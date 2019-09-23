@@ -1,0 +1,77 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.basic-container {
+  padding: 30px;
+}
+
+#Shadow {
+  max-width: 45em;
+  margin: auto;
+}
+
+#GoogleHome {
+  max-width: 50%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+#GoogleHome img {
+  width: 100%;
+  margin: -40% auto 0;
+}
+
+.ng-star-inserted li b {
+  text-align: right;
+  display: inline-block;
+  width: 5em;
+  margin-right: 1em;
+}
+
+.ng-star-inserted li b del {
+  font-family: "Courier New ", Courier, monospace;
+}
+
+mat-tab-body {
+  padding: 0 30px;
+  width: 100%;
+}
+
+#Play {
+  text-align: right;
+}
+
+button#Start {
+  margin: 2em 0;
+  width: 100%;
+}
+
+countdown {
+  font-family: 'Orbitron', sans-serif;
+  font-size: calc(4vw + 3em);
+}
+
+.mat-table__wrapper .mat-table {
+  min-width: auto !important;
+  width: 100% !important;
+}
+
+.mat-header-row {
+  width: 100%;
+}
+
+.mat-row {
+  width: 100%;
+}
+
+.mat-column-Hash {
+  flex: 0 0 50% !important;
+  min-width: 104px !important;
+}
