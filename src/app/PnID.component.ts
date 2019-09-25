@@ -23,6 +23,6 @@ constructor(public dialog: MatDialog) {}
 
 @Component({
   selector: 'dialog-content-example-dialog',
-  template: "PnID-Dialog.component.html",
+  templateUrl: "PnID-Dialog.component.html",
 })
 export class DialogContent {}
