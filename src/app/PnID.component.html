@@ -8,6 +8,16 @@
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
+
+  <mat-selection-list #shoes>
+  <mat-list-option *ngFor="let shoe of typesOfShoes">
+    {{shoe}}
+  </mat-list-option>
+</mat-selection-list>
+
+<p>
+  Options selected: {{shoes.selectedOptions.selected.length}}
+</p>
 </form>
 
 <button mat-button (click)="openDialog()">Open dialog</button>
