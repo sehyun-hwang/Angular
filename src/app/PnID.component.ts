@@ -2,7 +2,6 @@ import {Component, Inject} from '@angular/core';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FormControl} from '@angular/forms';
 
-
 @Component({
   selector: '',
   templateUrl: './PnID.component.html',
@@ -14,7 +13,7 @@ export class PnID {
 constructor(public dialog: MatDialog) {}
 
   openDialog() {
-    const dialogRef = this.dialog.open(DialogContentExampleDialog);
+    const dialogRef = this.dialog.open(DialogContent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -26,4 +25,4 @@ constructor(public dialog: MatDialog) {}
   selector: 'dialog-content-example-dialog',
   template: 'dialog-content-example-dialog.html',
 })
-export class DialogContentExampleDialog {}
+export class DialogContent {}

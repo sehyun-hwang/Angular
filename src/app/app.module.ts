@@ -15,7 +15,7 @@ import {AppComponent}from "./app.component";
 
 import { TeachersDay } from './TeachersDay.component';
 import { StreetCapture } from './StreetCapture.component';
-import { PnID } from './PnID.component';
+import { PnID,DialogContent } from './PnID.component';
 const routes: Routes  = [
   { path: 'teachersday/console.html', component: TeachersDay },
   { path: 'ptais/street-capture.html', component: StreetCapture },
@@ -23,7 +23,10 @@ const routes: Routes  = [
 ]
 
 @NgModule({
-  declarations: [...routes.map(x=>x.component), AppComponent],
+  declarations: [...routes.map(x=>x.component),
+    DialogContent,
+    AppComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -39,5 +42,6 @@ const routes: Routes  = [
     RouterModule.forRoot(routes)
   ],
   bootstrap: [AppComponent],
+  entryComponents: [DialogContent]
 })
 export class AppModule { }
