@@ -1,5 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, Inject} from '@angular/core';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FormControl} from '@angular/forms';
+
 
 @Component({
   selector: '',
@@ -9,4 +11,19 @@ import {FormControl} from '@angular/forms';
 export class PnID {
   myControl = new FormControl();
   options: string[] = ['One', 'Two', 'Three'];
+constructor(public dialog: MatDialog) {}
+
+  openDialog() {
+    const dialogRef = this.dialog.open(DialogContentExampleDialog);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 }
+
+@Component({
+  selector: 'dialog-content-example-dialog',
+  template: 'dialog-content-example-dialog.html',
+})
+export class DialogContentExampleDialog {}

@@ -19,7 +19,7 @@ import { PnID } from './PnID.component';
 const routes: Routes  = [
   { path: 'teachersday/console.html', component: TeachersDay },
   { path: 'ptais/street-capture.html', component: StreetCapture },
-  { path: 'pnid/index', component: PnID },
+  { path: '', component: PnID },
 ]
 
 @NgModule({
@@ -38,6 +38,6 @@ const routes: Routes  = [
 
     RouterModule.forRoot(routes)
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
