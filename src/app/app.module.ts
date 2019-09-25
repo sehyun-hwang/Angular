@@ -9,8 +9,8 @@ import {DemoMaterialModule} from './material-module';
 
 import { CountdownModule } from 'ngx-countdown';
 import { WebcamModule } from 'ngx-webcam';
-
 import { Routes, RouterModule } from '@angular/router';
+
 import {AppComponent}from "./app.component";
 
 import { TeachersDay } from './TeachersDay.component';
