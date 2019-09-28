@@ -15,21 +15,22 @@ constructor(public dialog: MatDialog) {}
 
  typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
   openDialog() {
-    const dialogRef = this.dialog.open(DialogContent);
+    const dialogRef = this.dialog.open(PnID_Dialog);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
   StopPropagation(event) {
-event.stopPropagation();
+    event.stopPropagation();
+    event.preventDefault();
   }
   ariaLabel: string = "12321";  
 }
 
 
 @Component({
-  selector: 'dialog-content-example-dialog',
+  selector: 'pnid-dialog',
   templateUrl: "PnID-Dialog.component.html",
 })
-export class DialogContent {}
+export class PnID_Dialog {}

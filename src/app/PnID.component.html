@@ -3,7 +3,7 @@
   <mat-form-field class="example-full-width">
     <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let dummy of , let i = index" [value]="option">
+      <mat-option *ngFor="let dummy of ' '.repeat(20).split(''), let i = index" [value]="option">
         {{i}}
       </mat-option>
     </mat-autocomplete>
@@ -11,25 +11,7 @@
 </form>
 
 <mat-accordion>
-  <mat-expansion-panel
-  (opened)="panelOpenState = true"
-  (closed)="panelOpenState = false">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-      LOTO i
-      </mat-panel-title>
-      <mat-panel-description>
-        <span>Unlocked</span>
-        <mat-slide-toggle
-        (click)="StopPropagation($event)"
-        [(ngModel)]="checked"></mat-slide-toggle>
-        <span>Locked</span>
-        <br/>
-        <p>{{checked}}</p>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <p>I'm visible because I am open</p>
-  </mat-expansion-panel>
+
 </mat-accordion>
 
 <button mat-button (click)="openDialog()">Open dialog</button>

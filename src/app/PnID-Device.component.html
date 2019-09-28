@@ -1,0 +1,19 @@
+<mat-expansion-panel
+  (opened)="panelOpenState = true"
+  (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+      LOTO i
+      </mat-panel-title>
+      <mat-panel-description>
+        <span>Unlocked</span>
+        <mat-slide-toggle
+        (click)="StopPropagation($event)"
+        [(ngModel)]="checked"></mat-slide-toggle>
+        <span>Locked</span>
+        <br/>
+        <p>{{checked}}</p>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>I'm visible because I am open</p>
+  </mat-expansion-panel>
