@@ -4,9 +4,7 @@ import {routes} from "./Routes";
 
 @Component({
   selector: 'index',
-  template: `<div *ngFor="let route of routes">
-  <a [routerLink]="[route]">{{route}}</a>
-  </div>`,
+  templateUrl: "./index.component.html",
 })
 export class Index {
   routes:string[];
