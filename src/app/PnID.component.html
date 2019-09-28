@@ -3,17 +3,14 @@
   <mat-form-field class="example-full-width">
     <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let dummy of ' '.repeat(20).split(''), let i = index" [value]="option">
-        {{i}}
+      <mat-option *ngFor="let Account of 'Account '.repeat(20).split(' '), let i = index" [value]="option">
+        {{Account+" "+i}}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
 </form>
 
-<mat-accordion>
-
+<mat-accordion *ngFor="let dummy of ' '.repeat(3).split(''), let i = index">
+  <pnid-device [i]=[i]></pnid-device>
 </mat-accordion>
-<pnid-device></pnid-device>
-<button mat-button (click)="openDialog()">Open dialog</button>
-</div>
 

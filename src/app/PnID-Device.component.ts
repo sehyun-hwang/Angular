@@ -1,4 +1,4 @@
-import {Component } from '@angular/core';
+import {Component, Input } from '@angular/core';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
@@ -8,7 +8,7 @@ import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 })
 export class PnID_Device {
   constructor(public dialog: MatDialog) {}
-
+  @Input() i;
   openDialog(event) {
     event.stopPropagation();
     event.preventDefault();
