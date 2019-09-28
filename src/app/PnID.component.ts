@@ -21,10 +21,7 @@ constructor(public dialog: MatDialog) {}
       console.log(`Dialog result: ${result}`);
     });
   }
-  StopPropagation(event) {
-    event.stopPropagation();
-    event.preventDefault();
-  }
+  
   ariaLabel: string = "12321";  
 }
 
@@ -33,4 +30,5 @@ constructor(public dialog: MatDialog) {}
   selector: 'pnid-dialog',
   templateUrl: "PnID-Dialog.component.html",
 })
-export class PnID_Dialog {}
+export class PnID_Dialog {
+}

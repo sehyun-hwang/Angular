@@ -1,8 +1,13 @@
 import {Component } from '@angular/core';
 
 @Component({
-  selector: 'device',
+  selector: 'pnid-device',
   templateUrl: './PnID-Device.component.html',
   styles: []
 })
-export class PnID_Device {}
+export class PnID_Device {
+  StopPropagation(event) {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+}
