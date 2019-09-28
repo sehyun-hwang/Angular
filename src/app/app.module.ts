@@ -45,6 +45,6 @@ AppComponent,  PnID_Device, PnID_Dialog
   
   ],
   bootstrap: [AppComponent],
-  entryCompontents: [PnID_Dialog]
+  entryComponents: [PnID_Dialog]
 })
 export class AppModule { }

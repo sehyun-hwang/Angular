@@ -7,7 +7,7 @@ import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
   styles: []
 })
 export class PnID_Device {
-    constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog) {}
 
   openDialog(event) {
     event.stopPropagation();
@@ -25,4 +25,21 @@ export class PnID_Device {
   selector: 'pnid-dialog',
   templateUrl: "PnID-Dialog.component.html",
 })
-export class PnID_Dialog {}
+export class PnID_Dialog {
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+
+  matcher = new MyErrorStateMatcher();
+}
+
+import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {ErrorStateMatcher} from '@angular/material/core';
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
