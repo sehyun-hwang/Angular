@@ -10,7 +10,4 @@ import {MatListModule} from '@angular/material/list';
 })
 export class PnID {
   myControl = new FormControl();
-  options: string[] = ['One', 'Two', 'Three'];
-
- typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
 }
