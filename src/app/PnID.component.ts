@@ -21,7 +21,9 @@ constructor(public dialog: MatDialog) {}
       console.log(`Dialog result: ${result}`);
     });
   }
-  @Input('aria-label')
+  StopPropagation(event) {
+event.stopPropagation();
+  }
   ariaLabel: string = "12321";  
 }
 
