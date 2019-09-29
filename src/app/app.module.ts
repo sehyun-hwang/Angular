@@ -1,43 +1,40 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatNativeDateModule} from '@angular/material/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
-import { MatSortModule } from '@angular/material/sort';
-
+import {DemoMaterialModule} from './Material.module';
 import { CountdownModule } from 'ngx-countdown';
 import { WebcamModule } from 'ngx-webcam';
 
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import {AppComponent}from "./app.component";
+import {routes} from "./Routes"
 
-import { TeachersDay } from './TeachersDay.component';
-import { StreetCapture } from './StreetCapture.component';
-const routes: Routes  = [
-  { path: 'teachersday/console.html', component: TeachersDay },
-  { path: 'ptais/street-capture.html', component: StreetCapture },
-]
+import { PnID_Device, PnID_Dialog } from './PnID-Device.component';
 
 @NgModule({
-  declarations: [...routes.map(x=>x.component), AppComponent],
+  declarations: [...routes.map(x=>x.component),
+AppComponent,  PnID_Device, PnID_Dialog
+  ],
   imports: [
     BrowserModule,
-    FormsModule,
     BrowserAnimationsModule,
-
-    MatTabsModule,
-    MatButtonModule,
-    MatTableModule,
-    MatSortModule,
+    FormsModule,
+    HttpClientModule,
+    DemoMaterialModule,
+    MatNativeDateModule,
+    ReactiveFormsModule,
 
     CountdownModule,
     WebcamModule,
 
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [PnID_Dialog]
 })
 export class AppModule { }
