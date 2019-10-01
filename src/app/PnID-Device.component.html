@@ -2,18 +2,27 @@
   (opened)="panelOpenState = true"
   (closed)="panelOpenState = false">
     <mat-expansion-panel-header>
-      <mat-panel-title>
-      LOTO {{i}}
+      <mat-panel-title> 
+         <mat-icon>widgets</mat-icon>
+      <span>LOTO {{i}}</span>
       </mat-panel-title>
       <mat-panel-description>
+        <div style="width:100%">
+          dfsaafd
+        </div>
+        <div>
+        <mat-icon>lock_open</mat-icon>
         <span>Unlocked</span>
         <mat-slide-toggle
         (click)="openDialog($event)"
         [(ngModel)]="checked"></mat-slide-toggle>
         <span>Locked</span>
+        <mat-icon>lock</mat-icon>
         <br/>
         <p>{{checked}}</p>
+        </div>
       </mat-panel-description>
     </mat-expansion-panel-header>
     <p>I'm visible because I am open</p>
   </mat-expansion-panel>
+
