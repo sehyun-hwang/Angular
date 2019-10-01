@@ -9,6 +9,7 @@ import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 export class PnID_Device {
   constructor(public dialog: MatDialog) {}
   @Input() i;
+  Height = '100px';
   openDialog(event) {
     event.stopPropagation();
     event.preventDefault();
@@ -26,15 +27,15 @@ export class PnID_Device {
   templateUrl: "PnID-Dialog.component.html",
 })
 export class PnID_Dialog {
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
+  emailFormControl = new FormControl('ffd',
+  [Validators.required],
+  data=>new Promise((resolve, reject)=>data.value==="password" ? 
+    resolve(null):reject("Wrong password")));
 
   matcher = new MyErrorStateMatcher();
 }
 
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {FormControl, FormGroupDirective, NgForm, Validators, AsyncValidatorFn, ValidationErrors} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
