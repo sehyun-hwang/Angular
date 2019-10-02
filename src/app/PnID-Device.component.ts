@@ -30,7 +30,7 @@ export class PnID_Dialog {
   emailFormControl = new FormControl('ffd',
   [Validators.required],
   data=>new Promise((resolve, reject)=>data.value==="password" ? 
-    resolve(null):reject("Wrong password")));
+    resolve(null):resolve("Wrong password")));
 
   matcher = new MyErrorStateMatcher();
 }
