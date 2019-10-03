@@ -14,9 +14,8 @@ export class PnID_Device {
     event.stopPropagation();
     event.preventDefault();
 
-    const dialogRef = this.dialog.open(PnID_Dialog);
-
-    dialogRef.afterClosed().subscribe(result => {
+    this.dialog.open(PnID_Dialog)
+    .afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
