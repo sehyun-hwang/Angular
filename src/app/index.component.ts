@@ -9,7 +9,9 @@ import {routes} from "./Routes";
 export class Index {
   routes:string[];
   constructor() {
-    this.routes=routes.map(x=>x.path)
+    const _routes =routes.map(x=>x.path);
+    _routes.shift();
+    this.routes = _routes;
     console.log(routes)
   }
 }
