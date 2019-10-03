@@ -12,10 +12,10 @@
     <mat-error *ngIf="emailFormControl.hasError('required')">
       Email is <strong>required</strong>
     </mat-error>
+    <p [innerText]=[emailFormControl.valid]></p>
   </mat-form-field>
-</form>
-
 
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Lock or Unlock</button>
+  <button mat-button [mat-dialog-close]="emailFormControl.valid" cdkFocusInitial>Lock or Unlock</button>
+</form>
 </mat-dialog-actions>

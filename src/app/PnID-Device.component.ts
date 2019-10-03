@@ -26,18 +26,18 @@ export class PnID_Device {
   templateUrl: "PnID-Dialog.component.html",
 })
 export class PnID_Dialog {
-  emailFormControl = new FormControl('ffd',
-  [Validators.required],
-  data=>new Promise((resolve, reject)=>data.value==="password" ? 
-    resolve(null):resolve("Wrong password")));
-
+  emailFormControl = new FormControl('',
+  Validators.required,
+  data=>new Promise(resolve=>
+    resolve(data.value==="password" ?null:{sdfa:"123"})
+  ));
   matcher = new MyErrorStateMatcher();
 }
 
 import {FormControl, FormGroupDirective, NgForm, Validators, AsyncValidatorFn, ValidationErrors} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 
-export class MyErrorStateMatcher implements ErrorStateMatcher {
+class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
