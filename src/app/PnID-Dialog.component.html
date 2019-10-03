@@ -16,6 +16,6 @@
   </mat-form-field>
 
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="emailFormControl.valid" cdkFocusInitial>Lock or Unlock</button>
+  <button mat-button mat-dialog-close [disabled]="!emailFormControl.valid" cdkFocusInitial>Lock or Unlock</button>
 </form>
 </mat-dialog-actions>
