@@ -45,8 +45,16 @@ export class PnID_Dialog {
 
   emailFormControl = new FormControl('',
   Validators.required,
-  data=>new Promise(resolve=>
+  data=>new Promise(resolve=>{
+const url = new URL("https://plantasset.kr/MPIS_WCF/webservice.asmx?op=LOGIN");
+url.search = new URLSearchParams({
+  id:"mpis",
+  pwd: "mpis"
+  });
+fetch(url)=>({text})=>text.then(console.log)
+
     resolve(data.value==="password"? null:{error:"Wrong Password"})
+  }
   ));
   matcher = new MyErrorStateMatcher();
 }
