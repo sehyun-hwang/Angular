@@ -60,7 +60,7 @@ export class PnID_Dialog {
     .then(text=>new DOMParser().parseFromString(text, "text/xml").firstElementChild.innerHTML)
     .then(JSON.parse)
     .then(({Table})=>{
-      console.log(Table[0].STATUS === "false")
+      resolve(Table[0].STATUS == "false"? null: {error: "Wrong Password"})
     })
   ));
 
