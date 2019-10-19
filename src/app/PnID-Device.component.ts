@@ -44,18 +44,29 @@ export class PnID_Dialog {
   @Input() LOTO;
 
   emailFormControl = new FormControl('',
-  Validators.required,
-  data=>new Promise(resolve=>{
-const url = new URL("https://plantasset.kr/MPIS_WCF/webservice.asmx?op=LOGIN");
-url.search = new URLSearchParams({
-  id:"mpis",
-  pwd: "mpis"
-  });
-fetch(url)=>({text})=>text.then(console.log)
-
-    resolve(data.value==="password"? null:{error:"Wrong Password"})
-  }
+    Validators.required,
+    data=>new Promise(resolve=>fetch("https://plantasset.kr/MPIS_WCF/webservice.asmx/LOGIN", {
+      method: "POST",
+      headers: {
+        "Content-Type": 'application/x-www-form-url-encoded', 
+        Accept: 'application/json'
+      },
+      body: (function(){
+        const Param = newURLSearchParams();
+        ["id", "pwd", "model", "cordova", "platform", "uuid", "version", "manufacturer", "isvirtual", "serial", "latitude", "logitude", "macaddress"]
+        .forEach(x=>Param.append(x, {
+          id: "mpis",
+          pwd: data.value,
+        }[x] || null));
+        
+      })()
+    }).then(res=>{
+      console.log(res);
+      return res.text();
+    })//.then(text=>(new window.DOMParser()).parseFromString(text, "text/xml"))
+    .then(text=>{console.log(text)})
   ));
+
   matcher = new MyErrorStateMatcher();
 }
 
@@ -68,3 +79,4 @@ class MyErrorStateMatcher implements ErrorStateMatcher {
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
 }
+
