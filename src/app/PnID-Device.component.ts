@@ -47,24 +47,21 @@ export class PnID_Dialog {
     Validators.required,
     data=>new Promise(resolve=>fetch("https://plantasset.kr/MPIS_WCF/webservice.asmx/LOGIN", {
       method: "POST",
-      headers: {
-        "Content-Type": 'application/x-www-form-url-encoded', 
-        Accept: 'application/json'
-      },
       body: (function(){
-        const Param = newURLSearchParams();
-        ["id", "pwd", "model", "cordova", "platform", "uuid", "version", "manufacturer", "isvirtual", "serial", "latitude", "logitude", "macaddress"]
+        const Param = new URLSearchParams();
+        ["id", "pwd", "model", "cordova", "platform", "uuid", "version", "manufacturer", "isvirtual", "serial", "latitude", "longitude", "macaddress"]
         .forEach(x=>Param.append(x, {
           id: "mpis",
           pwd: data.value,
         }[x] || null));
-        
+        return Param;
       })()
-    }).then(res=>{
-      console.log(res);
-      return res.text();
-    })//.then(text=>(new window.DOMParser()).parseFromString(text, "text/xml"))
-    .then(text=>{console.log(text)})
+    }).then(res=>res.text())
+    .then(text=>new DOMParser().parseFromString(text, "text/xml").firstElementChild.innerHTML)
+    .then(JSON.parse)
+    .then(({Table})=>{
+      console.log(Table[0].STATUS === "false")
+    })
   ));
 
   matcher = new MyErrorStateMatcher();
