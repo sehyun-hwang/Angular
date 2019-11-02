@@ -21,19 +21,31 @@ export class PnID_Device {
       //@ts-ignore
       this.checked ^= true;
     });
-  }
-
-  barChartOptions = {
-    scaleShowVerticalLines: false,
-    responsive: true
   };
-  barChartLabels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-  barChartType = 'bar';
-  barChartLegend = true;
-  barChartData = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
-  ];
+
+  datasets: any[] = [{
+    label: 'Dataset 1',
+    lineTension: 0,
+    borderDash: [8, 4],
+    data: []
+  }, {
+    label: 'Dataset 2',
+    data: []
+  }];
+
+  options:any= {
+    scales: {
+      xAxes: [{
+        type: 'realtime',
+        realtime: {
+          onRefresh: chart => chart.data.datasets.forEach(dataset=>dataset.data.push({
+                x: Date.now(),
+                y: Math.random()
+              }))
+          }
+        }]
+    }
+  }
 }
 
 @Component({

@@ -25,13 +25,12 @@
     </mat-expansion-panel-header>
     <div>
 
-  <div style="display: block">
+  <div >
     <canvas baseChart
-            [datasets]="barChartData"
-            [labels]="barChartLabels"
-            [options]="barChartOptions"
-            [legend]="barChartLegend"
-            [chartType]="barChartType">
+    baseChart
+    [chartType]="'line'"
+    [datasets]="datasets"
+    [options]="options">
     </canvas>
   </div>
 </div>
