@@ -1,6 +1,7 @@
 import {Component, Input } from '@angular/core';
 import {MatDialog, MatDialogTitle, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ChartsModule } from 'ng2-charts';
+import 'chartjs-plugin-streaming';
 
 @Component({
   selector: 'pnid-device',
@@ -27,9 +28,6 @@ export class PnID_Device {
     label: 'Dataset 1',
     lineTension: 0,
     borderDash: [8, 4],
-    data: []
-  }, {
-    label: 'Dataset 2',
     data: []
   }];
 
