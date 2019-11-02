@@ -1,5 +1,7 @@
 import {Component, Input } from '@angular/core';
 import {MatDialog, MatDialogTitle, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
+import { Client } from '@influxdata/influx';
 import { ChartsModule } from 'ng2-charts';
 import 'chartjs-plugin-streaming';
 
@@ -24,6 +26,8 @@ export class PnID_Device {
     });
   };
 
+  Influx = new Client("https://us-west-2-1.aws.cloud2.influxdata.com/api/v2","jUGziYHIueFTW-eqGJwfxvnwmXwRDsEd9fhCGLsm7VBS_m0OH2stYEsECQwo6J39-ZzwpgaPCSRtVvvWc0zU6w==").queries.execute;
+
   datasets: any[] = [{
     label: 'Dataset 1',
     lineTension: 0,
@@ -36,12 +40,18 @@ export class PnID_Device {
       xAxes: [{
         type: 'realtime',
         realtime: {
-          onRefresh: chart => chart.data.datasets.forEach(dataset=>{
-            dataset.data.push({
-                x: Date.now(),
-                y: Math.random()
-            });
-          })
+          onRefresh: chart => {
+            const { promise, cancel } = this.Influx('44051e60e390121f',
+            `from(bucket: "test")
+            |> range(start: -72h)`);
+            promise.then(cons)
+            chart.data.datasets.forEach(dataset=>{
+              dataset.data.push({
+                  x: Date.now(),
+                  y: Math.random()
+              });
+            })
+          }
         }
       }]
     }
