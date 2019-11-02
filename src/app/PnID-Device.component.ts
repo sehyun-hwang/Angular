@@ -36,12 +36,14 @@ export class PnID_Device {
       xAxes: [{
         type: 'realtime',
         realtime: {
-          onRefresh: chart => chart.data.datasets.forEach(dataset=>dataset.data.push({
+          onRefresh: chart => chart.data.datasets.forEach(dataset=>{
+            dataset.data.push({
                 x: Date.now(),
                 y: Math.random()
-              }))
-          }
-        }]
+            });
+          })
+        }
+      }]
     }
   }
 }
