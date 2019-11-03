@@ -41,17 +41,19 @@ export class PnID_Device {
         type: 'realtime',
         realtime: {
           onRefresh: chart => {
+            console.log(this.Influx)
             const { promise, cancel } = this.Influx('44051e60e390121f',
             `from(bucket: "test")
             |> range(start: -72h)`);
-            promise.then(cons)
+            promise.then(console.log)
             chart.data.datasets.forEach(dataset=>{
               dataset.data.push({
                   x: Date.now(),
                   y: Math.random()
               });
             })
-          }
+          },
+          delay: 2000,
         }
       }]
     }
