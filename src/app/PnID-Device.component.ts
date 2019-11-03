@@ -26,7 +26,7 @@ export class PnID_Device {
     });
   };
 
-  Influx = new Client("https://us-west-2-1.aws.cloud2.influxdata.com/api/v2","jUGziYHIueFTW-eqGJwfxvnwmXwRDsEd9fhCGLsm7VBS_m0OH2stYEsECQwo6J39-ZzwpgaPCSRtVvvWc0zU6w==").queries.execute;
+  Influx = new Client("https://us-west-2-1.aws.cloud2.influxdata.com/api/v2","jUGziYHIueFTW-eqGJwfxvnwmXwRDsEd9fhCGLsm7VBS_m0OH2stYEsECQwo6J39-ZzwpgaPCSRtVvvWc0zU6w==");
 
   datasets: any[] = [{
     label: 'Dataset 1',
@@ -41,11 +41,9 @@ export class PnID_Device {
         type: 'realtime',
         realtime: {
           onRefresh: chart => {
-            console.log(this.Influx)
-            const { promise, cancel } = this.Influx('44051e60e390121f',
+            this.Influx.queries.execute('44051e60e390121f',
             `from(bucket: "test")
-            |> range(start: -72h)`);
-            promise.then(console.log).catch(console.warn)
+            |> range(start: -72h)`).promise.then(console.log).catch(console.warn)
             chart.data.datasets.forEach(dataset=>{
               dataset.data.push({
                   x: Date.now(),
@@ -53,7 +51,7 @@ export class PnID_Device {
               });
             })
           },
-          refresh: 20000,
+          refresh: 10000,
         }
       }]
     }
