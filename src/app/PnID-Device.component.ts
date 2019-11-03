@@ -55,14 +55,19 @@ export class PnID_Device {
             |> range(start: ${this.Last})`).promise.then(data=>{
               this.papa.parse(data, {
                 complete: ({data})=>{
-                  console.log(this.Last, data)
+                  console.log(this.Last, data.length)
+
                   if (data.length < 3) return;
-                  console.log(data)
+                  
                   function FindIndex(Key) {
                     return data[3].findIndex(x=>x.indexOf(Key) > 0);
                   }
                   const Value_i = FindIndex("value");
                   const Time_i = FindIndex("time");
+
+                  const date =  new Date(data[data.length - 3][Time_i]);
+                  date.setSeconds(date.getSeconds() + 1);
+                  this.Last = date.toISOString();
 
                   for (const x of data)
                     chart.data.datasets[0].data.push({
@@ -73,10 +78,6 @@ export class PnID_Device {
                   chart.update({
                     preservation: true
                   });
-
-                  const date =  new Date(data[data.length - 3][Time_i]);
-                  date.setSeconds(date.getSeconds() + 1);
-                  this.Last = date.toISOString();
                 },
               })
             }).catch(console.warn)
