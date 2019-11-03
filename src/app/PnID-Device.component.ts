@@ -47,8 +47,10 @@ export class PnID_Device {
             this.Influx.queries.execute('44051e60e390121f',
             `from(bucket: "test")
             |> range(start: -72h)`).promise.then(data=>{
-              this.papa.parse(data,{
-                complete: console.log
+              this.papa.parse(data, {
+                complete: ({data})=>{
+                  console.log(data);
+                },
               })
             }).catch(console.warn)
             chart.data.datasets.forEach(dataset=>{
