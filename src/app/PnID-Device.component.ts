@@ -2,6 +2,7 @@ import {Component, Input } from '@angular/core';
 import {MatDialog, MatDialogTitle, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 import { Client } from '@influxdata/influx';
+import { Papa } from 'ngx-papaparse';
 import { ChartsModule } from 'ng2-charts';
 import 'chartjs-plugin-streaming';
 
@@ -10,7 +11,9 @@ import 'chartjs-plugin-streaming';
   templateUrl: './PnID-Device.component.html',
 })
 export class PnID_Device {
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog,
+  private papa: Papa
+  ) {}
   @Input() i;
 
   checked:boolean;
@@ -43,7 +46,11 @@ export class PnID_Device {
           onRefresh: chart => {
             this.Influx.queries.execute('44051e60e390121f',
             `from(bucket: "test")
-            |> range(start: -72h)`).promise.then(console.log).catch(console.warn)
+            |> range(start: -72h)`).promise.then(data=>{
+              this.papa.parse(data,{
+                complete: console.log
+              })
+            }).catch(console.warn)
             chart.data.datasets.forEach(dataset=>{
               dataset.data.push({
                   x: Date.now(),

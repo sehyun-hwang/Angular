@@ -12,8 +12,8 @@ import { WebcamModule } from 'ngx-webcam';
 import { ChartsModule } from 'ng2-charts';
 
 import { RouterModule } from '@angular/router';
-import {AppComponent}from "./app.component";
-import {routes} from "./Routes"
+import { AppComponent }from "./app.component";
+import { routes } from "./Routes"
 
 import { PnID_Device, PnID_Dialog } from './PnID-Device.component';
 
