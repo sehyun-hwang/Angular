@@ -49,7 +49,9 @@ export class PnID_Device {
             |> range(start: -72h)`).promise.then(data=>{
               this.papa.parse(data, {
                 complete: ({data})=>{
-                  console.log(data);
+                  const Index = data[3].findIndex(x=>x.indexOf("value") > 0);
+                  const Last = data[data.length -2];
+                  console.log(Last);
                 },
               })
             }).catch(console.warn)
@@ -60,7 +62,7 @@ export class PnID_Device {
               });
             })
           },
-          refresh: 1000,
+          refresh: 5000,
         }
       }]
     }
