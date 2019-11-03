@@ -86,7 +86,7 @@ export class PnID_Device {
                     });
       
                   chart.update({
-                    preservation: false
+                    preservation: true
                   });
                   this.Done = true;
                 },
@@ -114,10 +114,10 @@ export class PnID_Dialog {
       body: (function(){
         const Param = new URLSearchParams();
         ["id", "pwd", "model", "cordova", "platform", "uuid", "version", "manufacturer", "isvirtual", "serial", "latitude", "longitude", "macaddress"]
-        .forEach(x=>Param.append(x, {
-          id: "mpis",
-          pwd: data.value,
-        }[x] || null));
+          .forEach(x=>Param.append(x, {
+            id: "mpis",
+            pwd: data.value,
+          }[x] || null));
         return Param;
       })()
     }).then(res=>res.text())
