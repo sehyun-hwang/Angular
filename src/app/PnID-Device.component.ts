@@ -32,10 +32,15 @@ export class PnID_Device {
   Influx = new Client("https://us-west-2-1.aws.cloud2.influxdata.com/api/v2","jUGziYHIueFTW-eqGJwfxvnwmXwRDsEd9fhCGLsm7VBS_m0OH2stYEsECQwo6J39-ZzwpgaPCSRtVvvWc0zU6w==");
 
   datasets: any[] = [{
-    label: 'Dataset 1',
+    label: 'Influx DB',
     lineTension: 0,
     borderDash: [8, 4],
-    data: []
+    data: [],
+  },{
+    label: 'Random',
+    lineTension: 0,
+    borderDash: [8, 4],
+    data: [],
   }];
 
   Last = "-72h";
@@ -50,22 +55,21 @@ export class PnID_Device {
             |> range(start: ${this.Last})`).promise.then(data=>{
               this.papa.parse(data, {
                 complete: ({data})=>{
-                  //console.log(this.Last, data)
+                  console.log(this.Last, data)
                   if (data.length < 3) return;
                   console.log(data)
                   function FindIndex(Key) {
-                    return data[3].findIndex(x=>x.indexOf(Key) > 0)
+                    return data[3].findIndex(x=>x.indexOf(Key) > 0);
                   }
                   const Value_i = FindIndex("value");
                   const Time_i = FindIndex("time");
 
-                  for (const x of data) {
-                    console.log(x);
+                  for (const x of data)
                     chart.data.datasets[0].data.push({
                       x: x[Time_i],
                       y: x[Value_i]
                     });
-                  };
+      
                   chart.update({
                     preservation: true
                   });
@@ -77,15 +81,12 @@ export class PnID_Device {
               })
             }).catch(console.warn)
 
-            /*chart.data.datasets.forEach(dataset=>{
-              dataset.data = dataset.data.push({
-                  x: Date.now(),
-                  y: Math.random()
-              });
+            chart.data.datasets[1].data.push({
+              x: Date.now(),
+              y: Math.random()
             });
-            */
           },
-          refresh: 10000,
+          refresh: 1000,
         }
       }]
     }
