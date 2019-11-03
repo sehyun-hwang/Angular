@@ -45,7 +45,7 @@ export class PnID_Device {
             const { promise, cancel } = this.Influx('44051e60e390121f',
             `from(bucket: "test")
             |> range(start: -72h)`);
-            promise.then(console.log)
+            promise.then(console.log).catch(console.warn)
             chart.data.datasets.forEach(dataset=>{
               dataset.data.push({
                   x: Date.now(),
@@ -53,7 +53,7 @@ export class PnID_Device {
               });
             })
           },
-          delay: 2000,
+          refresh: 20000,
         }
       }]
     }
