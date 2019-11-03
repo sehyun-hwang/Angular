@@ -44,21 +44,28 @@ export class PnID_Device {
   }];
 
   Last = "-72h";
+  Done = true;
   options:any = {
     scales: {
       xAxes: [{
         type: 'realtime',
         realtime: {
           onRefresh: chart => {
+            chart.data.datasets[1].data.push({
+              x: Date.now(),
+              y: Math.random()
+            });
+
+            if (!this.Done) return;
+            this.Done = false;
+
             this.Influx.queries.execute('44051e60e390121f',
             `from(bucket: "test")
             |> range(start: ${this.Last})`).promise.then(data=>{
               this.papa.parse(data, {
                 complete: ({data})=>{
                   console.log(this.Last, data.length)
-
                   if (data.length < 3) return;
-                  
                   function FindIndex(Key) {
                     return data[3].findIndex(x=>x.indexOf(Key) > 0);
                   }
@@ -78,14 +85,10 @@ export class PnID_Device {
                   chart.update({
                     preservation: true
                   });
+                  this.Done = true;
                 },
               })
-            }).catch(console.warn)
-
-            chart.data.datasets[1].data.push({
-              x: Date.now(),
-              y: Math.random()
-            });
+            }).catch(console.warn);
           },
           refresh: 1000,
         }
