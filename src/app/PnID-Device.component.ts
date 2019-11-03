@@ -50,27 +50,29 @@ export class PnID_Device {
             |> range(start: ${this.Last})`).promise.then(data=>{
               this.papa.parse(data, {
                 complete: ({data})=>{
-                  if (length < 3) return;
-
+                  //console.log(this.Last, data)
+                  if (data.length < 3) return;
+                  console.log(data)
                   function FindIndex(Key) {
                     return data[3].findIndex(x=>x.indexOf(Key) > 0)
                   }
                   const Value_i = FindIndex("value");
                   const Time_i = FindIndex("time");
 
-                  for (const x in data) {
+                  for (const x of data) {
+                    console.log(x);
                     chart.data.datasets[0].data.push({
-                      x: data[Time_i],
-                      y: data[Value_i]
-                    })
-                  }
+                      x: x[Time_i],
+                      y: x[Value_i]
+                    });
+                  };
+                  chart.update({
+                    preservation: true
+                  });
 
                   const date =  new Date(data[data.length - 3][Time_i]);
                   date.setSeconds(date.getSeconds() + 1);
                   this.Last = date.toISOString();
-                  console.log(data);
-
-
                 },
               })
             }).catch(console.warn)
@@ -83,7 +85,7 @@ export class PnID_Device {
             });
             */
           },
-          refresh: 5000,
+          refresh: 10000,
         }
       }]
     }
