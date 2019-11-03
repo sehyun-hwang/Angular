@@ -43,7 +43,7 @@ export class PnID_Device {
     data: [],
   }];
 
-  Last = "-72h";
+  Last = "-1m";
   Done = true;
   options:any = {
     scales: {
@@ -65,7 +65,10 @@ export class PnID_Device {
               this.papa.parse(data, {
                 complete: ({data})=>{
                   console.log(this.Last, data.length)
-                  if (data.length < 3) return;
+                  if (data.length < 3) {
+                    this.Done = true;
+                    return;
+                  }
                   function FindIndex(Key) {
                     return data[3].findIndex(x=>x.indexOf(Key) > 0);
                   }
@@ -83,7 +86,7 @@ export class PnID_Device {
                     });
       
                   chart.update({
-                    preservation: true
+                    preservation: false
                   });
                   this.Done = true;
                 },
