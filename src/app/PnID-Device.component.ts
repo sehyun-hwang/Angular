@@ -38,7 +38,7 @@ export class PnID_Device {
     data: []
   }];
 
-  options:any= {
+  options:any = {
     scales: {
       xAxes: [{
         type: 'realtime',
@@ -58,7 +58,7 @@ export class PnID_Device {
               });
             })
           },
-          refresh: 10000,
+          refresh: 1000,
         }
       }]
     }

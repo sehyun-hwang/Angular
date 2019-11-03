@@ -2,7 +2,7 @@
   (opened)="panelOpenState = true"
   (closed)="panelOpenState = false"
   >
-    <mat-expansion-panel-header
+  <mat-expansion-panel-header
     [collapsedHeight]="Height"
      [expandedHeight]="Height">
       <mat-panel-title> 
@@ -22,16 +22,15 @@
           <p innerText=[Locked]></p>
         </div>
       </mat-panel-description>
-    </mat-expansion-panel-header>
-    <div>
+  </mat-expansion-panel-header>
 
   <div>
     <canvas baseChart
     [chartType]="'line'"
     [datasets]="datasets"
-    [options]="options">
+    [attr.options]="options"
+    >
     </canvas>
   </div>
-</div>
-  </mat-expansion-panel>
+</mat-expansion-panel>
 
