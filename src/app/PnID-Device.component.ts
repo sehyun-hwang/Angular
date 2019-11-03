@@ -38,6 +38,7 @@ export class PnID_Device {
     data: []
   }];
 
+  Last = "-72h";
   options:any = {
     scales: {
       xAxes: [{
@@ -46,21 +47,41 @@ export class PnID_Device {
           onRefresh: chart => {
             this.Influx.queries.execute('44051e60e390121f',
             `from(bucket: "test")
-            |> range(start: -72h)`).promise.then(data=>{
+            |> range(start: ${this.Last})`).promise.then(data=>{
               this.papa.parse(data, {
                 complete: ({data})=>{
-                  const Index = data[3].findIndex(x=>x.indexOf("value") > 0);
-                  const Last = data[data.length -2];
-                  console.log(Last);
+                  if (length < 3) return;
+
+                  function FindIndex(Key) {
+                    return data[3].findIndex(x=>x.indexOf(Key) > 0)
+                  }
+                  const Value_i = FindIndex("value");
+                  const Time_i = FindIndex("time");
+
+                  for (const x in data) {
+                    chart.data.datasets[0].data.push({
+                      x: data[Time_i],
+                      y: data[Value_i]
+                    })
+                  }
+
+                  const date =  new Date(data[data.length - 3][Time_i]);
+                  date.setSeconds(date.getSeconds() + 1);
+                  this.Last = date.toISOString();
+                  console.log(data);
+
+
                 },
               })
             }).catch(console.warn)
-            chart.data.datasets.forEach(dataset=>{
-              dataset.data.push({
+
+            /*chart.data.datasets.forEach(dataset=>{
+              dataset.data = dataset.data.push({
                   x: Date.now(),
                   y: Math.random()
               });
-            })
+            });
+            */
           },
           refresh: 5000,
         }
