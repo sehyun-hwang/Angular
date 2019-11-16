@@ -10,5 +10,5 @@ export const routes: Routes  = [
   { path: 'teachersday/console.html', component: TeachersDay },
   { path: 'ptais/street-capture.html', component: StreetCapture },
   { path: 'pnid', component: PnID },
-  { path: '**', component: 
+  { path: '**', component: Pn
 ]
