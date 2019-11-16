@@ -4063,6 +4063,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const routes = [
     { path: '', component: _index_component__WEBPACK_IMPORTED_MODULE_1__["Index"] },
+    { path: 'Angualr', component: _index_component__WEBPACK_IMPORTED_MODULE_1__["Index"] },
     { path: 'teachersday/console.html', component: _TeachersDay_component__WEBPACK_IMPORTED_MODULE_2__["TeachersDay"] },
     { path: 'ptais/street-capture.html', component: _StreetCapture_component__WEBPACK_IMPORTED_MODULE_3__["StreetCapture"] },
     { path: 'pnid', component: _PnID_component__WEBPACK_IMPORTED_MODULE_4__["PnID"] },

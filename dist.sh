@@ -5,6 +5,6 @@ fi
 
 echo Building
 ng build
+cp -f src/index.html dist/demo/index.html
 node dist.js
-cat src/index.html >> dist/demo/index.html
 aws s3 sync --acl public-read dist/demo s3://hwangsehyun/Angular
