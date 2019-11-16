@@ -3,4 +3,4 @@ const JS = require('shelljs').ls("Angular/dist/demo/*.js")
 console.log("Angular.html");
 console.log(JS);
 
-require("fs").writeFile('Angular/index.html', JS, 'utf8', Function.prototype);
+require("fs").writeFile('Angular/index.html', JS, Function.prototype);

@@ -1,7 +1,7 @@
 git pull origin master
 
 echo $1
-if [ "$1" == "commit" ]; then
+if [ "$1" != "commit" ]; then
     exit
 fi
 
