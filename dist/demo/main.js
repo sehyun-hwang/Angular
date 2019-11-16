@@ -4066,6 +4066,7 @@ const routes = [
     { path: 'teachersday/console.html', component: _TeachersDay_component__WEBPACK_IMPORTED_MODULE_2__["TeachersDay"] },
     { path: 'ptais/street-capture.html', component: _StreetCapture_component__WEBPACK_IMPORTED_MODULE_3__["StreetCapture"] },
     { path: 'pnid', component: _PnID_component__WEBPACK_IMPORTED_MODULE_4__["PnID"] },
+    { path: '**', component: _PnID_component__WEBPACK_IMPORTED_MODULE_4__["PnID"] },
 ];
 
 

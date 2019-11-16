@@ -7,8 +7,9 @@ import { PnID } from './PnID.component';
 
 export const routes: Routes  = [
   { path: '', component: Index },
+  { path: 'Angualr', component: Index },
   { path: 'teachersday/console.html', component: TeachersDay },
   { path: 'ptais/street-capture.html', component: StreetCapture },
   { path: 'pnid', component: PnID },
-  { path: '**', component: Pn
+  { path: '**', component: PnID},
 ]
