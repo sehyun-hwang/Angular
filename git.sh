@@ -1,3 +1,4 @@
+rm report*.json
 git pull origin master
 
 echo $1

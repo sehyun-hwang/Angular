@@ -1,4 +1,7 @@
 {
+  "browserslist": [
+    "> 5%"
+  ],
   "name": "angular",
   "version": "0.0.0",
   "private": true,
@@ -13,7 +16,7 @@
     "@angular/platform-browser": "8.2.14",
     "@angular/platform-browser-dynamic": "8.2.14",
     "@angular/router": "8.2.14",
-    "@influxdata/influx": "0.5.5",
+    "@influxdata/influx": "^0.5.5",
     "chart.js": "2.8.0",
     "chartjs-plugin-streaming": "1.8.0",
     "core-js": "2.6.9",
