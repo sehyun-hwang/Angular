@@ -6,11 +6,10 @@ import * as Rx from 'rxjs';
 @Injectable()
 export class SocketIO {
   private socket;
-
   constructor() {console.log(io)}
 
   connect(): Subject<MessageEvent> {
-    this.socket = io('https://proxy.hwangsehyun.ga?ort=8081');
+    this.socket = io('https://proxy.hwangsehyun.ga?port=8081');
     let observable = new Observable(observer => {
       this.socket.on('message', data => {
         console.log('Received a message from WebSocket: ', data);
