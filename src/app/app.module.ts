@@ -37,7 +37,7 @@ AppComponent,  PnID_Device, PnID_Dialog
 
     RouterModule.forRoot(routes),
   ],
-  providers: [SocketIO].
+  providers: [SocketIO],
   bootstrap: [AppComponent],
   entryComponents: [PnID_Dialog]
 })

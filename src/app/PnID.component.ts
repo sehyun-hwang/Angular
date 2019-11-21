@@ -18,6 +18,6 @@ export class PnID {
   }
   myControl = new FormControl();
   test() {
-    
+    this.messages.next("message");
   }
 }
