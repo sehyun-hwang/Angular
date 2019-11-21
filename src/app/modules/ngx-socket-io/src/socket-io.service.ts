@@ -2,7 +2,7 @@ import { Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
 
-import * as io from 'socket.io-client';
+import * asio from 'socket.io-client';
 
 import { SocketIoConfig } from './config/socket-io.config';
 

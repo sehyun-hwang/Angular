@@ -10,6 +10,7 @@ import {DemoMaterialModule} from './Material.module';
 import { CountdownModule } from 'ngx-countdown';
 import { WebcamModule } from 'ngx-webcam';
 import { ChartsModule } from 'ng2-charts';
+import { SocketIoModule, SocketIoConfig } from './modules/ngx-socket-io';
 
 import { RouterModule } from '@angular/router';
 import { AppComponent }from "./app.component";
@@ -35,6 +36,7 @@ AppComponent,  PnID_Device, PnID_Dialog
     ChartsModule,
 
     RouterModule.forRoot(routes),
+    SocketIoModule.forRoot({ url: 'http://localhost:8988', options: {} }),
   ],
   bootstrap: [AppComponent],
   entryComponents: [PnID_Dialog]
