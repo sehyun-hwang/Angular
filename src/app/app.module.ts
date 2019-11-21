@@ -14,6 +14,7 @@ import { ChartsModule } from 'ng2-charts';
 import { RouterModule } from '@angular/router';
 import { AppComponent }from "./app.component";
 import { routes } from "./Routes"
+import { SocketIO } from "./modules/socket.io"
 
 import { PnID_Device, PnID_Dialog } from './PnID-Device.component';
 
@@ -36,6 +37,7 @@ AppComponent,  PnID_Device, PnID_Dialog
 
     RouterModule.forRoot(routes),
   ],
+  providers: [SocketIO].
   bootstrap: [AppComponent],
   entryComponents: [PnID_Dialog]
 })

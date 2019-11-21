@@ -5,7 +5,6 @@ import * as Rx from 'rxjs';
 
 @Injectable()
 export class SocketIO {
-
   private socket;
   private ws_url = '';
 
@@ -18,9 +17,7 @@ export class SocketIO {
         console.log('Received a message from WebSocket: ', data);
         observer.next(data);
       });
-      return () => {
-        this.socket.disconnect();
-      }
+      return () => this.socket.disconnect();
     });
 
     let observer = {

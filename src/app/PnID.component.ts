@@ -4,6 +4,7 @@ import {FormControl} from '@angular/forms';
 import {MatListModule} from '@angular/material/list';
 
 import { SocketIO } from "./modules/socket.io"
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: '',
@@ -11,7 +12,10 @@ import { SocketIO } from "./modules/socket.io"
   styleUrls: ['./PnID.component.css'],
 })
 export class PnID {
-  constructor(private socketIO: SocketIO) {}
+  messages: Subject<any>;
+  constructor(private socketIO: SocketIO) {
+     this.messages = <Subject<any>>this.socketIO.connect();
+  }
   myControl = new FormControl();
   test() {
     
