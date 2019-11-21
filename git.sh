@@ -1,5 +1,3 @@
 rm report*.json
 git pull origin master
-git add .
-git commit -m "message"
-git push
+git add . ; git commit -m "message"; git push;
