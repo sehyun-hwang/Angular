@@ -7,4 +7,11 @@ import {Component } from '@angular/core';
 })
 export class Community {
   Scopes = [...Array(10).keys()];
+  Devices = [{
+    EN: "humidifier",
+    KR: "가습기" 
+  }, {
+    EN: "light",
+    KR: "무드등" 
+  }];
 }

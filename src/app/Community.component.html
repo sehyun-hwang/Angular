@@ -5,9 +5,9 @@
 	<mat-grid-tile>
 		<mat-form-field style="width:5em">
 			<select matNativeControl>
-      <option value="User">유저 모드</option>
-      <option value="Admin">관리 모드</option>
-    </select>
+    <option value="User">유저 모드</option>
+    <option value="Admin">관리 모드</option>
+  </select>
 		</mat-form-field>
 	</mat-grid-tile>
 	<mat-grid-tile>
@@ -30,9 +30,10 @@
 </div>
 
 <mat-grid-list cols="2">
+	a
 	<mat-grid-tile *ngFor="let Device of Devices;">
 		<img src="https://img.icons8.com/{{Device.EN}}.svg" style="width:50%; height:50%;"/>
-    <br/>
+		<br/>
 		<mat-slide-toggle (click)="Device($event)" [(ngModel)]="checked">
 		</mat-slide-toggle>
 	</mat-grid-tile>

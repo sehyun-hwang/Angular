@@ -4,11 +4,4 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   template: "<router-outlet></router-outlet>",
 })
-export class AppComponent {
-  Scopes=[...Array(10).keys()]
-  Devices = [{
-    EN: "humidifier",
-    KR: "가습기" 
-  }]
-
-}
+export class AppComponent {}
