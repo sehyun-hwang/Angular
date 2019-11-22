@@ -15,5 +15,3 @@ do
         git push
     fi
 done
-
-
