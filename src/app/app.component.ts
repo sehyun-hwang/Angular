@@ -5,5 +5,7 @@ import { Component } from '@angular/core';
   template: "<router-outlet></router-outlet>",
 })
 export class AppComponent {
-  Scopes=Array(10).map((x,i)=>i)
+  Scopes=[...Array(10).keys()]
+
+
 }
