@@ -29,7 +29,11 @@
 	</mat-tab-group>
 </div>
 
-<div style="height:calc((100vh - 100px)/2)">
-	<mat-slide-toggle (click)="Device($event)" [(ngModel)]="checked">
-	</mat-slide-toggle>
-</div>
+<mat-grid-list cols="2">
+	<mat-grid-tile *ngFor="let Device of Devices;">
+		<img src="https://img.icons8.com/{{Device.EN}}.svg" style="width:50%; height:50%;"/>
+    <br/>
+		<mat-slide-toggle (click)="Device($event)" [(ngModel)]="checked">
+		</mat-slide-toggle>
+	</mat-grid-tile>
+</mat-grid-list>

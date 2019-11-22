@@ -6,6 +6,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   Scopes=[...Array(10).keys()]
-
+  Devices = [{
+    EN: "humidifier",
+    KR: "가습기" 
+  }]
 
 }
