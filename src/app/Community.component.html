@@ -23,18 +23,19 @@
 <div style="height:calc((100vh - 100px)/2)">
 	<mat-tab-group mat-align-tabs="center" style="top:100px">
 		<mat-tab label="일">
+			<img src="https://apigateway.hwangsehyun.ga/community/foo">
 		</mat-tab>
-		<mat-tab label="월">
+			<mat-tab label="월">
+				<img src="https://apigateway.hwangsehyun.ga/community/foo">
 		</mat-tab>
 	</mat-tab-group>
 </div>
 
 <mat-grid-list cols="2">
-	a
-	<mat-grid-tile *ngFor="let Device of Devices;">
+	<mat-grid-tile id="Device" *ngFor="let Device of Devices;">
 		<img src="https://img.icons8.com/{{Device.EN}}.svg" style="width:50%; height:50%;"/>
-		<br/>
 		<mat-slide-toggle (click)="Device($event)" [(ngModel)]="checked">
 		</mat-slide-toggle>
+		<span [innerText]="Device.KR"></span>
 	</mat-grid-tile>
 </mat-grid-list>
