@@ -1,16 +1,19 @@
-<mat-grid-list cols="1" rowHeight="100px">
-	<mat-grid-tile>
+<mat-grid-list cols="6" rowHeight="100px">
+	<mat-grid-tile colspan="4">
 		<h1>우리집 전력 사용량</h1>
-		<mat-form-field>
+    	</mat-grid-tile>
+        	<mat-grid-tile>
+		<mat-form-field style="width:5em">
 			<select matNativeControl>
       <option value="User">유저 모드</option>
       <option value="Admin">관리 모드</option>
     </select>
 		</mat-form-field>
-
-		<mat-form-field>
+	</mat-grid-tile>
+  	<mat-grid-tile>
+		<mat-form-field style="width:5em">
 			<select matNativeControl>
-      <option value="User">유저 모드</option>
+      <option *ngFor="let Scope of Scopes;" [innerText]=Scope></option>
     </select>
 		</mat-form-field>
 	</mat-grid-tile>
@@ -18,29 +21,8 @@
 
 
 <mat-tab-group mat-align-tabs="center" style="top:100px">
-	<mat-tab label="Instructions">
-
+	<mat-tab label="일">
 	</mat-tab>
-	<mat-tab label="Prizes">
-		<h1>List of Prizes:</h1>
-		<div id="GoogleHome">
-			<img src="https://www.bigw.com.au/medias/sys_master/images/images/h1d/h51/11444208140318.jpg">
-      </div>
-
-			<ul>
-				<li><b>1st Prize:</b>1 X Google Home Mini</li>
-				<li><b>2nd Prize:</b>1 X Bluetooth Keyboard</li>
-				<li><b>3rd Prize:</b>2 X Tea Set</li>
-				<li><b>4th Prize:</b>2 X Hand-held Fan</li>
-				<li><b>5th Prize:</b>2 X Moisture Cream</li>
-				<li><b>6th Prize:</b>8 X Milk Thistle</li>
-				<li class="Null">Null Reference Error:🤪 </li>
-			</ul>
-	</mat-tab>
-	<mat-tab label="Play">
-		<span># of Updates: {{Updates}}</span>
-		<button id="Start" (click)="counter.begin()" mat-raised-button color="primary">Start the Game</button>
-		<countdown #countdown [config]="{leftTime: 120, demand: true}" (event)="Countdown.Event($event)">$!m!:$!s-ext!s
-		</countdown>
+	<mat-tab label="월">
 	</mat-tab>
 </mat-tab-group>
