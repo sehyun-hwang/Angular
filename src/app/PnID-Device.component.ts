@@ -6,6 +6,8 @@ import { Papa } from 'ngx-papaparse';
 import { ChartsModule } from 'ng2-charts';
 import 'chartjs-plugin-streaming';
 
+import {Parser} from "./PnID-PlantAsset.component";
+
 @Component({
   selector: 'pnid-device',
   templateUrl: './PnID-Device.component.html',
@@ -109,7 +111,7 @@ export class PnID_Dialog {
 
   emailFormControl = new FormControl('',
     Validators.required,
-    data=>new Promise(resolve=>fetch("https://plantasset.kr/MPIS_WCF/webservice.asmx/LOGIN", {
+    async data=>fetch("https://plantasset.kr/MPIS_WCF/webservice.asmx/LOGIN", {
       method: "POST",
       body: (function(){
         const Param = new URLSearchParams();
@@ -120,13 +122,9 @@ export class PnID_Dialog {
           }[x] || null));
         return Param;
       })()
-    }).then(res=>res.text())
-    .then(text=>new DOMParser().parseFromString(text, "text/xml").firstElementChild.innerHTML)
-    .then(JSON.parse)
-    .then(({Table})=>{
-      resolve(Table[0].STATUS !== "false"? null: {error: "Wrong Password"})
-    })
-  ));
+    }).then(Parser).catch(console.log)
+    .then(data=>data.STATUS !== "false"? null: {error: "Wrong Password"})
+  );
 
   matcher = new MyErrorStateMatcher();
 }
