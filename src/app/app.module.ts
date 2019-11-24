@@ -16,10 +16,14 @@ import { AppComponent }from "./app.component";
 import { routes } from "./Routes"
 import { SocketIO } from "./modules/socket.io"
 
+import { PnID } from './PnID.component';
 import { PnID_Device, PnID_Dialog } from './PnID-Device.component';
 
+
 @NgModule({
-  declarations: [...routes.map(x=>x.component),
+  declarations: [...routes
+  .filter(x=>x.component)
+  .map(x=>x.component),
 AppComponent,  PnID_Device, PnID_Dialog
   ],
   imports: [
@@ -35,7 +39,8 @@ AppComponent,  PnID_Device, PnID_Dialog
     WebcamModule,
     ChartsModule,
 
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(location.hostname.includes("pnid")?
+    [{path:"**", component: PnID}]:routes),
   ],
   providers: [SocketIO],
   bootstrap: [AppComponent],
