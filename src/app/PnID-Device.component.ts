@@ -122,8 +122,11 @@ export class PnID_Dialog {
           }[x] || null));
         return Param;
       })()
-    }).then(Parser).catch(console.log)
-    .then(data=>data.STATUS !== "false"? null: {error: "Wrong Password"})
+    }).then(Parser).then(console.log)
+    .then(data=>{
+      console.log(data)
+      data.STATUS !== "false"? null: {error: "Wrong Password"}
+      })
   );
 
   matcher = new MyErrorStateMatcher();
