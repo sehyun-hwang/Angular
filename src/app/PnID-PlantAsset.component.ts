@@ -1,10 +1,8 @@
-export function Parser(promise: Promise<Response>) {
-  return promise
-    .then(res => res.text())
+export async function Parser(promise: Promise<Response>) {
+  var data = await promise.text()
     .then(
-      text =>
-        new DOMParser().parseFromString(text, "text/xml").firstElementChild.innerHTML
-    )
+      text => new DOMParser().parseFromString(text, "text/xml").firstElementChild.innerHTML)
     .then(JSON.parse)
-    .then(({ Table }) => Table[0]);
+  data = data.Table[0];
+  return data;
 }
