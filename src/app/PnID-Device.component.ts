@@ -30,7 +30,7 @@ export class PnID_Device {
       .open(PnID_Dialog)
       .afterClosed()
       .subscribe(result => {
-        console.log(123,result)
+
         //@ts-ignore
         if (result) this.checked ^= true;
       });
