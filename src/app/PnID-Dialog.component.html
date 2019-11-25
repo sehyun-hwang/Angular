@@ -4,7 +4,7 @@
   <form class="example-form">
     <mat-form-field class="example-full-width">
       <input matInput cdkFocusInitial placeholder="Email" [formControl]="emailFormControl"
-            [errorStateMatcher]="matcher">
+            [errorStateMatcher]="matcher" [(ngModel)]="password">
       <mat-hint>Errors appear instantly!</mat-hint>
       <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
         Please enter a valid email address
@@ -17,4 +17,4 @@
 </mat-dialog-actions>
 
 <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button mat-dialog-close [disabled]="!emailFormControl.valid">Lock or Unlock</button>
+  <button mat-button [mat-dialog-close]="password" [disabled]="!emailFormControl.valid">Lock or Unlock</button>
