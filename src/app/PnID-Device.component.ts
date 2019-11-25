@@ -10,7 +10,7 @@ import { Papa } from "ngx-papaparse";
 import { ChartsModule } from "ng2-charts";
 import "chartjs-plugin-streaming";
 
-import { Parser } from "./PnID-PlantAsset.component";
+import { Parser } from "./PnID-PlantAsset";
 
 @Component({
   selector: "pnid-device",
