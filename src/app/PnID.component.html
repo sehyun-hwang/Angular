@@ -1,4 +1,4 @@
-<div class="mat-app-background basic-container">
+<div class="mat-app-background basic-container" style="overflow-y:auto">
 
 <button mat-button (click)="test();">test</button>
 
@@ -19,8 +19,8 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-<form class="example-form">
-  <mat-form-field class="example-full-width">
+<form>
+  <mat-form-field>
     <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let Account of 'Account '.repeat(20).split(' '), let i = index" [value]="option">
