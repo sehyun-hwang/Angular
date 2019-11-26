@@ -7,12 +7,21 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./Community.component.css'],
 })
 export class Community {
-  Scopes = [...Array(7)].map((x,i)=>i+101);
+  Form_Initial = {
+    dong: [...Array(7)].map((x,i)=>i+101),
+    floor: (()=>{
+      const arr = [...Array(10)];
+      arr.pop();
+      return arr;
+    })()
+  };
 
   Form = {
     Mode:"User",
     dong: 101,
+    floor: 1,
   };
+
 
   Devices = [{
     EN: "humidifier",

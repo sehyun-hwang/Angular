@@ -15,8 +15,8 @@
 	<mat-grid-tile>
 		<mat-form-field style="width:5em">
 			<mat-select matNativeControl [(ngModel)]="Form.dong"> 
-				<mat-option *ngFor="let Scope of Scopes;" [value]="Scope">
-          {{Scope}}동
+				<mat-option *ngFor="let dong of Form_Initial.dong;" [value]="dong">
+          {{dong}}동
 				</mat-option>
 			</mat-select>
 		</mat-form-field>
@@ -26,10 +26,18 @@
 <div style="height:calc((100vh - 100px)/2)">
 	<mat-tab-group mat-align-tabs="center" style="top:100px">
 		<mat-tab label="일">
+      <mat-form-field style="width:5em">
+			  <mat-select matNativeControl [(ngModel)]="Form.floor"> 
+				  <mat-option *ngFor="let floor of Form_Initial.floor;" [value]="Form.floor">
+          {{Form.floor}}층
+				  </mat-option>
+			</mat-select>
+		</mat-form-field>
+
 			<img src="https://apigateway.hwangsehyun.ga/community/foo">
 		</mat-tab>
-			<mat-tab label="월">
-				<img src="https://apigateway.hwangsehyun.ga/community/foo">
+		<mat-tab label="월">
+			<img src="https://apigateway.hwangsehyun.ga/community/foo">
 		</mat-tab>
 	</mat-tab-group>
 </div>
