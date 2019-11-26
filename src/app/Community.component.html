@@ -24,7 +24,8 @@
 </mat-grid-list>
 
 <div style="height:calc((100vh - 100px)/2)">
-	<mat-tab-group mat-align-tabs="center" style="top:100px">
+	<mat-tab-group mat-align-tabs="center" style="top:100px" [selectedIndex]="Form.Unit"
+               (selectedIndexChange)="Submit()">
 		<mat-tab label="일">
       <mat-form-field style="width:5em">
 			  <mat-select matNativeControl [(ngModel)]="Form.floor"> 

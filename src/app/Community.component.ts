@@ -18,6 +18,7 @@ export class Community {
 
   Form = {
     Mode: "User",
+    Unit: "",
     dong: 101,
     floor: 1
   };
