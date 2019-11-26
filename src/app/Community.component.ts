@@ -1,24 +1,28 @@
-import { Component } from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
+import { Component, OnInit } from "@angular/core";
+import { FormControl } from "@angular/forms";
 
 @Component({
   selector: "",
   templateUrl: "./Community.component.html",
   styleUrls: ["./Community.component.css"]
 })
-export class Community {
+export class Community implements OnInit {
   Form_Initial = {
-    dong: [...Array(7)].map((x, i) => i + 101),
-    floor: (() => {
-      const arr = [...Array(10)];
-      arr.pop();
-      return arr;
-    })()
+    dong: Array.from({length: 7}, (x, i) => i+101),
+    floor: Array.from({length: 10}, (x, i) => i+1)
   };
+
+  Tab = new FormControl(0);
+  ngOnInit() {
+    this.Tab.valueChanges.subscribe(value => {
+      this.Form.Unit = this.Tab.value;
+      this.Submit();
+    });
+  }
 
   Form = {
     Mode: "User",
-    Unit: "",
+    Unit: 0,
     dong: 101,
     floor: 1
   };
