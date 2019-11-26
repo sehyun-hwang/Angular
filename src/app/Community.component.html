@@ -2,18 +2,21 @@
 	<mat-grid-tile colspan="4">
 		<h1>우리집 전력 사용량</h1>
 	</mat-grid-tile>
+
 	<mat-grid-tile>
-		<mat-form-field style="width:5em">
-			<select matNativeControl>
-    <option value="User">유저 모드</option>
-    <option value="Admin">관리 모드</option>
-  </select>
+    <mat-form-field style="width:5em" >
+      <mat-select matNativeControl [(ngModel)]="Form.Mode">
+        <mat-option value="User">유저 모드</mat-option>
+        <mat-option value="Admin">관리 모드</mat-option>
+      </mat-select>
 		</mat-form-field>
 	</mat-grid-tile>
+
 	<mat-grid-tile>
 		<mat-form-field style="width:5em">
-			<mat-select>
-				<mat-option *ngFor="let Scope of Scopes;" [innerText]="Scope" [value]="Scope">
+			<mat-select matNativeControl [(ngModel)]="Form.dong"> 
+				<mat-option *ngFor="let Scope of Scopes;" [value]="Scope">
+          {{Scope}}동
 				</mat-option>
 			</mat-select>
 		</mat-form-field>
