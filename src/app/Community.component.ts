@@ -15,14 +15,14 @@ export class Community implements OnInit {
   Tab = new FormControl(0);
   ngOnInit() {
     this.Tab.valueChanges.subscribe(value => {
-      this.Form.Unit = this.Tab.value;
+      this.Form.Unit = ["d", "m"][this.Tab.value];
       this.Submit();
     });
   }
 
   Form = {
     Mode: "User",
-    Unit: 0,
+    Unit: "d",
     dong: 101,
     floor: 1
   };

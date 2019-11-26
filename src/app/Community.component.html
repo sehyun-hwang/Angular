@@ -5,7 +5,7 @@
 
 	<mat-grid-tile>
     <mat-form-field style="width:5em" >
-      <mat-select matNativeControl [(ngModel)]="Form.Mode">
+      <mat-select matNativeControl [(ngModel)]="Form.Mode" (ngModelChange)="Submit()" >
         <mat-option value="User">유저 모드</mat-option>
         <mat-option value="Admin">관리 모드</mat-option>
       </mat-select>
@@ -14,8 +14,8 @@
 
 	<mat-grid-tile>
 		<mat-form-field style="width:5em">
-			<mat-select matNativeControl [(ngModel)]="Form.dong"> 
-				<mat-option *ngFor="let dong of Form_Initial.dong; let index = index;" [value]="index">
+			<mat-select matNativeControl [(ngModel)]="Form.dong" (ngModelChange)="Submit()"> 
+				<mat-option *ngFor="let dong of Form_Initial.dong;" [value]="dong">
           {{dong}}동
 				</mat-option>
 			</mat-select>
@@ -28,9 +28,9 @@
                (selectedIndexChange)="Tab.setValue($event)">
 		<mat-tab label="일">
       <mat-form-field style="width:5em">
-			  <mat-select matNativeControl [(ngModel)]="Form.floor"> 
-				  <mat-option *ngFor="let floor of Form_Initial.floor;" [value]="Form.floor">
-          {{Form.floor}}층
+			  <mat-select matNativeControl [(ngModel)]="Form.floor" (ngModelChange)="Submit()"> 
+				  <mat-option *ngFor="let floor of Form_Initial.floor;" [value]="floor">
+          {{floor}}층
 				  </mat-option>
 			</mat-select>
 		</mat-form-field>
