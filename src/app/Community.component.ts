@@ -26,7 +26,7 @@ export class Community implements OnInit {
     dong: 101,
     floor: 1
   };
-
+  Stringify = JSON.stringify;
   Submit() {
     console.log(this.Form);
   }
