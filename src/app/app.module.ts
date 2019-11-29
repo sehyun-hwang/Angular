@@ -39,7 +39,7 @@ AppComponent,  PnID_Device, PnID_Dialog
     WebcamModule,
     ChartsModule,
 
-    RouterModule.forRoot(location.hostname.includes("pnid") || window["cordova"]?
+    RouterModule.forRoot((location.hostname.includes("pnid") || window["cordova"])?
     [{path:"**", component: PnID}]:routes),
   ],
   providers: [SocketIO],
