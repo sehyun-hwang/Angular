@@ -1,36 +1,36 @@
 <div class="mat-app-background basic-container" style="overflow-y:auto">
 
-<button mat-button (click)="test();">test</button>
+  <button mat-button (click)="test();">test</button>
 
-<table mat-table [dataSource]="table" class="mat-elevation-z8">
+  <table mat-table [dataSource]="table" class="mat-elevation-z8">
 
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef> No. </th>
-    <td mat-cell *matCellDef="let element" [innerText]="element.id" ></td>
-  </ng-container>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let element" [innerText]="element.id"></td>
+    </ng-container>
 
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let element" [innerText]="element.name"></td>
-  </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element" [innerText]="element.name"></td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 
-<form>
-  <mat-form-field>
-    <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let Account of 'Account '.repeat(20).split(' '), let i = index" [value]="option">
-        {{Account+" "+i}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-</form>
+  <form>
+    <mat-form-field>
+      <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let Account of 'Account '.repeat(20).split(' '), let i = index" [value]="option">
+          {{Account+" "+i}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
 
-<mat-accordion *ngFor="let dummy of ' '.repeat(1).split(''), let i = index">
-  <pnid-device [i]=[i]></pnid-device>
-</mat-accordion>
+  <mat-accordion *ngFor="let dummy of ' '.repeat(1).split(''), let i = index">
+    <pnid-device [i]=[i]></pnid-device>
+  </mat-accordion>
 
 </div>

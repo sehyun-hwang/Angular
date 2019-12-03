@@ -58,4 +58,5 @@
     "tslint": "~5.11.0",
     "typescript": "~3.5.3"
   }
-}
+,
+"browserslist": [ "> 5%" ]}
