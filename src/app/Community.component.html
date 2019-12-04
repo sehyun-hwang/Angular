@@ -27,19 +27,9 @@
 	<mat-tab-group mat-align-tabs="center" style="top:100px" [selectedIndex]="Tab.value"
 		(selectedIndexChange)="Tab.setValue($event)">
 		<mat-tab label="일">
-			<mat-form-field style="width:5em">
-				<mat-select matNativeControl [(ngModel)]="Form.floor" (ngModelChange)="Submit()">
-					<mat-option *ngFor="let floor of Form_Initial.floor;" [value]="floor">
-						{{floor}}층
-					</mat-option>
-				</mat-select>
-			</mat-form-field>
-			<h1>Request JSON</h1>
-			<span [innerText]="Stringify(Form)"></span>
-
-			<mat-grid-list cols="2" rowHeight="25vh">
+			<mat-grid-list cols="2" rowHeight="50vh" gutterSize="-100px%">
 				<mat-grid-tile>
-					<img src="https://img.icons8.com/pastel-glyph/64/000000/electricity.png" style="width:100%"/>
+					<img src="https://img.icons8.com/pastel-glyph/64/000000/electricity.png" style="width:75%"/>
   </mat-grid-tile>
 					<mat-grid-tile>
 						<div style="line-height:0.5">
@@ -49,8 +39,18 @@
 						</div>
 					</mat-grid-tile>
 			</mat-grid-list>
-      <h3 style="text-align:">오늘은 우리 아파트에서 평균 180W를 사용했어요!</h3>
+      <h3 style="text-align:center; background:orange;">오늘은 우리 아파트에서 평균 180W를 사용했어요!</h3>
 			<br/>
+      <mat-form-field style="width:5em">
+				<mat-select matNativeControl [(ngModel)]="Form.floor" (ngModelChange)="Submit()">
+					<mat-option *ngFor="let floor of Form_Initial.floor;" [value]="floor">
+						{{floor}}층
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+
+			<span [innerText]="Stringify(Form)"></span>
+
 			<img [src]="Santize(src)" />
 			<!--img src="https://apigateway.hwangsehyun.ga/community/foo" style="width:50%"-->
 		</mat-tab>
