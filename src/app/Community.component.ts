@@ -25,8 +25,8 @@ export class Community implements OnInit {
     );
 
     fetch(url.toString())
+      .then(data=>data.json())
       .then(console.log)
-      .catch(console.log);
   }
 
   Form_Initial = {
