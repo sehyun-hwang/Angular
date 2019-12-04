@@ -31,7 +31,7 @@
 	</mat-tab-group>
 	<mat-grid-list cols="2" rowHeight="30vh" gutterSize="-100px">
 		<mat-grid-tile>
-			<img src="https://www.hwangsehyun.ga/Community/Lightning.png" style="width:75%"/>
+			<img src="https://www.hwangsehyun.ga/Community/Lightning.png" style="width:30%"/>
   </mat-grid-tile>
 			<mat-grid-tile>
 				<div style="line-height:0.5">
@@ -61,7 +61,7 @@
 <mat-grid-list cols="2">
 	<mat-grid-tile id="Device" *ngFor="let Device of Devices;">
 		<img src="https://img.icons8.com/{{Device.EN}}.svg" style="width:50%" />
-		<mat-slide-toggle (click)="Device($event)" [(ngModel)]="checked">
+		<mat-slide-toggle (click)="Device($event)">
 		</mat-slide-toggle>
 		<span [innerText]="Device.KR"></span>
 	</mat-grid-tile>
