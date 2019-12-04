@@ -14,7 +14,7 @@ export class Community implements OnInit {
   }
 
   test() {
-    var url = new URL("https://apigateway.hwangsehyun.ga/Community/aaa");
+    const url = new URL("https://apigateway.hwangsehyun.ga/community/aaa");
     const searchParams = {
       dong: "102",
       floor: "3-8",
@@ -24,7 +24,9 @@ export class Community implements OnInit {
       url.searchParams.append(key, searchParams[key])
     );
 
-    fetch(url).then(console.log);
+    fetch(url.toString())
+      .then(console.log)
+      .catch(console.log);
   }
 
   Form_Initial = {
