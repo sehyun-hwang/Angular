@@ -14,17 +14,17 @@ export class Community implements OnInit {
   }
 
   test() {
-    fetch("https://apigateway.hwangsehyun.ga/ommunity/aaa", {
-      method: "POST",
-      body: JSON.stringify({
-        dong: "102",
-        floor: "3-8",
-        month: "5-8"
-      }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(console.log);
+    var url = new URL("https://apigateway.hwangsehyun.ga/Community/aaa");
+    const searchParams = {
+      dong: "102",
+      floor: "3-8",
+      month: "5-8"
+    };
+    Object.keys(searchParams).forEach(key =>
+      url.searchParams.append(key, searchParams[key])
+    );
+
+    fetch(url).then(console.log);
   }
 
   Form_Initial = {
