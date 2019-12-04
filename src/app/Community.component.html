@@ -26,8 +26,9 @@
 <div style="height:calc((100vh - 100px))">
 	<mat-tab-group mat-align-tabs="center" style="top:100px" [selectedIndex]="Tab.value"
 		(selectedIndexChange)="Tab.setValue($event)">
-		<mat-tab label="일">
-			<mat-grid-list cols="2" rowHeight="50vh" gutterSize="-100px%">
+		<mat-tab label="일"></mat-tab>
+		<mat-tab label="월">
+      <mat-grid-list cols="2" rowHeight="50vh" gutterSize="-100px%">
 				<mat-grid-tile>
 					<img src="https://img.icons8.com/pastel-glyph/64/000000/electricity.png" style="width:75%"/>
   </mat-grid-tile>
@@ -53,8 +54,7 @@
 
 			<img [src]="Santize(src)" />
 			<!--img src="https://apigateway.hwangsehyun.ga/community/foo" style="width:50%"-->
-		</mat-tab>
-		<mat-tab label="월">
+
 		</mat-tab>
 	</mat-tab-group>
 </div>
