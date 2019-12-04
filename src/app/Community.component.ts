@@ -13,6 +13,20 @@ export class Community implements OnInit {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
+  test() {
+    fetch("https://apigateway.hwangsehyun.ga/ommunity/aaa", {
+      method: "POST",
+      body: JSON.stringify({
+        dong: "102",
+        floor: "3-8",
+        month: "5-8"
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(console.log);
+  }
+
   Form_Initial = {
     dong: Array.from({ length: 7 }, (x, i) => i + 101),
     floor: Array.from({ length: 10 }, (x, i) => i + 1)
