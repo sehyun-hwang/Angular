@@ -43,7 +43,7 @@ export class Community implements OnInit {
       this.Submit();
     });
 
-    const Fetch = fetch("https://www.hwangsehyun.ga/Community/index.svg");
+    const Fetch = fetch("https://www.hwangsehyun.ga/Community/figure.svg");
 
     Fetch.then(data => data.clone().blob()).then(
       blob => (this.src = URL.createObjectURL(blob))

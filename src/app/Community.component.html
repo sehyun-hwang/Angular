@@ -21,24 +21,33 @@
 
 <div class="w-50" style="padding: 0 5%; text-align:center;">
 	<mat-form-field>
-		<mat-select matNativeControl [(ngModel)]="Form.floor" (ngModelChange)="Submit()">
-			<mat-option *ngFor="let floor of Form_Initial.floor;" [value]="floor">
-				{{floor}}층
-			</mat-option>
-		</mat-select>
-	</mat-form-field>
-
-	<mat-form-field>
 		<mat-select matNativeControl [(ngModel)]="Form.dong" (ngModelChange)="Submit()">
 			<mat-option *ngFor="let dong of Form_Initial.dong;" [value]="dong">
 				{{dong}}동
 			</mat-option>
 		</mat-select>
 	</mat-form-field>
+
+	<mat-form-field>
+		<mat-select matNativeControl [(ngModel)]="Form.floor" (ngModelChange)="Submit()">
+			<mat-option *ngFor="let floor of Form_Initial.floor;" [value]="floor">
+				{{floor}}층
+			</mat-option>
+		</mat-select>
+	</mat-form-field>
+  
+  <br/>
+
+  <span>시작 월</span>
+	<span></span>
+	<mat-slider min="1" max="12" step="1" value="1"></mat-slider>
+	<span>종료 월</span>
+	<mat-slider min="1" max="12" step="1" value="12"></mat-slider>
 </div>
+
 <button mat-button (click)="test();">test</button>
 
-<mat-grid-list cols="2" rowHeight="30vh" gutterSize="-100px">
+<mat-grid-list cols="2" rowHeight="40vh" gutterSize="-100px">
 	<mat-grid-tile>
 		<img src="https://www.hwangsehyun.ga/Community/Lightning.png" style="width:30%"/>
   </mat-grid-tile>
