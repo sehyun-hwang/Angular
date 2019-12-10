@@ -27,7 +27,7 @@ export class Community implements OnInit {
 
     //fetch(url.toString())
 
-    const Fetch = fetch("https://www.hwangsehyun.ga/Community/figure.svg");
+    const Fetch = fetch("https://apigateway.hwangsehyun.ga/community/aaa?dong=102&floor=3-8&month=5-8").catch(console.log);
 
     Fetch.then(data => data.clone().blob()).then(
       blob => (this.src = URL.createObjectURL(blob))
@@ -35,11 +35,12 @@ export class Community implements OnInit {
 
     Fetch.then(data => data.text())
       .then(
-        text =>
-          new DOMParser()
+        text =>{
+          console.log(text);
+          return new DOMParser()
             .parseFromString(text, "text/xml")
             .querySelector("json").innerHTML
-      )
+            })
       .then(JSON.parse)
       .then(text => {
         console.log(text);
