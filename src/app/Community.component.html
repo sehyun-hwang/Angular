@@ -1,25 +1,13 @@
-<mat-grid-list cols="6" rowHeight="100px">
-	<mat-grid-tile colspan="4">
+<mat-grid-list cols="4" rowHeight="100px">
+	<mat-grid-tile colspan="3">
 		<h1>우리집 전력 사용량</h1>
-      <button mat-button (click)="test();">test</button>
-
 	</mat-grid-tile>
 
 	<mat-grid-tile>
-		<mat-form-field style="width:5em">
+		<mat-form-field style="width:10em">
 			<mat-select matNativeControl [(ngModel)]="Form.Mode" (ngModelChange)="Submit()">
 				<mat-option value="User">유저 모드</mat-option>
 				<mat-option value="Admin">관리 모드</mat-option>
-			</mat-select>
-		</mat-form-field>
-	</mat-grid-tile>
-
-	<mat-grid-tile>
-		<mat-form-field style="width:5em">
-			<mat-select matNativeControl [(ngModel)]="Form.dong" (ngModelChange)="Submit()">
-				<mat-option *ngFor="let dong of Form_Initial.dong;" [value]="dong">
-					{{dong}}동
-				</mat-option>
 			</mat-select>
 		</mat-form-field>
 	</mat-grid-tile>
@@ -31,27 +19,41 @@
 		<mat-tab label="일" [disabled]="true"></mat-tab>
 		<mat-tab label="월"></mat-tab>
 	</mat-tab-group>
+
+	<div class="w-50">
+		<mat-form-field>
+			<mat-select matNativeControl [(ngModel)]="Form.floor" (ngModelChange)="Submit()">
+				<mat-option *ngFor="let floor of Form_Initial.floor;" [value]="floor">
+					{{floor}}층
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field>
+			<mat-select matNativeControl [(ngModel)]="Form.dong" (ngModelChange)="Submit()">
+				<mat-option *ngFor="let dong of Form_Initial.dong;" [value]="dong">
+					{{dong}}동
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</div>
+
+	<button mat-button (click)="test();">test</button>
+
 	<mat-grid-list cols="2" rowHeight="30vh" gutterSize="-100px">
 		<mat-grid-tile>
 			<img src="https://www.hwangsehyun.ga/Community/Lightning.png" style="width:30%"/>
   </mat-grid-tile>
 			<mat-grid-tile>
 				<div style="line-height:0.5">
-					<h3>오늘의 사용량</h3>
+					<h3>이번달의 사용량</h3>
 					<h1 style="font-size:4em">235W</h1>
 					<h3>예상 요금</h3>
 				</div>
 			</mat-grid-tile>
 	</mat-grid-list>
-	<h3 style="text-align:center; background:orange;">오늘은 우리 아파트에서 평균 180W를 사용했어요!</h3>
+	<h3 style="text-align:center; background:orange;">이번 달에 우리 아파트에서 평균 180W를 사용했어요!</h3>
 	<br/>
-	<!--mat-form-field style="width:5em">
-		<mat-select matNativeControl [(ngModel)]="Form.floor" (ngModelChange)="Submit()">
-			<mat-option *ngFor="let floor of Form_Initial.floor;" [value]="floor">
-				{{floor}}층
-			</mat-option>
-		</mat-select>
-	</mat-form-field>
 
 	<span [innerText]="Stringify(Form)"></span>
 

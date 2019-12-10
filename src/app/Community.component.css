@@ -1,0 +1,7 @@
+.Width {
+  padding: 5px;
+}
+
+.Width > * {
+  width:40%;
+}

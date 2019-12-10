@@ -34,7 +34,7 @@ export class Community implements OnInit {
     floor: Array.from({ length: 10 }, (x, i) => i + 1)
   };
 
-  Tab = new FormControl(0);
+  Tab = new FormControl(1);
   src: string;
   data: object;
   ngOnInit() {
