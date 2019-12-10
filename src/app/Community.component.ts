@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChildren } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { DomSanitizer } from "@angular/platform-browser";
 
@@ -8,6 +8,7 @@ import { DomSanitizer } from "@angular/platform-browser";
   styleUrls: ["./Community.component.css"]
 })
 export class Community implements OnInit {
+  @ViewChildren("MO") Months_Input;
   constructor(private sanitizer: DomSanitizer) {}
   public Santize(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
@@ -25,8 +26,8 @@ export class Community implements OnInit {
     );
 
     fetch(url.toString())
-      .then(data=>data.json())
-      .then(console.log)
+      .then(data => data.json())
+      .then(console.log);
   }
 
   Form_Initial = {
@@ -35,9 +36,12 @@ export class Community implements OnInit {
   };
 
   Tab = new FormControl(1);
-Months() {
-console.log(event)
-}
+  Months() {
+    console.log(this.Months_Input)
+    const array = []
+    document.querySelectorAll(".Month").forEach(x=>console.log(x))
+    console.log(array);
+  }
 
   src: string;
   data: object;
