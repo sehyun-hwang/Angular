@@ -8,7 +8,7 @@ import { DomSanitizer } from "@angular/platform-browser";
   styleUrls: ["./Community.component.css"]
 })
 export class Community implements OnInit {
-  @ViewChildren("MO") Months_Input;
+  @ViewChildren("month") Months_Input;
   constructor(private sanitizer: DomSanitizer) {}
   public Santize(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
@@ -37,10 +37,10 @@ export class Community implements OnInit {
 
   Tab = new FormControl(1);
   Months() {
-    console.log(this.Months_Input)
-    const array = []
-    document.querySelectorAll(".Month").forEach(x=>console.log(x))
-    console.log(array);
+    var string = "";
+    this.Months_Input.forEach(x=>string += (x.value + "-"));
+    this.Form.month = string.slice(0, -1);
+    this.Submit();
   }
 
   src: string;
@@ -74,7 +74,8 @@ export class Community implements OnInit {
     Mode: "User",
     Unit: "d",
     dong: 101,
-    floor: 1
+    floor: 1,
+    month: "1-12"
   };
   Stringify = JSON.stringify;
   Submit() {

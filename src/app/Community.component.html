@@ -35,12 +35,13 @@
 			</mat-option>
 		</mat-select>
 	</mat-form-field>
-  
-  <br/>
 
-<div *ngFor="let x of ['Start', 'End']">
-  <span>{{x}} 월: {{Month.value}}월</span>
-	<mat-slider #Month min="1" max="12" step="1" (change)="Months()"></mat-slider>
+	<br/>
+
+	<div *ngFor="let x of ['Start', 'End']">
+		<span>{{x}} 월: {{month.value}}월</span>
+		<mat-slider #month min="1" max="12" step="1" (change)="Months()"></mat-slider>
+	</div>
 </div>
 
 <button mat-button (click)="test();">test</button>
