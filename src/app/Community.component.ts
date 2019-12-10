@@ -25,9 +25,25 @@ export class Community implements OnInit {
       url.searchParams.append(key, searchParams[key])
     );
 
-    fetch(url.toString())
-      .then(data => data.json())
-      .then(console.log);
+    //fetch(url.toString())
+
+    const Fetch = fetch("https://www.hwangsehyun.ga/Community/figure.svg");
+
+    Fetch.then(data => data.clone().blob()).then(
+      blob => (this.src = URL.createObjectURL(blob))
+    );
+
+    Fetch.then(data => data.text())
+      .then(
+        text =>
+          new DOMParser()
+            .parseFromString(text, "text/xml")
+            .querySelector("json").innerHTML
+      )
+      .then(JSON.parse)
+      .then(text => {
+        console.log(text);
+      });
   }
 
   Form_Initial = {
@@ -50,24 +66,6 @@ export class Community implements OnInit {
       this.Form.Unit = ["d", "m"][this.Tab.value];
       this.Submit();
     });
-
-    const Fetch = fetch("https://www.hwangsehyun.ga/Community/figure.svg");
-
-    Fetch.then(data => data.clone().blob()).then(
-      blob => (this.src = URL.createObjectURL(blob))
-    );
-
-    Fetch.then(data => data.text())
-      .then(
-        text =>
-          new DOMParser()
-            .parseFromString(text, "text/xml")
-            .querySelector("json").innerHTML
-      )
-      .then(JSON.parse)
-      .then(text => {
-        console.log(text);
-      });
   }
 
   Form = {
