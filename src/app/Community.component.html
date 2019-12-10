@@ -28,7 +28,7 @@
 <div style="height:calc((50vh - 100px))">
 	<mat-tab-group mat-align-tabs="center" style="top:50px" [selectedIndex]="Tab.value"
 		(selectedIndexChange)="Tab.setValue($event)">
-		<mat-tab label="일"></mat-tab>
+		<mat-tab label="일" [disabled]="true"></mat-tab>
 		<mat-tab label="월"></mat-tab>
 	</mat-tab-group>
 	<mat-grid-list cols="2" rowHeight="30vh" gutterSize="-100px">
@@ -62,8 +62,8 @@
 
 <mat-grid-list cols="2">
 	<mat-grid-tile id="Device" *ngFor="let Device of Devices;">
-		<img src="https://img.icons8.com/{{Device.EN}}.svg" style="width:50%" />
-		<mat-slide-toggle (click)="Device($event)">
+		<img src="https://img.icons8.com/search/{{Device.EN}}.png" style="width:50%" />
+		<mat-slide-toggle>
 		</mat-slide-toggle>
 		<span [innerText]="Device.KR"></span>
 	</mat-grid-tile>
