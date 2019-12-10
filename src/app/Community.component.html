@@ -40,8 +40,8 @@
 
 <div *ngFor="let x of ['Start', 'End']">
   <span>{{x}} 월:</span>
-	<span [innerText]="ivalue"></span>
-	<mat-slider #input min="1" max="12" step="1" (change)="Months($event)"></mat-slider>
+	<span [innerText]="input.value"></span>
+	<mat-slider #input [id]="'Month-'+x" min="1" max="12" step="1" (change)="Months($event)"></mat-slider>
 </div>
 
 <button mat-button (click)="test();">test</button>

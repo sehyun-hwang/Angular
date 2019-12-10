@@ -35,7 +35,7 @@ export class Community implements OnInit {
   };
 
   Tab = new FormControl(1);
-Months(event) {
+Months() {
 console.log(event)
 }
 
