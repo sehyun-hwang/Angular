@@ -38,11 +38,10 @@
   
   <br/>
 
-  <span>시작 월</span>
-	<span></span>
-	<mat-slider min="1" max="12" step="1" value="1"></mat-slider>
-	<span>종료 월</span>
-	<mat-slider min="1" max="12" step="1" value="12"></mat-slider>
+<div *ngFor="let x of ['Start', 'End']">
+  <span>{{x}} 월:</span>
+	<span [innerText]="ivalue"></span>
+	<mat-slider #input min="1" max="12" step="1" (change)="Months($event)"></mat-slider>
 </div>
 
 <button mat-button (click)="test();">test</button>

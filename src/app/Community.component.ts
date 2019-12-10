@@ -35,6 +35,10 @@ export class Community implements OnInit {
   };
 
   Tab = new FormControl(1);
+Months(event) {
+console.log(event)
+}
+
   src: string;
   data: object;
   ngOnInit() {
