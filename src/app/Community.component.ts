@@ -17,22 +17,21 @@ export class Community implements OnInit {
 
   test() {
     const url = ((url: any) => {
-      url = new URL(url);
       const { Mode, dong, floor, month } = this.Form;
       const searchParams = {
         dong: dong,
         month: month
       };
+      if (Mode === "User") searchParams["floor"] = floor;
 
-      if (Mode==="User") searchParams["floor"] = floor; 
-
+      url = new URL(url);
       Object.keys(searchParams).forEach(key =>
         url.searchParams.append(key, searchParams[key])
       );
 
-      return url.toString()
-    }) ("https://apigateway.hwangsehyun.ga/community/aaa");
-console.log(url);
+      return url.toString();
+    })("https://apigateway.hwangsehyun.ga/community/aaa");
+    console.log(url);
 
     fetch(url)
       .then(res => {
@@ -52,6 +51,22 @@ console.log(url);
       .then(JSON.parse)
       .then(data => {
         console.log(data);
+        var { Average, Day } = data;
+        const Ratio = Average / Day * 30;
+        var Class: number;
+
+        if (Ratio > 0.7) Class = 1;
+        else if (Ratio > 0.9) Class = 2;
+        else if (Ratio > 1.1) Class = 3;
+        else if (Ratio > 1.3) Class = 4;
+        else Class = 5;
+        data.Class = Class;
+
+        this.Result = {
+          Average: int(Average),
+          Day: int(Day),
+          Class: Class
+        };
       })
       .catch(console.warn);
   }
@@ -71,6 +86,7 @@ console.log(url);
     this.Submit();
   }
 
+  Result = {};
   src: string;
   Stringify = JSON.stringify;
 
@@ -86,7 +102,7 @@ console.log(url);
     Mode: "User",
     Unit: "d",
     dong: 101,
-    floor: 1,
+    floor: 2,
     month: "1-12"
   };
 

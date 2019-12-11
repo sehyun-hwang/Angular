@@ -46,38 +46,38 @@
 
 <button mat-raised-button color="primary" (click)="test();" style="width:100%">조회</button>
 
-<mat-grid-list cols="3" rowHeight="30vh" gutterSize="-100px">
-	<mat-grid-tile>
-		<img src="https://www.hwangsehyun.ga/Community/Lightning.png" style="width:30%"/>
-  </mat-grid-tile>
+<div *ngIf="src">
+	<mat-grid-list cols="3" rowHeight="30vh" gutterSize="-100px">
 		<mat-grid-tile>
-			<div style="line-height:0.5">
-				<h3>이번 달의 사용량</h3>
-				<h1 style="font-size:4em">235W</h1>
-				<h3>예상 요금</h3>
-			</div>
+			<img src="https://www.hwangsehyun.ga/Community/Lightning.png" style="width:30%"/>
+    </mat-grid-tile>
+
+			<mat-grid-tile>
+				<div style="line-height:0.5">
+					<h3>이번 달의 사용량</h3>
+					<h1 style="font-size:4em">{{Result.Day}}KWh</h1>
+					<h3>예상 요금</h3>
+				</div>
+			</mat-grid-tile>
+
+			<mat-grid-tile>
+				<h3>에너지 등급</h3>
+				<mwl-gauge [min]="1" [max]="5" [value]="Result.Class" [animated]="true" [animationDuration]="1">
+				</mwl-gauge>
+			</mat-grid-tile>
+	</mat-grid-list>
+
+	<button mat-raised-button color="primary" style="width:100%">이번 달에 우리 아파트에서 평균 {{Result.Average}}KWh를 사용했어요!</button>
+
+	<img [src]="Santize(src)" />
+</div>
+
+	<mat-grid-list cols="2">
+		<mat-grid-tile id="Device" *ngFor="let Device of Devices;">
+			<img src="https://img.icons8.com/search/{{Device.EN}}.png" style="width:50%" />
+			<mat-slide-toggle></mat-slide-toggle>
+			<span [innerText]="Device.KR"></span>
 		</mat-grid-tile>
-    <mat-grid-tile>
-  <mwl-gauge
-      [min]="1"
-      [max]="5"
-      [value]="Class"
-      [animated]="true"
-      [animationDuration]="1">
-    </mwl-gauge>
-      </mat-grid-tile>
-</mat-grid-list>
+	</mat-grid-list>
 
-<button mat-raised-button color="primary" style="width:100%">이번 달에 우리 아파트에서 평균 180W를 사용했어요!</button>
-
-<img *ngIf="src" [src]="Santize(src)" />
-
-<mat-grid-list cols="2">
-	<mat-grid-tile id="Device" *ngFor="let Device of Devices;">
-		<img src="https://img.icons8.com/search/{{Device.EN}}.png" style="width:50%" />
-		<mat-slide-toggle></mat-slide-toggle>
-		<span [innerText]="Device.KR"></span>
-	</mat-grid-tile>
-</mat-grid-list>
-
-<p>Form: {{Stringify(Form)}}</p>
+	<p>Form: {{Stringify(Form)}}</p>
