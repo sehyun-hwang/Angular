@@ -52,7 +52,7 @@ export class Community implements OnInit {
       .then(data => {
         console.log(data);
         var { Average, Day } = data;
-        const Ratio = Average / Day * 30;
+        const Ratio = (Average / Day) * 30;
         var Class: number;
 
         if (Ratio > 0.7) Class = 1;
@@ -60,12 +60,29 @@ export class Community implements OnInit {
         else if (Ratio > 1.1) Class = 3;
         else if (Ratio > 1.3) Class = 4;
         else Class = 5;
-        data.Class = Class;
+
+   function Bill(x) {
+    var bill = 0;
+    const array = [910, 1600, 7300];
+
+    if (x <= 200) return x * array[0];
+    else bill += 200 * array[0];
+
+    console.log(bill)
+
+    if (x > 200) bill += 200 * array[1];
+    else return bill + (x - 200) * array[1];
+
+
+    if (x > 400) return bill + (x - 400) * array[2];
+    else return bill;
+}
 
         this.Result = {
           Average: Math.round(Average),
-          Day: Math.round(Day * 30) ,
-          Class: Class
+          Day: Math.round(Day * 30),
+          Class: Class,
+          Bill: Bill(Day * 30)
         };
       })
       .catch(console.warn);
