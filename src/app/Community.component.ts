@@ -27,23 +27,24 @@ export class Community implements OnInit {
 
     //fetch(url.toString())
 
-    const Fetch = fetch("https://apigateway.hwangsehyun.ga/community/aaa?dong=102&floor=3-8&month=5-8").catch(console.log);
-
-    Fetch.then(data => data.clone().blob()).then(
-      blob => (this.src = URL.createObjectURL(blob))
-    );
-
-    Fetch.then(data => data.text())
-      .then(
-        text =>{
-          console.log(text);
-          return new DOMParser()
-            .parseFromString(text, "text/xml")
-            .querySelector("json").innerHTML
-            })
-      .then(JSON.parse)
+    fetch(
+      "https://apigateway.hwangsehyun.ga/community/aaa?dong=102&floor=3-8&month=5-8"
+    )
+      .catch(console.warn)
+      .then(data => data.text())
       .then(text => {
-        console.log(text);
+        const LastLine = text.lastIndexOf("\n");
+        this.src = URL.createObjectURL(
+          new Blob([text.slice(0, LastLine)], { type: "image/svg+xml" })
+        );
+
+        return new DOMParser()
+          .parseFromString(text.slice(LastLine, text.length), "text/xml")
+          .querySelector("json").innerHTML;
+      })
+      .then(JSON.parse)
+      .then(data => {
+        console.log(data);
       });
   }
 
@@ -55,7 +56,7 @@ export class Community implements OnInit {
   Tab = new FormControl(1);
   Months() {
     var string = "";
-    this.Months_Input.forEach(x=>string += (x.value + "-"));
+    this.Months_Input.forEach(x => (string += x.value + "-"));
     this.Form.month = string.slice(0, -1);
     this.Submit();
   }
