@@ -32,11 +32,13 @@ export class Community implements OnInit {
 
       return url.toString()
     }) ("https://apigateway.hwangsehyun.ga/community/aaa");
-
-    //fetch(url)
+console.log(url);
 
     fetch(url)
-      .then(data => data.text())
+      .then(res => {
+        if (res.status === 200) return res.text();
+        throw new Error(res.statusText);
+      })
       .then(text => {
         const LastLine = text.lastIndexOf("\n");
         this.src = URL.createObjectURL(
