@@ -38,9 +38,9 @@
 
 	<br/>
 
-	<div *ngFor="let x of ['시작', '종료']">
+	<div *ngFor="let x of ['시작', '종료']; let i = index;">
 		<span>{{x}} 월: {{month.value}}월</span>
-		<mat-slider #month min="1" max="12" step="1" (change)="Months()"></mat-slider>
+		<mat-slider #month min="1" max="12" step="1" (change)="Months()" [value]="i?12:1"></mat-slider>
 	</div>
 </div>
 
@@ -69,8 +69,7 @@
 <mat-grid-list cols="2">
 	<mat-grid-tile id="Device" *ngFor="let Device of Devices;">
 		<img src="https://img.icons8.com/search/{{Device.EN}}.png" style="width:50%" />
-		<mat-slide-toggle>
-		</mat-slide-toggle>
+		<mat-slide-toggle></mat-slide-toggle>
 		<span [innerText]="Device.KR"></span>
 	</mat-grid-tile>
 </mat-grid-list>

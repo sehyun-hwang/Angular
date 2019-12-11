@@ -54,8 +54,6 @@ export class Community implements OnInit {
       .catch(console.warn);
   }
 
-
-
   Tab = new FormControl(1);
   ngOnInit() {
     this.Tab.valueChanges.subscribe(value => {
@@ -72,6 +70,11 @@ export class Community implements OnInit {
   }
 
   src: string;
+  Stringify = JSON.stringify;
+
+  Submit() {
+    console.log(this.Form);
+  }
 
   Form_Initial = {
     dong: Array.from({ length: 7 }, (x, i) => i + 101),
@@ -84,10 +87,6 @@ export class Community implements OnInit {
     floor: 1,
     month: "1-12"
   };
-  Stringify = JSON.stringify;
-  Submit() {
-    console.log(this.Form);
-  }
 
   Devices = [
     {
