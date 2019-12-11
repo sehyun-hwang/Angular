@@ -28,7 +28,7 @@
 		</mat-select>
 	</mat-form-field>
 
-	<mat-form-field *ngIf="Form.Mode === 'Admin'">
+	<mat-form-field *ngIf="Form.Mode === 'User'">
 		<mat-select matNativeControl [(ngModel)]="Form.floor" (ngModelChange)="Submit()">
 			<mat-option *ngFor="let floor of Form_Initial.floor;" [value]="floor">
 				{{floor}}층

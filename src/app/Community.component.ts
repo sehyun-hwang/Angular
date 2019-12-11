@@ -63,8 +63,8 @@ export class Community implements OnInit {
         data.Class = Class;
 
         this.Result = {
-          Average: int(Average),
-          Day: int(Day),
+          Average: Math.round(Average),
+          Day: Math.round(Day * 30) ,
           Class: Class
         };
       })
