@@ -28,7 +28,7 @@
 		</mat-select>
 	</mat-form-field>
 
-	<mat-form-field>
+	<mat-form-field *ngIf="Form.Mode === 'Admin'">
 		<mat-select matNativeControl [(ngModel)]="Form.floor" (ngModelChange)="Submit()">
 			<mat-option *ngFor="let floor of Form_Initial.floor;" [value]="floor">
 				{{floor}}층
@@ -38,15 +38,15 @@
 
 	<br/>
 
-	<div *ngFor="let x of ['Start', 'End']">
+	<div *ngFor="let x of ['시작', '종료']">
 		<span>{{x}} 월: {{month.value}}월</span>
 		<mat-slider #month min="1" max="12" step="1" (change)="Months()"></mat-slider>
 	</div>
 </div>
 
-<button mat-button (click)="test();">test</button>
+<button mat-raised-button color="primary" (click)="test();" style="width:100%">조회</button>
 
-<mat-grid-list cols="2" rowHeight="40vh" gutterSize="-100px">
+<mat-grid-list cols="2" rowHeight="30vh" gutterSize="-100px">
 	<mat-grid-tile>
 		<img src="https://www.hwangsehyun.ga/Community/Lightning.png" style="width:30%"/>
   </mat-grid-tile>
@@ -59,13 +59,12 @@
 		</mat-grid-tile>
 </mat-grid-list>
 
-<h3 style="text-align:center; background:orange;">이번 달에 우리 아파트에서 평균 180W를 사용했어요!</h3>
-<br/>
+<button mat-raised-button color="primary" style="width:100%">이번 달에 우리 아파트에서 평균 180W를 사용했어요!</button>
 
-<span [innerText]="Stringify(Form)"></span>
+<p>Query</p>
+<p [innerText]="Stringify(Form)"></p>
 
-<!--img [src]="Santize(src)" />
-	<img src="https://apigateway.hwangsehyun.ga/community/foo" style="width:50%"-->
+<img *ngIf="src" [src]="Santize(src)" />
 
 <mat-grid-list cols="2">
 	<mat-grid-tile id="Device" *ngFor="let Device of Devices;">

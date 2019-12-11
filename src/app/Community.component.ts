@@ -9,28 +9,33 @@ import { DomSanitizer } from "@angular/platform-browser";
 })
 export class Community implements OnInit {
   @ViewChildren("month") Months_Input;
+
   constructor(private sanitizer: DomSanitizer) {}
-  public Santize(url: string) {
+  Santize(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
   test() {
-    const url = new URL("https://apigateway.hwangsehyun.ga/community/aaa");
-    const searchParams = {
-      dong: "102",
-      floor: "3-8",
-      month: "5-8"
-    };
-    Object.keys(searchParams).forEach(key =>
-      url.searchParams.append(key, searchParams[key])
-    );
+    const url = ((url: any) => {
+      url = new URL(url);
+      const { Mode, dong, floor, month } = this.Form;
+      const searchParams = {
+        dong: dong,
+        month: month
+      };
 
-    //fetch(url.toString())
+      if (Mode==="User") searchParams["floor"] = floor; 
 
-    fetch(
-      "https://apigateway.hwangsehyun.ga/community/aaa?dong=102&floor=3-8&month=5-8"
-    )
-      .catch(console.warn)
+      Object.keys(searchParams).forEach(key =>
+        url.searchParams.append(key, searchParams[key])
+      );
+
+      return url.toString()
+    }) ("https://apigateway.hwangsehyun.ga/community/aaa");
+
+    //fetch(url)
+
+    fetch(url)
       .then(data => data.text())
       .then(text => {
         const LastLine = text.lastIndexOf("\n");
@@ -45,15 +50,20 @@ export class Community implements OnInit {
       .then(JSON.parse)
       .then(data => {
         console.log(data);
-      });
+      })
+      .catch(console.warn);
   }
 
-  Form_Initial = {
-    dong: Array.from({ length: 7 }, (x, i) => i + 101),
-    floor: Array.from({ length: 10 }, (x, i) => i + 1)
-  };
+
 
   Tab = new FormControl(1);
+  ngOnInit() {
+    this.Tab.valueChanges.subscribe(value => {
+      this.Form.Unit = ["d", "m"][this.Tab.value];
+      this.Submit();
+    });
+  }
+
   Months() {
     var string = "";
     this.Months_Input.forEach(x => (string += x.value + "-"));
@@ -62,14 +72,11 @@ export class Community implements OnInit {
   }
 
   src: string;
-  data: object;
-  ngOnInit() {
-    this.Tab.valueChanges.subscribe(value => {
-      this.Form.Unit = ["d", "m"][this.Tab.value];
-      this.Submit();
-    });
-  }
 
+  Form_Initial = {
+    dong: Array.from({ length: 7 }, (x, i) => i + 101),
+    floor: Array.from({ length: 10 }, (x, i) => i + 1)
+  };
   Form = {
     Mode: "User",
     Unit: "d",
