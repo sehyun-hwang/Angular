@@ -82,7 +82,7 @@ export class Community implements OnInit {
         this.Result = {
           Average: Math.round(Average),
           Day: Math.round(Day),
-          Class: ,
+          Class: 3,
           Bill: Bill(Day * 30)
         };
 
