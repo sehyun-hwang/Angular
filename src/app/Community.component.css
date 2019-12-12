@@ -1,3 +1,7 @@
-.Width > * {
-  width:40%;
+.w-50 > mat-form-field, .w-50 > span {
+  min-width:30%;
+}
+
+.Content {
+  display:flex;
 }
