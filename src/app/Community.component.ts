@@ -63,28 +63,30 @@ export class Community implements OnInit {
 
         function Bill(x) {
           var bill = 0;
-          const array = [910, 1600, 7300];
+          const UnitCost = [93.3, 187.9, 280.6]
+          const DefaultCost = [910, 1600, 7300];
 
-          if (x <= 200) return x * array[0];
-          else bill += 200 * array[0];
+          return Math.round(
+            (() => {
+              if (x < 200) return DefaultCost[0] + x * UnitCost[0];
+              else bill += 200 * UnitCost[0];
 
-          console.log(bill);
+              if (x < 400) return DefaultCost[1] + bill + (x - 200) * UnitCost[1];
+              else bill += 200 * UnitCost[1];
 
-          if (x > 200) bill += 200 * array[1];
-          else return bill + (x - 200) * array[1];
-
-          if (x > 400) return bill + (x - 400) * array[2];
-          else return bill;
+              return DefaultCost[2] + bill + (x - 400) * UnitCost[2];
+            })()
+          );
         }
 
         this.Result = {
           Average: Math.round(Average),
-          Day: Math.round(Day * 30),
-          Class: 0,
+          Day: Math.round(Day),
+          Class: ,
           Bill: Bill(Day * 30)
         };
 
-        setTimeout(()=>this.Result.Class = Class, 100)
+        setTimeout(() => this.Result["Class"] = Class, 100);
       })
       .catch(console.warn);
   }

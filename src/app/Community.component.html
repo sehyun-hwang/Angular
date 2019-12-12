@@ -39,8 +39,9 @@
 	<br/>
 
 	<span *ngFor="let x of ['시작', '종료']; let i = index;">
-		<span>{{x}} 월: {{month.value}}월</span>
+		<span>{{x}} 월</span>
 		<mat-slider #month min="1" max="12" step="1" (change)="Months()" [value]="i?12:1" [thumbLabel]="true"></mat-slider>
+    <span>{{month.value}}월</span>
     <br/>
 	</span>
 </div>
@@ -49,20 +50,21 @@
 
 <div *ngIf="src" class="Content">
 	<div>
-		<h3>오늘의 사용량</h3>
+		<h2>오늘의 사용량</h2>
 		<h1 style="font-size:4em">{{Result.Day}} KWh</h1>
 		<h3>예상 요금: {{Result.Bill}}원</h3>
 	</div>
 
 	<div>
 		<h2>에너지 등급</h2>
-    <mwl-gauge *ngIf="src" [min]="1" [max]="5" [value]="Result.Class" [animated]="true"
+    <mwl-gauge [min]="1" [max]="5" [value]="Result.Class" [animated]="true"
 				[animationDuration]="1">
 				</mwl-gauge>
 	</div>
+
 	<button mat-raised-button color="primary" style="width:100%">이번 달에 우리 아파트에서 평균 {{Result.Average}}KWh를 사용했어요!</button>
 
-	<img [src]="Santize(src)" />
+	<img [src]="Santize(src)" style="width:100%"/>
 </div>
 
 	<mat-grid-list cols="2">

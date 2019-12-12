@@ -1,7 +1,12 @@
-.w-50 > mat-form-field, .w-50 > span {
+.w-50 > * {
   min-width:30%;
 }
 
 .Content {
   display:flex;
+  flex-flow: row wrap;
+}
+
+.Content > div {
+   flex:  50%;
 }
