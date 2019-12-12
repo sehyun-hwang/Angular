@@ -61,29 +61,30 @@ export class Community implements OnInit {
         else if (Ratio > 1.3) Class = 4;
         else Class = 5;
 
-   function Bill(x) {
-    var bill = 0;
-    const array = [910, 1600, 7300];
+        function Bill(x) {
+          var bill = 0;
+          const array = [910, 1600, 7300];
 
-    if (x <= 200) return x * array[0];
-    else bill += 200 * array[0];
+          if (x <= 200) return x * array[0];
+          else bill += 200 * array[0];
 
-    console.log(bill)
+          console.log(bill);
 
-    if (x > 200) bill += 200 * array[1];
-    else return bill + (x - 200) * array[1];
+          if (x > 200) bill += 200 * array[1];
+          else return bill + (x - 200) * array[1];
 
-
-    if (x > 400) return bill + (x - 400) * array[2];
-    else return bill;
-}
+          if (x > 400) return bill + (x - 400) * array[2];
+          else return bill;
+        }
 
         this.Result = {
           Average: Math.round(Average),
           Day: Math.round(Day * 30),
-          Class: Class,
+          Class: 0,
           Bill: Bill(Day * 30)
         };
+
+        setTimeout(()=>this.Result.Class = Class, 100)
       })
       .catch(console.warn);
   }

@@ -46,27 +46,19 @@
 
 <button mat-raised-button color="primary" (click)="test();" style="width:100%">조회</button>
 
-<div *ngIf="src" style="text-align:center">
-	<mat-grid-list cols="3" rowHeight="30vh" gutterSize="-100px">
-		<mat-grid-tile>
-			<img src="https://www.hwangsehyun.ga/Community/Lightning.png" style="width:30%"/>
-    </mat-grid-tile>
+<div *ngIf="src" style="">
+	<div style="line-height:0.5; width:49%; display:inline-block; display:flex;   flex-direction: column; align-items:center;">
+		<h3>오늘의 사용량</h3>
+		<h1 style="font-size:4em">{{Result.Day}} KWh</h1>
+		<h3>예상 요금: {{Result.Bill}}원</h3>
+	</div>
 
-			<mat-grid-tile>
-				<div style="line-height:0.5">
-					<h3>오늘의 사용량</h3>
-					<h1 style="font-size:4em">{{Result.Day}} KWh</h1>
-					<h3>예상 요금: {{Result.Bill}}원</h3>
-				</div>
-			</mat-grid-tile>
-
-			<mat-grid-tile>
-				<h3>에너지 등급</h3>
-				<mwl-gauge [min]="1" [max]="5" [value]="Result.Class" [animated]="true" [animationDuration]="1">
+	<div style="width:49%; display:inline-block;">
+		<h2>에너지 등급</h2>
+    <mwl-gauge *ngIf="src" [min]="1" [max]="5" [value]="Result.Class" [animated]="true"
+				[animationDuration]="1">
 				</mwl-gauge>
-			</mat-grid-tile>
-	</mat-grid-list>
-
+	</div>
 	<button mat-raised-button color="primary" style="width:100%">이번 달에 우리 아파트에서 평균 {{Result.Average}}KWh를 사용했어요!</button>
 
 	<img [src]="Santize(src)" />
