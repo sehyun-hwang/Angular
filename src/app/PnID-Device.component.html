@@ -1,36 +1,24 @@
-<mat-expansion-panel
-  (opened)="panelOpenState = true"
-  (closed)="panelOpenState = false"
-  >
-  <mat-expansion-panel-header
-    [collapsedHeight]="Height"
-     [expandedHeight]="Height">
-      <mat-panel-title> 
-         <mat-icon>widgets</mat-icon>
+<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+  <mat-expansion-panel-header [collapsedHeight]="Height" [expandedHeight]="Height">
+    <mat-panel-title>
+      <mat-icon>widgets</mat-icon>
       <span>LOTO {{i}}</span>
-      </mat-panel-title>
-      <mat-panel-description>
-        <div>
-          <mat-icon>lock_open</mat-icon>
-          <span>Unlocked</span>
-          <mat-slide-toggle
-          (click)="openDialog($event)"
-          [(ngModel)]="checked"></mat-slide-toggle>
-          <span>Locked</span>
-          <mat-icon>lock</mat-icon>
-          <br/>
-          <p innerText=[Locked]></p>
-        </div>
-      </mat-panel-description>
+    </mat-panel-title>
+    <mat-panel-description>
+      <div>
+        <mat-icon>lock_open</mat-icon>
+        <span>Unlocked</span>
+        <mat-slide-toggle (click)="openDialog($event)" [(ngModel)]="checked"></mat-slide-toggle>
+        <span>Locked</span>
+        <mat-icon>lock</mat-icon>
+        <br/>
+        <p innerText=[Locked]></p>
+      </div>
+    </mat-panel-description>
   </mat-expansion-panel-header>
 
   <div>
-    <canvas baseChart
-    [chartType]="'line'"
-    [datasets]="datasets"
-    [options]="panelOpenState? options:{}"
-    >
+    <canvas baseChart [chartType]="'line'" [datasets]="datasets" [options]="panelOpenState? options:{}">
     </canvas>
   </div>
 </mat-expansion-panel>
-

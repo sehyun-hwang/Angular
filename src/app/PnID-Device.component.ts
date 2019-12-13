@@ -20,6 +20,8 @@ export class PnID_Device {
   constructor(public dialog: MatDialog, private papa: Papa) {}
   @Input() i;
 
+  panelOpenState: boolean;
+
   checked: boolean;
   Height = "100px";
   openDialog(event) {
@@ -30,7 +32,6 @@ export class PnID_Device {
       .open(PnID_Dialog)
       .afterClosed()
       .subscribe(result => {
-
         //@ts-ignore
         if (result) this.checked ^= true;
       });
@@ -126,6 +127,8 @@ export class PnID_Device {
 })
 export class PnID_Dialog {
   @Input() LOTO;
+
+  password: string;
 
   emailFormControl = new FormControl("", Validators.required, async data =>
     fetch("https://plantasset.kr/MPIS_WCF/webservice.asmx/LOGIN", {

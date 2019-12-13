@@ -2,6 +2,13 @@ import { Component, OnInit, ViewChildren } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { DomSanitizer } from "@angular/platform-browser";
 
+interface Result {
+  Average: number;
+  Day: number;
+  Bill: number;
+  Class: number;
+}
+
 @Component({
   selector: "",
   templateUrl: "./Community.component.html",
@@ -63,7 +70,7 @@ export class Community implements OnInit {
 
         function Bill(x) {
           var bill = 0;
-          const UnitCost = [93.3, 187.9, 280.6]
+          const UnitCost = [93.3, 187.9, 280.6];
           const DefaultCost = [910, 1600, 7300];
 
           return Math.round(
@@ -71,7 +78,8 @@ export class Community implements OnInit {
               if (x < 200) return DefaultCost[0] + x * UnitCost[0];
               else bill += 200 * UnitCost[0];
 
-              if (x < 400) return DefaultCost[1] + bill + (x - 200) * UnitCost[1];
+              if (x < 400)
+                return DefaultCost[1] + bill + (x - 200) * UnitCost[1];
               else bill += 200 * UnitCost[1];
 
               return DefaultCost[2] + bill + (x - 400) * UnitCost[2];
@@ -86,7 +94,7 @@ export class Community implements OnInit {
           Bill: Bill(Day * 30)
         };
 
-        setTimeout(() => this.Result["Class"] = Class, 100);
+        setTimeout(() => (this.Result["Class"] = Class), 100);
       })
       .catch(console.warn);
   }
@@ -106,7 +114,7 @@ export class Community implements OnInit {
     this.Submit();
   }
 
-  Result = {};
+  Result: Result;
   src: string;
   Stringify = JSON.stringify;
 

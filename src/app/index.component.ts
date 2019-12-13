@@ -1,17 +1,17 @@
-import { Component } from '@angular/core';
-import { Input } from '@angular/core';
-import {routes} from "./Routes";
+import { Component } from "@angular/core";
+import { Input } from "@angular/core";
+import { routes } from "./app.module";
 
 @Component({
-  selector: 'index',
-  templateUrl: "./index.component.html",
+  selector: "index",
+  templateUrl: "./index.component.html"
 })
 export class Index {
-  routes:string[];
+  routes: string[];
   constructor() {
-    const _routes =routes.map(x=>x.path);
+    const _routes = routes.map(x => x.path);
     _routes.shift();
     this.routes = _routes;
-    console.log(routes)
+    console.log(routes);
   }
 }
