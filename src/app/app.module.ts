@@ -12,20 +12,19 @@ import { WebcamModule } from "ngx-webcam";
 import { ChartsModule } from "ng2-charts";
 import { GaugeModule } from "angular-gauge";
 
-import { Routing } from "./app.routing.module";
+import { Declarations, Routing } from "./app.routing.module";
 import { SocketIO } from "./modules/socket.io";
-import { PnID_Device, PnID_Dialog } from "./PnID-Device.component";
+import { AppComponent } from "./app.routing.component";
 
 @NgModule({
-  declarations: [
-    PnID_Device, PnID_Dialog,
-    ],
+  declarations: [AppComponent, ...Declarations],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    
+
+    DemoMaterialModule,
     MatNativeDateModule,
     ReactiveFormsModule,
 
@@ -33,10 +32,10 @@ import { PnID_Device, PnID_Dialog } from "./PnID-Device.component";
     WebcamModule,
     ChartsModule,
     GaugeModule.forRoot(),
+    
     Routing,
   ],
   providers: [SocketIO],
-  bootstrap: [],
-  entryComponents: [PnID_Dialog]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

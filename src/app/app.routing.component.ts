@@ -1,5 +1,6 @@
-import { Component, AfterViewChecked } from "@angular/core";
+import { Component, AfterViewChecked, Input } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
+import { routes } from "./app.routing.module";
 
 @Component({
   selector: "app-root",
@@ -10,22 +11,17 @@ import { Router, ActivatedRoute } from "@angular/router";
     <router-outlet></router-outlet>
     `
 })
-export class RouterComponent implements AfterViewChecked {
-  constructor(importableRoutes:ImportableRoutes, private router:Router) {
-    router.resetConfig(importableRoutes.routes)
-  }
+export class AppComponent implements AfterViewChecked {
+  constructor(private router:Router) {}
   ngAfterViewChecked() {
     this.router.resetConfig([{ path: "**", component: PnID }]);
   }
 }
 
-import { Component } from "@angular/core";
-import { Input } from "@angular/core";
-import { routes } from "./app.module";
 
 @Component({
   selector: "index",
-  templateUrl: "./index.component.html"
+  templateUrl: "./app.routing.component.html"
 })
 export class Index {
   routes: string[];
