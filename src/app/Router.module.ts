@@ -1,7 +1,6 @@
 import { Component, AfterViewChecked } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
-
-import {RouterComponent} from "./Router.component";
+import { RouterModule, Router, ActivatedRoute } from "@angular/router";
+import { RouterComponent } from "./Router.component";
 
 import { Index } from "./index.component";
 import { TeachersDay } from "./TeachersDay.component";
@@ -28,13 +27,11 @@ export class ImportableRoutes {
   }
 }
 
-import { NgModule } from '@angular/core';
+import { NgModule } from "@angular/core";
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(new AppComponent)
-  ],
+  imports: [RouterModule.forRoot(ImportableRoutes.prototype.routes)],
   exports: [RouterModule],
   providers: []
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
