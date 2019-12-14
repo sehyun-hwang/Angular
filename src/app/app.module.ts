@@ -25,7 +25,7 @@ import { PnID_Device, PnID_Dialog } from "./PnID-Device.component";
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    DemoMaterialModule,
+    
     MatNativeDateModule,
     ReactiveFormsModule,
 

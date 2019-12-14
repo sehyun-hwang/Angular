@@ -9,28 +9,25 @@ import { PnID } from "./PnID.component";
 import { Community } from "./Community.component";
 import { Routes } from "@angular/router";
 
-export class ImportableRoutes {
-  routes: Routes = [
-    { path: "", component: Index },
-    { path: "Angular", component: Index },
-    { path: "community", component: Community },
-    { path: "teachersday/console.html", component: TeachersDay },
-    { path: "ptais/street-capture.html", component: StreetCapture },
-    { path: "pnid", component: PnID },
-    { path: "**", redirectTo: "/" }
-  ];
+const routes: Routes = [
+  { path: "", component: Index },
+  { path: "Angular", component: Index },
+  { path: "community", component: Community },
+  { path: "teachersday/console.html", component: TeachersDay },
+  { path: "ptais/street-capture.html", component: StreetCapture },
+  { path: "pnid", component: PnID },
+  { path: "**", redirectTo: "/" }
+];
 
-  Import() {
-    return this.routes
-      .filter(route => route.component)
-      .map(route => route.component);
-  }
+function ImportRoutes(routes: Routes) {
+  return routes.filter(route => route.component).map(route => route.component);
 }
 
 import { NgModule } from "@angular/core";
 
 @NgModule({
-  imports: [RouterModule.forRoot(ImportableRoutes.prototype.routes)],
+  declarations: [ImportRoutes(routes)],
+  imports: [ RouterModule.forRoot(routes)],
   exports: [RouterModule],
   providers: []
 })
