@@ -34,4 +34,4 @@ import { NgModule } from "@angular/core";
   exports: [RouterModule],
   providers: []
 })
-export class AppRoutingModule {}
+export class Routing {}
