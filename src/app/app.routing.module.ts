@@ -10,7 +10,7 @@ import { PnID_Device, PnID_Dialog } from "./PnID-Device.component";
 import { Community } from "./Community.component";
 import { Routes } from "@angular/router";
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: "", component: Index },
   { path: "Angular", component: Index },
   { path: "community", component: Community },
