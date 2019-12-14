@@ -5,8 +5,7 @@ import { routes } from "./app.routing.module";
 @Component({
   selector: "app-root",
   template: `
-    <button mat-button (click)="ngAfterViewChecked()">
-      {{ route.pathFromRoot }}
+    <button mat-button (click)="router.navigate('')">
     </button>
     <router-outlet></router-outlet>
     `
@@ -14,6 +13,7 @@ import { routes } from "./app.routing.module";
 export class AppComponent implements AfterViewChecked {
   constructor(private router:Router) {}
   ngAfterViewChecked() {
+    
     this.router.resetConfig([{ path: "**", component: PnID }]);
   }
 }
