@@ -1,23 +1,36 @@
-import { Component, AfterViewChecked, Input } from "@angular/core";
+import { Component, AfterViewChecked, OnInit} from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { routes } from "./app.routing.module";
+
+import { PnID } from "./PnID.component";
 
 @Component({
   selector: "app-root",
   template: `
-    <button mat-button (click)="router.navigate('')">
+    <button mat-button *ngIf="DisplayRouterInfo" routerLink="''">
+      Back to Index
     </button>
+    <span [innerText]="Fragment"></span>
     <router-outlet></router-outlet>
-    `
+  `
 })
-export class AppComponent implements AfterViewChecked {
-  constructor(private router:Router) {}
-  ngAfterViewChecked() {
-    
-    this.router.resetConfig([{ path: "**", component: PnID }]);
+export class AppComponent  implements OnInit {
+  DisplayRouterInfo = false;
+  Fragment: string;
+
+  constructor(router: Router, public route: ActivatedRoute) {
+    if (location.hostname.includes("pnid") || "cordova" in window)
+      router.resetConfig([{ path: "**", component: PnID }]);
+    else this.DisplayRouterInfo = true;
+  }
+
+  ngOnInit() {
+    console.log(123)
+    this.route.url.subscribe(segments => {
+      this.Fragment = segments.toString();
+    });
   }
 }
-
 
 @Component({
   selector: "index",
