@@ -1,6 +1,6 @@
-import { Component, AfterViewChecked, OnInit} from "@angular/core";
+import { Component, AfterViewChecked, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { routes } from "./app.routing.module";
+import { routes } from "./Components";
 
 import { PnID } from "./PnID.component";
 
@@ -14,7 +14,7 @@ import { PnID } from "./PnID.component";
     <router-outlet></router-outlet>
   `
 })
-export class AppComponent  implements OnInit {
+export class AppComponent implements OnInit {
   DisplayRouterInfo = false;
   Fragment: string;
 
@@ -25,7 +25,7 @@ export class AppComponent  implements OnInit {
   }
 
   ngOnInit() {
-    console.log(123)
+    console.log(123);
     this.route.url.subscribe(segments => {
       this.Fragment = segments.toString();
     });

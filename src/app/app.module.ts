@@ -14,12 +14,11 @@ import { GaugeModule } from "angular-gauge";
 import { DemoMaterialModule } from "./modules/Material.module";
 import { SocketIO } from "./modules/socket.io";
 
-import { Declarations, Routing } from "./app.routing.module";
-import { AppComponent } from "./app.routing.component";
+import { Routing } from "./app.routing.module";
+import { AppComponent, Declarations } from "./Components";
 
 @NgModule({
-  declarations: [
-    AppComponent, ...Declarations],
+  declarations: Declarations,
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -34,10 +33,10 @@ import { AppComponent } from "./app.routing.component";
     WebcamModule,
     ChartsModule,
     GaugeModule.forRoot(),
-    
-    Routing,
+
+    Routing
   ],
   providers: [SocketIO],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
