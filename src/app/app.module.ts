@@ -3,7 +3,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatNativeDateModule } from "@angular/material/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
+//import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { CountdownModule } from "ngx-countdown";
@@ -14,8 +14,8 @@ import { GaugeModule } from "angular-gauge";
 import { DemoMaterialModule } from "./modules/Material.module";
 import { SocketIO } from "./modules/socket.io";
 
-import { Routing } from "./app.routing.module";
-import { AppComponent, Declarations } from "./Components";
+import { RouterModule } from "@angular/router";
+import { routes, AppComponent, Declarations, PnID_Dialog } from "./Components";
 
 @NgModule({
   declarations: Declarations,
@@ -34,9 +34,10 @@ import { AppComponent, Declarations } from "./Components";
     ChartsModule,
     GaugeModule.forRoot(),
 
-    Routing
+    RouterModule.forRoot(routes())
   ],
   providers: [SocketIO],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [PnID_Dialog]
 })
 export class AppModule {}

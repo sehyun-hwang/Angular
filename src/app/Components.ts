@@ -9,16 +9,6 @@ import { Community } from "./Community.component";
 import { Routes } from "@angular/router";
 export { AppComponent, PnID_Dialog };
 
-export const routes: Routes = [
-  { path: "", component: Index },
-  { path: "Angular", component: Index },
-  { path: "community", component: Community },
-  { path: "teachersday/console.html", component: TeachersDay },
-  { path: "ptais/street-capture.html", component: StreetCapture },
-  { path: "pnid", component: PnID },
-  { path: "**", redirectTo: "/" }
-];
-
 export const Declarations = [
   AppComponent,
   Index,
@@ -29,3 +19,14 @@ export const Declarations = [
   PnID_Dialog,
   Community
 ];
+
+export function routes (): Routes {
+  return [
+  { path: "", component: Index },
+  { path: "Angular", component: Index },
+  { path: "community", component: Community },
+  { path: "teachersday/console.html", component: TeachersDay },
+  { path: "ptais/street-capture.html", component: StreetCapture },
+  { path: "pnid", component: PnID },
+  { path: "**", redirectTo: "/" },
+]}

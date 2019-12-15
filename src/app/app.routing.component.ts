@@ -1,7 +1,7 @@
-import { Component, AfterViewChecked, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { routes } from "./Components";
 
+import { routes } from "./Components";
 import { PnID } from "./PnID.component";
 
 @Component({
@@ -21,11 +21,13 @@ export class AppComponent implements OnInit {
   constructor(router: Router, public route: ActivatedRoute) {
     if (location.hostname.includes("pnid") || "cordova" in window)
       router.resetConfig([{ path: "**", component: PnID }]);
-    else this.DisplayRouterInfo = true;
+    else {
+      router.resetConfig(routes());
+      this.DisplayRouterInfo = true;
+    }
   }
 
   ngOnInit() {
-    console.log(123);
     this.route.url.subscribe(segments => {
       this.Fragment = segments.toString();
     });
@@ -39,7 +41,7 @@ export class AppComponent implements OnInit {
 export class Index {
   routes: string[];
   constructor() {
-    const _routes = routes.map(x => x.path);
+    const _routes = routes().map(x => x.path);
     _routes.shift();
     this.routes = _routes;
     console.log(routes);
