@@ -8,7 +8,6 @@ if ! grep -R browserslist package.json; then
 fi
 
 set -e
-#ng build
 NODE_OPTIONS="--max-old-space-size=2048" ng build --prod
 
 URL="https://hwangsehyun.s3-ap-southeast-1.amazonaws.com/Angular/"
@@ -18,3 +17,8 @@ fi
 
 cat index.html >> dist/demo/index.html
 aws s3 sync --acl public-read dist/demo s3://hwangsehyun/Angular
+aws s3 cp --acl public-read \
+    --content-type "text/html; charset=utf-8" \
+    --metadata-directive REPLACE \
+    s3://hwangsehyun/Angular/index.html \
+    s3://hwangsehyun/Angular/index.html 

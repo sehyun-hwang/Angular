@@ -37,7 +37,7 @@ export class Community implements OnInit {
       );
 
       return url.toString();
-    })("https://apigateway.hwangsehyun.ga/community/aaa");
+    })("https://apigateway.hwangsehyun.ga/community");
     console.log(url);
 
     fetch(url)
