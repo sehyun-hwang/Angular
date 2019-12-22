@@ -15,5 +15,9 @@ platformBrowserDynamic()
       window["ngRef"].destroy();
     window["ngRef"] = ref;
 
+    window["RecreateAppRoot"] = function() {
+      document.querySelector("app-root").remove();
+      document.querySelector("body").append(document.createElement("app-root"));
+    };
   })
   .catch(err => console.error(err));

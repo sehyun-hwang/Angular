@@ -51,13 +51,5 @@ export class AppModule {
       Bootstrap();
       Bootstrap();
     };
-
-    /* Test Code for Bootstraping
-    document.querySelector("app-root").remove()
-    do
-    document.querySelector("body").append(
-      document.createElement("app-root")
-    )
-    */
   }
 }
