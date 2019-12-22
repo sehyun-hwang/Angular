@@ -13,7 +13,8 @@ platformBrowserDynamic()
 
     if (window["ngRef"] && !window["ngRef"]["distroyed"])
       window["ngRef"].destroy();
-    window["ngRef"] = ref;
+    else
+      window["ngRef"] = ref;
 
     window["RecreateAppRoot"] = function() {
       document.querySelector("app-root").remove();
