@@ -37,16 +37,11 @@ import { routes, AppComponent, Declarations, PnID_Dialog } from "./Components";
     RouterModule.forRoot(routes())
   ],
   providers: [SocketIO],
-  //bootstrap: [AppComponent],
-  entryComponents: [AppComponent, PnID_Dialog],
+  bootstrap: [AppComponent],
+  entryComponents: [AppComponent, PnID_Dialog]
 })
 export class AppModule {
-    ngDoBootstrap(app: ApplicationRef) {
-    function Bootstrap() {
-      app.bootstrap(AppComponent);
-      //app.bootstrap(AppComponent);
-    }
-    //Bootstrap();
-    window["Bootstrap"] = Bootstrap;
+  ngDoBootstrap(app: ApplicationRef) {
+    window["Bootstrap"] = () => app.bootstrap(AppComponent);
   }
 }
