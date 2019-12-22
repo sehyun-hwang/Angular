@@ -18,11 +18,7 @@ export class PnID {
   Date = Date;
   constructor() {
     this.io = IO("https://proxy.hwangsehyun.ga?port=8081");
-    this.io.on("AngularTable", data =>
-      Promise.resolve(data)
-        .then(JSON.parse)
-        .then(data => (this.table = data))
-    );
+    this.io.on("AngularTable", data =>this.table = data);
 
     fetch("https://jsonplaceholder.typicode.com/users")
       .then(data => data.json())
