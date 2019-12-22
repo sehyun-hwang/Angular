@@ -1,5 +1,5 @@
 import { HttpClientModule } from "@angular/common/http";
-import { NgModule } from "@angular/core";
+import { NgModule, ApplicationRef } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatNativeDateModule } from "@angular/material/core";
 import { BrowserModule } from "@angular/platform-browser";
@@ -37,7 +37,15 @@ import { routes, AppComponent, Declarations, PnID_Dialog } from "./Components";
     RouterModule.forRoot(routes())
   ],
   providers: [SocketIO],
-  bootstrap: [AppComponent],
-  entryComponents: [PnID_Dialog]
+  //bootstrap: [AppComponent],
+  entryComponents: [AppComponent, PnID_Dialog],
 })
-export class AppModule {}
+export class AppModule {
+    ngDoBootstrap(app: ApplicationRef) {
+    function Bootstrap() {
+      app.bootstrap(AppComponent)
+    }
+    //Bootstrap();
+    window["Bootstrap"] = Bootstrap;
+  }
+}
