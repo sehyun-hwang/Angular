@@ -19,7 +19,8 @@ export class AppComponent implements OnInit {
   Fragment: string;
 
   constructor(router: Router, public route: ActivatedRoute) {
-    if (location.hostname.includes("pnid") || "cordova" in window)
+    console.log(1)
+    if ("cordova" in window)
       router.resetConfig([{ path: "**", component: PnID }]);
     else {
       router.resetConfig(routes());
@@ -44,6 +45,6 @@ export class Index {
     const _routes = routes().map(x => x.path);
     _routes.shift();
     this.routes = _routes;
-    console.log(routes);
+    console.log(_routes);
   }
 }

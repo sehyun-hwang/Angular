@@ -6,7 +6,7 @@ import * as Rx from 'rxjs';
 @Injectable()
 export class SocketIO {
   private socket;
-  constructor() {console.log(io)}
+  constructor() {}
 
   connect(): Subject<MessageEvent> {
     this.socket = io('https://proxy.hwangsehyun.ga?port=8081');

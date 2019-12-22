@@ -1,18 +1,19 @@
-import './polyfills';
-import 'hammerjs';
+import "./polyfills";
+import "hammerjs";
 
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { enableProdMode } from "@angular/core";
+import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 
-import { AppModule } from './app/app.module';
+import { AppModule } from "./app/app.module";
 
-platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
-  console.log("Bootstrap")
-  // Ensure Angular destroys itself on hot reloads.
-  if (window['ngRef']) {
-    window['ngRef'].destroy();
-  }
-  window['ngRef'] = ref;
+platformBrowserDynamic()
+  .bootstrapModule(AppModule)
+  .then(ref => {
+    console.log("Bootstrap");
 
-  // Otherwise, log the boot error
-}).catch(err => console.error(err));
+    if (window["ngRef"] && !window["ngRef"]["distroyed"])
+      window["ngRef"].destroy();
+    window["ngRef"] = ref;
+
+  })
+  .catch(err => console.error(err));
