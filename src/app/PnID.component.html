@@ -6,12 +6,12 @@
 
     <ng-container matColumnDef="time">
       <th mat-header-cell *matHeaderCellDef> No. </th>
-      <td mat-cell *matCellDef="let element" [innerText]="element[0]"></td>
+      <td mat-cell *matCellDef="let element" [innerText]="element['0']"></td>
     </ng-container>
 
     <ng-container matColumnDef="event">
       <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let element" [innerText]="element[1]"></td>
+      <td mat-cell *matCellDef="let element" [innerText]="element"></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
