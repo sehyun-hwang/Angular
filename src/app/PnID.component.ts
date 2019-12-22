@@ -3,8 +3,7 @@ import { Component } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { MatListModule } from "@angular/material/list";
 
-import { SocketIO } from "./modules/socket.io";
-import { Observable, Subject } from "rxjs";
+import IO from "socket.io-client";
 
 @Component({
   selector: "",
@@ -13,17 +12,18 @@ import { Observable, Subject } from "rxjs";
 })
 export class PnID {
   table: Object;
-  displayedColumns: string[] = ['id', 'name'];
-  messages: Subject<any>;
-  constructor(private socketIO: SocketIO) {
+  displayedColumns: string[] = ["id", "name"];
+
+  io;
+  constructor() {
+    this.io = IO("https://proxy.hwangsehyun.ga?port=8081");
+
     fetch("https://jsonplaceholder.typicode.com/users")
       .then(data => data.json())
-      .then(data => this.table = data)
-      .then(console.log);
-    this.messages = <Subject<any>>this.socketIO.connect();
+      .then(data => (this.table = data));
   }
   myControl = new FormControl();
   test() {
-    this.messages.next("message");
+    this.io.emit("Ping");
   }
 }

@@ -11,7 +11,7 @@ platformBrowserDynamic()
   .then(ref => {
     console.log("Bootstrap");
 
-    if (window["ngRef"] && !window["ngRef"]["distroyed"])
+    if (window["ngRef"] && window["ngRef"]["distroyed"])
       window["ngRef"].destroy();
     else
       window["ngRef"] = ref;
