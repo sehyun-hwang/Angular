@@ -43,7 +43,8 @@ import { routes, AppComponent, Declarations, PnID_Dialog } from "./Components";
 export class AppModule {
     ngDoBootstrap(app: ApplicationRef) {
     function Bootstrap() {
-      app.bootstrap(AppComponent)
+      app.bootstrap(AppComponent);
+      //app.bootstrap(AppComponent);
     }
     //Bootstrap();
     window["Bootstrap"] = Bootstrap;
