@@ -19,7 +19,7 @@ import { Parser, IOInjectable } from "./PnID";
 export class PnID_Device {
     io = this.IO.io
   constructor(public dialog: MatDialog, private papa: Papa, private IO:IOInjectable) {
-    io.on("AngularTable", data=>console.log(data))
+    this.io.on("MCU", data=>console.log(data))
   }
   @Input() i;
 
