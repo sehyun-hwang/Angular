@@ -6,4 +6,6 @@ export async function Parser(promise: Response) {
   return data.Table[0];
 }
 
-export function Date( ssssssssssssssssssssssssssss)
+export function Timestamp(n:number) {
+    return new Date(n * 1000).toLocaleString()
+}

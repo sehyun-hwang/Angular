@@ -4,6 +4,7 @@ import { FormControl } from "@angular/forms";
 import { MatListModule } from "@angular/material/list";
 
 import IO from "socket.io-client";
+import { Timestamp } from "./PnID";
 
 @Component({
   selector: "",
@@ -15,8 +16,7 @@ export class PnID {
   displayedColumns: string[] = ["time", "event"];
 
   io;
-  Date = Date;
-  constructor() {
+  constructor(public timestamp:Timestamp) {
     this.io = IO("https://proxy.hwangsehyun.ga?port=8081");
     this.io.on("AngularTable", data =>this.table = data);
 
