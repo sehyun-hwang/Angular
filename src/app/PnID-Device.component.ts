@@ -135,21 +135,9 @@ export class PnID_Dialog {
       method: "POST",
       body: (function() {
         const Param = new URLSearchParams();
-        [
-          "id",
-          "pwd",
-          "model",
-          "cordova",
-          "platform",
-          "uuid",
-          "version",
-          "manufacturer",
-          "isvirtual",
-          "serial",
-          "latitude",
-          "longitude",
-          "macaddress"
-        ].forEach(x =>
+        JSON.parse(
+          '["id","pwd","model","cordova","platform","uuid","version","manufacturer","isvirtual","serial","latitude","longitude","macaddress"]'
+        ).forEach(x =>
           Param.append(
             x,
             {
@@ -163,7 +151,7 @@ export class PnID_Dialog {
     })
       .then(Parser)
       .then(data =>
-        data.STATUS !== "false" ? null : { error: "Wrong Password" }
+        data["STATUS"] !== "false" ? null : { error: "Wrong Password" }
       )
   );
 

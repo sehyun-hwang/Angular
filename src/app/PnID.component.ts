@@ -16,7 +16,8 @@ export class PnID {
   displayedColumns: string[] = ["time", "event"];
 
   io;
-  constructor(public timestamp:Timestamp) {
+  Timestamp = Timestamp;
+  constructor() {
     this.io = IO("https://proxy.hwangsehyun.ga?port=8081");
     this.io.on("AngularTable", data =>this.table = data);
 
