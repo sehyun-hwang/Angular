@@ -10,14 +10,17 @@ import { Papa } from "ngx-papaparse";
 import { ChartsModule } from "ng2-charts";
 import "chartjs-plugin-streaming";
 
-import { Parser, IO } from "./PnID";
+import { Parser, IOInjectable } from "./PnID";
 
 @Component({
   selector: "pnid-device",
   templateUrl: "./PnID-Device.component.html"
 })
 export class PnID_Device {
-  constructor(public dialog: MatDialog, private papa: Papa) {}
+    io = this.IO.io
+  constructor(public dialog: MatDialog, private papa: Papa, private IO:IOInjectable) {
+    io.on("AngularTable", data=>console.log(data))
+  }
   @Input() i;
 
   panelOpenState: boolean;
