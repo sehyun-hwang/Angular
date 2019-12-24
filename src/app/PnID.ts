@@ -1,3 +1,16 @@
+import { Injectable } from '@angular/core';
+import IOClient from "socket.io-client";
+
+@Injectable({
+  providedIn: 'root'
+})
+export class IOInjectable {
+  constructor(public io) {
+    console.log(123)
+ io = IOClient("https://proxy.hwangsehyun.ga?port=8081");
+  }
+}
+
 export async function Parser(promise: Response) {
   const data = await promise.text()
     .then(
@@ -9,3 +22,4 @@ export async function Parser(promise: Response) {
 export function Timestamp(n:number) {
     return new Date(n * 1000).toLocaleString()
 }
+

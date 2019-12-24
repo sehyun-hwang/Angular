@@ -10,7 +10,7 @@ import { Papa } from "ngx-papaparse";
 import { ChartsModule } from "ng2-charts";
 import "chartjs-plugin-streaming";
 
-import { Parser } from "./PnID";
+import { Parser, IO } from "./PnID";
 
 @Component({
   selector: "pnid-device",
@@ -56,6 +56,8 @@ export class PnID_Device {
       data: []
     }
   ];
+
+  Switches = []
 
   Last = "-1m";
   Done = true;

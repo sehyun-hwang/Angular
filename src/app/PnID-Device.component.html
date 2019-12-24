@@ -20,9 +20,10 @@
     <canvas baseChart [chartType]="'line'" [datasets]="datasets" [options]="panelOpenState? options:{}">
     </canvas>
   <mat-list>
-  <mat-list-item *ngFor="let message of [1,2,3]">
-    <mat-icon matListIcon>folder</mat-icon>
-    <h3 matLine> 123</h3>
+  <mat-list-item *ngFor="let Switch of Switches">
+    <mat-icon matListIcon>
+settings_applications</mat-icon>
+    <h3 matLine>Switch {{Switch}}</h3>
       <mat-slide-toggle></mat-slide-toggle>
   </mat-list-item>
 </mat-list>
