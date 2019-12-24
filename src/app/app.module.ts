@@ -45,11 +45,11 @@ export class AppModule {
     function Bootstrap() {
       app.bootstrap(AppComponent);
     }
-    Bootstrap();
-
-    window["Bootstrap"] = () => {
-      Bootstrap();
-      Bootstrap();
-    };
+    if ("cordova" in window)
+      window["Bootstrap"] = () => {
+        Bootstrap();
+        Bootstrap();
+      };
+    else Bootstrap();
   }
 }

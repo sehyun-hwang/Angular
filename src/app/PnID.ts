@@ -5,3 +5,5 @@ export async function Parser(promise: Response) {
     .then(JSON.parse)
   return data.Table[0];
 }
+
+export function Date( ssssssssssssssssssssssssssss)
