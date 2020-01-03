@@ -24,7 +24,7 @@ export class PnID {
   }
   myControl = new FormControl();
 
-  Switches:boolean[]
+  Switches:boolean[];
 
   test() {
     this.io.emit("Ping");

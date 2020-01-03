@@ -21,7 +21,7 @@ export class PnID_Device {
   constructor(public dialog: MatDialog, private papa: Papa, private IO:IOInjectable) {
     this.io.on("MCU", data=>console.log(data))
   }
-  @Input() i;
+  @Input() Switches;
 
   panelOpenState: boolean;
 
