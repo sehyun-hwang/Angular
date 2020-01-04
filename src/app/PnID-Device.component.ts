@@ -8,7 +8,7 @@ import {
 import { Client } from "@influxdata/influx";
 import { Papa } from "ngx-papaparse";
 import { ChartsModule } from "ng2-charts";
-import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
+import { ChartOptions, ChartType, ChartDataSets } from "chart.js";
 import "chartjs-plugin-streaming";
 
 import { Parser, IOInjectable } from "./PnID";
@@ -65,18 +65,15 @@ export class PnID_Device {
 
   Last = "-1m";
   Done = true;
-  Accordion(Opened:boolean) {
-    console.log( this.options.scales.xAxes[0].type, Opened)
-    this.options.scales.xAxes[0].type = Opened? "": "realtime";
+  Accordion(Opened: boolean) {
+    console.log(this.options.scales.xAxes[0].type, Opened);
+    this.options.scales.xAxes[0].type = Opened ? "" : "realtime";
   }
   options: ChartOptions = {
     scales: {
       xAxes: [
         {
           type: "realtime",
-          time: {
-            parser: false,
-          },
           realtime: {
             ttl: undefined,
             refresh: 1000,
@@ -95,36 +92,40 @@ export class PnID_Device {
                   `from(bucket: "test")
                   |> range(start: ${this.Last})`
                 )
-                .promise.then(data => {
-                  this.papa.parse(data, {
-                    complete: ({ data }) => {
-                      console.log(this.Last, data.length);
-                      if (data.length < 3) {
-                        this.Done = true;
-                        return;
-                      }
-                      function FindIndex(Key) {
-                        return data[3].findIndex(x => x.indexOf(Key) > 0);
-                      }
-                      const Value_i = FindIndex("value");
-                      const Time_i = FindIndex("time");
+                .promise.then(
+                  data =>
+                    new Promise(resolve =>
+                      this.papa.parse(data, {
+                        complete: data => resolve({ data })
+                      })
+                    )
+                )
+                .then(data => {
+                  console.log(this.Last, data.length);
+                  if (data.length < 3) {
+                    this.Done = true;
+                    return;
+                  }
+                  function FindIndex(Key) {
+                    return data[3].findIndex(x => x.indexOf(Key) > 0);
+                  }
+                  const Value_i = FindIndex("value");
+                  const Time_i = FindIndex("time");
 
-                      const date = new Date(data[data.length - 3][Time_i]);
-                      date.setSeconds(date.getSeconds() + 1);
-                      this.Last = date.toISOString();
+                  const date = new Date(data[data.length - 3][Time_i]);
+                  date.setSeconds(date.getSeconds() + 1);
+                  this.Last = date.toISOString();
 
-                      for (const x of data)
-                        chart.data.datasets[0].data.push({
-                          x: x[Time_i],
-                          y: x[Value_i]
-                        });
+                  for (const x of data)
+                    chart.data.datasets[0].data.push({
+                      x: x[Time_i],
+                      y: x[Value_i]
+                    });
 
-                      chart.update({
-                        preservation: true
-                      });
-                      this.Done = true;
-                    }
+                  chart.update({
+                    preservation: true
                   });
+                  this.Done = true;
                 })
                 .catch(console.warn);
             }

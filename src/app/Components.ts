@@ -23,10 +23,9 @@ export const Declarations = [
 export function routes (): Routes {
   return [
   { path: "", component: Index },
-  { path: "Angular", component: Index },
+  { path: "pnid", component: PnID },
   { path: "community", component: Community },
   { path: "teachersday/console.html", component: TeachersDay },
   { path: "ptais/street-capture.html", component: StreetCapture },
-  { path: "pnid", component: PnID },
-  { path: "**", redirectTo: "/" },
+  { path: "**", redirectTo: "" },
 ]}
