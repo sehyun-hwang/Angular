@@ -8,6 +8,7 @@ import {
 import { Client } from "@influxdata/influx";
 import { Papa } from "ngx-papaparse";
 import { ChartsModule } from "ng2-charts";
+import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import "chartjs-plugin-streaming";
 
 import { Parser, IOInjectable } from "./PnID";
@@ -17,13 +18,15 @@ import { Parser, IOInjectable } from "./PnID";
   templateUrl: "./PnID-Device.component.html"
 })
 export class PnID_Device {
-    io = this.IO.io
-  constructor(public dialog: MatDialog, private papa: Papa, private IO:IOInjectable) {
-    this.io.on("MCU", data=>console.log(data))
+  io = this.IO.io;
+  constructor(
+    public dialog: MatDialog,
+    private papa: Papa,
+    private IO: IOInjectable
+  ) {
+    this.io.on("MCU", data => console.log(data));
   }
   @Input() Switches;
-
-  panelOpenState: boolean;
 
   checked: boolean;
   Height = "100px";
@@ -60,16 +63,20 @@ export class PnID_Device {
     }
   ];
 
-  Switches = []
-
   Last = "-1m";
   Done = true;
-  options: any = {
+  Accordion(Opened:boolean) {
+    console.log( this.options.scales.xAxes[0].type, Opened)
+    this.options.scales.xAxes[0].type = Opened? "": "realtime";
+  }
+  options: ChartOptions = {
     scales: {
       xAxes: [
         {
           type: "realtime",
           realtime: {
+            ttl: undefined,
+            refresh: 1000,
             onRefresh: chart => {
               chart.data.datasets[1].data.push({
                 x: Date.now(),
@@ -83,7 +90,7 @@ export class PnID_Device {
                 .execute(
                   "44051e60e390121f",
                   `from(bucket: "test")
-            |> range(start: ${this.Last})`
+                  |> range(start: ${this.Last})`
                 )
                 .promise.then(data => {
                   this.papa.parse(data, {
@@ -117,8 +124,7 @@ export class PnID_Device {
                   });
                 })
                 .catch(console.warn);
-            },
-            refresh: 1000
+            }
           }
         }
       ]

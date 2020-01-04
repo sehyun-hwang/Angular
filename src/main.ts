@@ -21,4 +21,4 @@ platformBrowserDynamic()
       document.querySelector("body").append(document.createElement("app-root"));
     };
   })
-  .catch(err => console.error(err));
+  .catch(console.error);
