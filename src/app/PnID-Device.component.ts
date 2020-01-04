@@ -48,7 +48,7 @@ export class PnID_Device {
     "jUGziYHIueFTW-eqGJwfxvnwmXwRDsEd9fhCGLsm7VBS_m0OH2stYEsECQwo6J39-ZzwpgaPCSRtVvvWc0zU6w=="
   );
 
-  datasets: any[] = [
+  datasets: ChartDataSets = [
     {
       label: "Influx DB",
       lineTension: 0,
@@ -74,6 +74,9 @@ export class PnID_Device {
       xAxes: [
         {
           type: "realtime",
+          time: {
+            parser: false,
+          },
           realtime: {
             ttl: undefined,
             refresh: 1000,

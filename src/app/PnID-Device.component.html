@@ -17,7 +17,7 @@
 		</mat-panel-description>
 	</mat-expansion-panel-header>
 
-	<canvas baseChart [chartType]="'line'" [datasets]="datasets" [options]="options">
+	<canvas baseChart [chartType]="'line'" [datasets]="datasets" [options]="panelOpenState ? options : {}">
 	</canvas>
   
 	<mat-list>
