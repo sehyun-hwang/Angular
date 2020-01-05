@@ -1,25 +1,22 @@
-<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+<mat-expansion-panel [expanded]="panelOpenState">
 	<mat-expansion-panel-header [collapsedHeight]="Height" [expandedHeight]="Height">
 		<mat-panel-title>
 			<mat-icon>widgets</mat-icon>
 			<span>LOTO Hardware</span>
 		</mat-panel-title>
 		<mat-panel-description>
-			<div>
-				<mat-icon>lock_open</mat-icon>
-				<span>Unlocked</span>
-				<mat-slide-toggle (click)="openDialog($event)" [(ngModel)]="checked"></mat-slide-toggle>
-				<span>Locked</span>
-				<mat-icon>lock</mat-icon>
-				<br/>
-				<p innerText=[Locked]></p>
-			</div>
+			<mat-icon>lock_open</mat-icon>
+			<mat-slide-toggle (click)="openDialog($event)" [(ngModel)]="checked"></mat-slide-toggle>
+			<mat-icon>lock</mat-icon>
+		</mat-panel-description>
+		<mat-panel-description>
+			<mat-spinner [diameter]="30"></mat-spinner>
 		</mat-panel-description>
 	</mat-expansion-panel-header>
 
 	<canvas baseChart [chartType]="'line'" [datasets]="datasets" [options]="panelOpenState ? options : {}">
 	</canvas>
-  
+
 	<mat-list>
 		<mat-list-item *ngFor="let Switch of Switches && Switches.slice(1); let i = index;">
 			<mat-icon matListIcon>
