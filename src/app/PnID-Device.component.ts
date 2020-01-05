@@ -1,5 +1,6 @@
 import { Component, Input } from "@angular/core";
 
+import { Parser, IOInjectable } from "./PnID";
 @Component({
   selector: "pnid-switch",
   template: '<mat-slide-toggle (change)="Change($event)"></mat-slide-toggle>'
@@ -22,7 +23,7 @@ import { ChartsModule } from "ng2-charts";
 import { ChartOptions, ChartType, ChartDataSets } from "chart.js";
 import "chartjs-plugin-streaming";
 
-import { Parser, IOInjectable } from "./PnID";
+
 
 @Component({
   selector: "pnid-device",
