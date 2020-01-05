@@ -2,7 +2,6 @@ import {
   Component,
   Input,
   OnChanges,
-  SimpleChanges,
   ChangeDetectorRef,
   Output,
   EventEmitter
@@ -15,17 +14,13 @@ import { Parser, IOInjectable } from "./PnID";
   templateUrl: "PnID-Switch.component.html"
 })
 export class PnID_Switch {
-  constructor(private IO: IOInjectable, private cdRef: ChangeDetectorRef) {}
-  ngOnChanges(changes: SimpleChanges) {
+  constructor(private cdRef: ChangeDetectorRef) {}
+  ngOnChanges() {
     this.cdRef.detectChanges()
   }
 
-  checked: boolean;
-  io = this.IO.io;
+  @Input() Click;
   @Input() Response;
-  @Input() Disabled_Override;
-  Disabled;
-
   @Output() Request = new EventEmitter<boolean>();
 }
 
@@ -57,7 +52,7 @@ export class PnID_Device {
   }
   @Input() Switches;
 
-  Locked: boolean = this.Switches;
+  Locked: boolean;
   Height = "100px";
   openDialog(event) {
     event.stopPropagation();
@@ -67,6 +62,7 @@ export class PnID_Device {
       .open(PnID_Dialog)
       .afterClosed()
       .subscribe(result => {
+        console.log(event)
         //@ts-ignore
         if (result) this.checked ^= true;
       });
