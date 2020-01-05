@@ -1,10 +1,12 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 
 import { Parser, IOInjectable } from "./PnID";
 
 @Component({
   selector: "pnid-switch",
-  template: '<mat-slide-toggle (change)="Change($event.checked)"></mat-slide-toggle>'
+  template: `<mat-slide-toggle
+  (change)="Request.emit(i, $event.checked)"
+  ></mat-slide-toggle>`
 })
 export class PnID_Switch {
   constructor(
@@ -17,9 +19,7 @@ export class PnID_Switch {
   @Input() Disabled_Override;
   Disabled;
   
-  Change(value) {
-    console.log(value)
-  }
+  @Output() Request = new EventEmitter<[number, boolean]>();
 }
 
 import { MatDialog } from "@angular/material/dialog";
@@ -41,6 +41,13 @@ export class PnID_Device {
     private papa: Papa,
     private IO: IOInjectable
   ) {}
+
+  Request(i: number, x: boolean) {
+    console.log(i, x)
+    const arr = [...this.Switches]
+    arr[i] = x;
+    this.io.emit("Switches", arr)
+  }
   @Input() Switches;
 
   checked: boolean;

@@ -12,22 +12,17 @@ import { IOInjectable, Timestamp } from "./PnID";
 export class PnID {
   table: Object;
   displayedColumns: string[] = ["time", "event"];
-
   Timestamp = Timestamp;
-  io = this.IO.io
+
+  Switches:boolean[];
+
+  io = this.IO.io;
   constructor(private IO:IOInjectable) {
     this.io.on("AngularTable", data => this.table = data);
-    this.io.on("Switches", data=> this.Response = data);
+    this.io.on("Switches", data=> this.Switches = data);
   }
+  
   myControl = new FormControl();
-
-  Response:boolean[];
-  private _Request:boolean[];
-  Request(i: number, x: boolean) {
-    this._Request[i] = x;
-    this.io.emit("Switches", this._Request)
-  }
-
   test() {
     this.io.emit("Ping");
   }
