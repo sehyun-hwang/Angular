@@ -4,7 +4,9 @@ import {
   OnChanges,
   ChangeDetectorRef,
   Output,
-  EventEmitter
+  EventEmitter,
+  ViewChild,
+  ElementRef
 } from "@angular/core";
 
 import { Parser, IOInjectable } from "./PnID";
@@ -16,7 +18,7 @@ import { Parser, IOInjectable } from "./PnID";
 export class PnID_Switch {
   constructor(private cdRef: ChangeDetectorRef) {}
   ngOnChanges() {
-    this.cdRef.detectChanges()
+    this.cdRef.detectChanges();
   }
 
   @Input() Click;
@@ -52,9 +54,9 @@ export class PnID_Device {
   }
   @Input() Switches;
 
-  Locked: boolean;
+  request: boolean;
   Height = "100px";
-  openDialog(event) {
+  _Dialog(event) {
     event.stopPropagation();
     event.preventDefault();
 
@@ -62,11 +64,11 @@ export class PnID_Device {
       .open(PnID_Dialog)
       .afterClosed()
       .subscribe(result => {
-        console.log(event)
         //@ts-ignore
-        if (result) this.checked ^= true;
+        if (result) this.Request(0, this.request);
       });
   }
+  Dialog = this._Dialog.bind(this)
 
   Influx = new Client(
     "https://us-west-2-1.aws.cloud2.influxdata.com/api/v2",

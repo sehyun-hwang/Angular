@@ -1,4 +1,5 @@
-<mat-slide-toggle #Slider  
+<mat-slide-toggle #Slider
+  (click)="Click && Click($event)"
 	[disabled]="Slider.checked !== Response" 
   [checked]="Response"
   (change)="Request.emit($event.checked)"
