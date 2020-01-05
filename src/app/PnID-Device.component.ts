@@ -4,17 +4,19 @@ import { Parser, IOInjectable } from "./PnID";
 
 @Component({
   selector: "pnid-switch",
-  template: `<mat-slide-toggle
+  template: `<mat-slide-toggle #Slider
   (change)="Request.emit($event.checked)"
-  ></mat-slide-toggle>`
+  >
+  <span [innerText]="Slider.checked"></span>
+  </mat-slide-toggle>`
 })
 export class PnID_Switch {
+  Log = console.log
   constructor(
     private IO: IOInjectable
   ){}
+  checked: boolean;
   io = this.IO.io;
-  
-  @Input() i;
   @Input() Status;
   @Input() Disabled_Override;
   Disabled;
@@ -159,8 +161,6 @@ export class PnID_Device {
   templateUrl: "PnID-Dialog.component.html"
 })
 export class PnID_Dialog {
-  @Input() LOTO;
-
   emailFormControl = new FormControl("", Validators.required, async ({value}) =>
     fetch("https://plantasset.kr/MPIS_WCF/webservice.asmx/LOGIN", {
       method: "POST",
