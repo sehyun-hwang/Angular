@@ -6,8 +6,67 @@ import {
   Output,
   EventEmitter,
   ViewChild,
-  ElementRef
+  ElementRef,
+  Inject
 } from "@angular/core";
+
+import { MatDialog } from "@angular/material/dialog";
+
+@Component({
+  selector: "pnid-dialog",
+  templateUrl: "PnID-Dialog.component.html"
+})
+export class PnID_Dialog {
+  emailFormControl = new FormControl(
+    "",
+    Validators.required,
+    async ({ value }) =>
+      fetch("https://plantasset.kr/MPIS_WCF/webservice.asmx/LOGIN", {
+        method: "POST",
+        body: (function() {
+          const Param = new URLSearchParams();
+          JSON.parse(
+            '["id","pwd","model","cordova","platform","uuid","version","manufacturer","isvirtual","serial","latitude","longitude","macaddress"]'
+          ).forEach(x =>
+            Param.append(
+              x,
+              {
+                id: "mpis",
+                pwd: value
+              }[x] || null
+            )
+          );
+          return Param;
+        })()
+      })
+        .then(Parser)
+        .then(data => ("STATUS" in data ? { error: "Wrong Password" } : null))
+  );
+
+  matcher = new MyErrorStateMatcher();
+}
+
+import {
+  FormControl,
+  FormGroupDirective,
+  NgForm,
+  Validators
+} from "@angular/forms";
+import { ErrorStateMatcher } from "@angular/material/core";
+
+class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(
+      control &&
+      control.invalid &&
+      (control.dirty || control.touched || isSubmitted)
+    );
+  }
+}
 
 import { Parser, IOInjectable } from "./PnID";
 
@@ -26,8 +85,6 @@ export class PnID_Switch {
   @Output() Request = new EventEmitter<boolean>();
 }
 
-import { MatDialog } from "@angular/material/dialog";
-
 import { Client } from "@influxdata/influx";
 import { Papa } from "ngx-papaparse";
 import { ChartsModule } from "ng2-charts";
@@ -36,7 +93,7 @@ import "chartjs-plugin-streaming";
 
 @Component({
   selector: "pnid-device",
-  templateUrl: "./PnID-Device.component.html"
+  templateUrl: "./PnID-Device.component.html",
 })
 export class PnID_Device {
   io = this.IO.io;
@@ -46,6 +103,10 @@ export class PnID_Device {
     private IO: IOInjectable
   ) {}
 
+  @ViewChild('Switch', {
+    static: false
+  }) Switch;
+
   Request(i: number, x: boolean) {
     console.log(i, x);
     const arr = [...this.Switches];
@@ -53,8 +114,7 @@ export class PnID_Device {
     this.io.emit("Switches", arr);
   }
   @Input() Switches;
-
-  request: boolean;
+  
   Height = "100px";
   _Dialog(event, checked) {
     event.stopPropagation();
@@ -64,11 +124,13 @@ export class PnID_Device {
       .open(PnID_Dialog)
       .afterClosed()
       .subscribe(result => {
-        console.log(result, checked)
-        if (result) this.Request(0, checked);
+        if (!result) return;
+        checked = !checked;
+        this.Request(0, !checked);
+        this.Switch.ngOnChanges();
       });
   }
-  Dialog = this._Dialog.bind(this)
+  Dialog = this._Dialog.bind(this);
 
   Influx = new Client(
     "https://us-west-2-1.aws.cloud2.influxdata.com/api/v2",
@@ -157,60 +219,4 @@ export class PnID_Device {
       ]
     }
   };
-}
-
-@Component({
-  selector: "pnid-dialog",
-  templateUrl: "PnID-Dialog.component.html"
-})
-export class PnID_Dialog {
-  emailFormControl = new FormControl(
-    "",
-    Validators.required,
-    async ({ value }) =>
-      fetch("https://plantasset.kr/MPIS_WCF/webservice.asmx/LOGIN", {
-        method: "POST",
-        body: (function() {
-          const Param = new URLSearchParams();
-          JSON.parse(
-            '["id","pwd","model","cordova","platform","uuid","version","manufacturer","isvirtual","serial","latitude","longitude","macaddress"]'
-          ).forEach(x =>
-            Param.append(
-              x,
-              {
-                id: "mpis",
-                pwd: value
-              }[x] || null
-            )
-          );
-          return Param;
-        })()
-      })
-        .then(Parser)
-        .then(data => ("STATUS" in data ? { error: "Wrong Password" } : null))
-  );
-
-  matcher = new MyErrorStateMatcher();
-}
-
-import {
-  FormControl,
-  FormGroupDirective,
-  NgForm,
-  Validators
-} from "@angular/forms";
-import { ErrorStateMatcher } from "@angular/material/core";
-
-class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null
-  ): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
-  }
 }

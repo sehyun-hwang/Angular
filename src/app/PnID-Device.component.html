@@ -5,10 +5,9 @@
 			<span>LOTO Hardware</span>
 		</mat-panel-title>
   
-
 		<mat-panel-description matTooltip="Status: {{checked}}">
 			<mat-icon>lock_open</mat-icon>
-			<pnid-switch [Click]="Dialog" [Response]="Switches[0]" (Request)="request=$event"></pnid-switch>
+			<pnid-switch #Switch [Click]="Dialog" [Response]="Switches[0]" ></pnid-switch>
 			<mat-icon>lock</mat-icon>
 		</mat-panel-description>
 

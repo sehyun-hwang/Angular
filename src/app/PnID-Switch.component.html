@@ -1,6 +1,6 @@
 <mat-slide-toggle #Slider
-  (click)="Click && Click($event, Slider.checked)"
-	[disabled]="Slider.checked !== Response" 
+  (click)="Click && Click($event, Slider)"
+	[disabled]="Slider.checked !== Response"
   [checked]="Response"
   (change)="Request.emit($event.checked)"
   labelPosition="before">
