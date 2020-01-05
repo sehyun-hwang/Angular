@@ -1,26 +1,31 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ChangeDetectorRef,
+  Output,
+  EventEmitter
+} from "@angular/core";
 
 import { Parser, IOInjectable } from "./PnID";
 
 @Component({
   selector: "pnid-switch",
-  template: `<mat-slide-toggle #Slider
-  (change)="Request.emit($event.checked)"
-  >
-  <span [innerText]="Slider.checked"></span>
-  </mat-slide-toggle>`
+  templateUrl: "PnID-Switch.component.html"
 })
 export class PnID_Switch {
-  Log = console.log
-  constructor(
-    private IO: IOInjectable
-  ){}
+  constructor(private IO: IOInjectable, private cdRef: ChangeDetectorRef) {}
+  ngOnChanges(changes: SimpleChanges) {
+    this.cdRef.detectChanges()
+  }
+
   checked: boolean;
   io = this.IO.io;
-  @Input() Status;
+  @Input() Response;
   @Input() Disabled_Override;
   Disabled;
-  
+
   @Output() Request = new EventEmitter<boolean>();
 }
 
@@ -45,14 +50,14 @@ export class PnID_Device {
   ) {}
 
   Request(i: number, x: boolean) {
-    console.log(i, x)
-    const arr = [...this.Switches]
+    console.log(i, x);
+    const arr = [...this.Switches];
     arr[i] = x;
-    this.io.emit("Switches", arr)
+    this.io.emit("Switches", arr);
   }
   @Input() Switches;
 
-  Locked:boolean = this.Switches;
+  Locked: boolean = this.Switches;
   Height = "100px";
   openDialog(event) {
     event.stopPropagation();
@@ -77,14 +82,14 @@ export class PnID_Device {
       label: "Influx DB",
       lineTension: 0,
       borderDash: [8, 4],
-      data: [],
+      data: []
     },
     {
       label: "Random",
       lineTension: 0,
       borderDash: [8, 4],
       data: [],
-      hidden: true,
+      hidden: true
     }
   ];
 
@@ -161,35 +166,41 @@ export class PnID_Device {
   templateUrl: "PnID-Dialog.component.html"
 })
 export class PnID_Dialog {
-  emailFormControl = new FormControl("", Validators.required, async ({value}) =>
-    fetch("https://plantasset.kr/MPIS_WCF/webservice.asmx/LOGIN", {
-      method: "POST",
-      body: (function() {
-        const Param = new URLSearchParams();
-        JSON.parse(
-          '["id","pwd","model","cordova","platform","uuid","version","manufacturer","isvirtual","serial","latitude","longitude","macaddress"]'
-        ).forEach(x =>
-          Param.append(
-            x,
-            {
-              id: "mpis",
-              pwd: value
-            }[x] || null
-          )
-        );
-        return Param;
-      })()
-    })
-      .then(Parser)
-      .then(data =>
-        "STATUS" in data ? { error: "Wrong Password" } : null 
-      )
+  emailFormControl = new FormControl(
+    "",
+    Validators.required,
+    async ({ value }) =>
+      fetch("https://plantasset.kr/MPIS_WCF/webservice.asmx/LOGIN", {
+        method: "POST",
+        body: (function() {
+          const Param = new URLSearchParams();
+          JSON.parse(
+            '["id","pwd","model","cordova","platform","uuid","version","manufacturer","isvirtual","serial","latitude","longitude","macaddress"]'
+          ).forEach(x =>
+            Param.append(
+              x,
+              {
+                id: "mpis",
+                pwd: value
+              }[x] || null
+            )
+          );
+          return Param;
+        })()
+      })
+        .then(Parser)
+        .then(data => ("STATUS" in data ? { error: "Wrong Password" } : null))
   );
 
   matcher = new MyErrorStateMatcher();
 }
 
-import { FormControl, FormGroupDirective, NgForm, Validators } from "@angular/forms";
+import {
+  FormControl,
+  FormGroupDirective,
+  NgForm,
+  Validators
+} from "@angular/forms";
 import { ErrorStateMatcher } from "@angular/material/core";
 
 class MyErrorStateMatcher implements ErrorStateMatcher {
