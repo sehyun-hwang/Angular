@@ -7,7 +7,7 @@ import { Component, Input } from "@angular/core";
 export class PnID_Switch {
   constructor(
     private IO: IOInjectable
-  )
+  ){}
   io = this.IO.io;
   Change(event) {
     console.log(event.checked)
