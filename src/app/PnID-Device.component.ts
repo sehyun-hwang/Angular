@@ -5,6 +5,10 @@ import { Component, Input } from "@angular/core";
   template: '<mat-slide-toggle (change)="Change($event)"></mat-slide-toggle>'
 })
 export class PnID_Switch {
+  constructor(
+    private IO: IOInjectable
+  )
+  io = this.IO.io;
   Change(event) {
     console.log(event.checked)
   }
