@@ -21,11 +21,11 @@
 	</canvas>
   
 	<mat-list>
-		<mat-list-item *ngFor="let Switch of Switches">
+		<mat-list-item *ngFor="let Switch of Switches && Switches.slice(1); let i = index;">
 			<mat-icon matListIcon>
 				settings_applications</mat-icon>
-			<h3 matLine>Switch {{Switch}}</h3>
-			<pnid-switch></pnid-switch>
+			<h3 matLine>Switch {{i+1}}</h3>
+			<pnid-switch [Status]="Switch" [i]=[i]></pnid-switch>
 		</mat-list-item>
 	</mat-list>
 </mat-expansion-panel>

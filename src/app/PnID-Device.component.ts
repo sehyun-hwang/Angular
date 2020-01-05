@@ -1,6 +1,7 @@
 import { Component, Input } from "@angular/core";
 
 import { Parser, IOInjectable } from "./PnID";
+
 @Component({
   selector: "pnid-switch",
   template: '<mat-slide-toggle (change)="Change($event)"></mat-slide-toggle>'
@@ -10,6 +11,12 @@ export class PnID_Switch {
     private IO: IOInjectable
   ){}
   io = this.IO.io;
+  
+  @Input() i;
+  @Input() Status;
+  @Input() Disabled_Override;
+  Disabled;
+  
   Change(event) {
     console.log(event.checked)
   }
@@ -23,8 +30,6 @@ import { ChartsModule } from "ng2-charts";
 import { ChartOptions, ChartType, ChartDataSets } from "chart.js";
 import "chartjs-plugin-streaming";
 
-
-
 @Component({
   selector: "pnid-device",
   templateUrl: "./PnID-Device.component.html"
@@ -35,9 +40,7 @@ export class PnID_Device {
     public dialog: MatDialog,
     private papa: Papa,
     private IO: IOInjectable
-  ) {
-    this.io.on("MCU", data => console.log(data));
-  }
+  ) {}
   @Input() Switches;
 
   checked: boolean;
@@ -180,7 +183,7 @@ export class PnID_Dialog {
   matcher = new MyErrorStateMatcher();
 }
 
-import { FormControl, FormGroupDirective, NgForm } from "@angular/forms";
+import { FormControl, FormGroupDirective, NgForm, Validators } from "@angular/forms";
 import { ErrorStateMatcher } from "@angular/material/core";
 
 class MyErrorStateMatcher implements ErrorStateMatcher {
