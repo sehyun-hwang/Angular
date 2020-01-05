@@ -19,7 +19,6 @@ export class AppComponent implements OnInit {
   Fragment: string;
 
   constructor(router: Router, public route: ActivatedRoute) {
-    console.log(1)
     if ("cordova" in window)
       router.resetConfig([{ path: "**", component: PnID }]);
     else {
