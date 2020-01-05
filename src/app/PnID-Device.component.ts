@@ -50,7 +50,7 @@ export class PnID_Device {
   }
   @Input() Switches;
 
-  checked: boolean;
+  Locked:boolean = this.Switches;
   Height = "100px";
   openDialog(event) {
     event.stopPropagation();
