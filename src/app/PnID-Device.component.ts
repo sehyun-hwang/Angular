@@ -4,7 +4,7 @@ import { Parser, IOInjectable } from "./PnID";
 
 @Component({
   selector: "pnid-switch",
-  template: '<mat-slide-toggle (change)="Change($event)"></mat-slide-toggle>'
+  template: '<mat-slide-toggle (change)="Change($event.checked)"></mat-slide-toggle>'
 })
 export class PnID_Switch {
   constructor(
@@ -17,8 +17,8 @@ export class PnID_Switch {
   @Input() Disabled_Override;
   Disabled;
   
-  Change(event) {
-    console.log(event.checked)
+  Change(value) {
+    console.log(value)
   }
 }
 

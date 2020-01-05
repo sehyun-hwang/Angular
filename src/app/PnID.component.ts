@@ -17,14 +17,15 @@ export class PnID {
   io = this.IO.io
   constructor(private IO:IOInjectable) {
     this.io.on("AngularTable", data => this.table = data);
-    this.io.on("Switches", data=> {
-      console.log(data)
-      this.Switches = data
-    });
+    this.io.on("Switches", data=> this.Response = data);
   }
   myControl = new FormControl();
 
-  Switches:boolean[];
+  Response:boolean[];
+  private _Request:boolean[];
+  Request(i, x) {
+    _Request
+  }
 
   test() {
     this.io.emit("Ping");
