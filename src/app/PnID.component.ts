@@ -23,8 +23,9 @@ export class PnID {
 
   Response:boolean[];
   private _Request:boolean[];
-  Request(i, x) {
-    _Request
+  Request(i: number, x: boolean) {
+    this._Request[i] = x;
+    this.io.emit("Switches", this._Request)
   }
 
   test() {
