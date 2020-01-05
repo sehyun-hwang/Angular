@@ -75,13 +75,14 @@ export class PnID_Device {
       label: "Influx DB",
       lineTension: 0,
       borderDash: [8, 4],
-      data: []
+      data: [],
     },
     {
       label: "Random",
       lineTension: 0,
       borderDash: [8, 4],
-      data: []
+      data: [],
+      hidden: true,
     }
   ];
 
@@ -160,9 +161,7 @@ export class PnID_Device {
 export class PnID_Dialog {
   @Input() LOTO;
 
-  password: string;
-
-  emailFormControl = new FormControl("", Validators.required, async data =>
+  emailFormControl = new FormControl("", Validators.required, async ({value}) =>
     fetch("https://plantasset.kr/MPIS_WCF/webservice.asmx/LOGIN", {
       method: "POST",
       body: (function() {
@@ -174,7 +173,7 @@ export class PnID_Dialog {
             x,
             {
               id: "mpis",
-              pwd: data.value
+              pwd: value
             }[x] || null
           )
         );
@@ -183,7 +182,7 @@ export class PnID_Dialog {
     })
       .then(Parser)
       .then(data =>
-        data["STATUS"] !== "false" ? null : { error: "Wrong Password" }
+        "STATUS" in data ? { error: "Wrong Password" } : null 
       )
   );
 
