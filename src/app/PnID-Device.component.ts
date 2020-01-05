@@ -64,7 +64,7 @@ export class PnID_Device {
       .open(PnID_Dialog)
       .afterClosed()
       .subscribe(result => {
-        //@ts-ignore
+        console.log(result, this.request)
         if (result) this.Request(0, this.request);
       });
   }
