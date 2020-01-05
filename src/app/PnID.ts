@@ -7,11 +7,9 @@ import IOClient from "socket.io-client";
 export class IOInjectable implements OnDestroy {
   io;
   constructor(){
-    console.log("constructed")
     this.io = IOClient("https://proxy.hwangsehyun.ga?port=8081");
   }
   ngOnDestroy() {
-    console.log("Connetion close");
     this.io.close();
   }
 }
