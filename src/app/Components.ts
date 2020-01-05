@@ -3,7 +3,7 @@ import { Index } from "./app.routing.component";
 import { TeachersDay } from "./TeachersDay.component";
 import { StreetCapture } from "./StreetCapture.component";
 import { PnID } from "./PnID.component";
-import { PnID_Device, PnID_Dialog } from "./PnID-Device.component";
+import { PnID_Device, PnID_Dialog, PnID_Switch } from "./PnID-Device.component";
 import { Community } from "./Community.component";
 
 import { Routes } from "@angular/router";
@@ -17,6 +17,7 @@ export const Declarations = [
   PnID,
   PnID_Device,
   PnID_Dialog,
+  PnID_Switch,
   Community
 ];
 

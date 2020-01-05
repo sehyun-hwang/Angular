@@ -1,9 +1,16 @@
 import { Component, Input } from "@angular/core";
-import {
-  MatDialog,
-  MatDialogTitle,
-  MAT_DIALOG_DATA
-} from "@angular/material/dialog";
+
+@Component({
+  selector: "pnid-switch",
+  template: '<mat-slide-toggle (change)="Change($event)"></mat-slide-toggle>'
+})
+export class PnID_Switch {
+  Change(event) {
+    console.log(event.checked)
+  }
+}
+
+import { MatDialog } from "@angular/material/dialog";
 
 import { Client } from "@influxdata/influx";
 import { Papa } from "ngx-papaparse";
@@ -65,15 +72,11 @@ export class PnID_Device {
 
   Last = "-1m";
   Done = true;
-  Accordion(Opened: boolean) {
-    console.log(this.options.scales.xAxes[0].type, Opened);
-    this.options.scales.xAxes[0].type = Opened ? "" : "realtime";
-  }
   options: ChartOptions = {
     scales: {
       xAxes: [
         {
-          type: "realtime",
+          type: "realtim",
           realtime: {
             ttl: undefined,
             refresh: 1000,
@@ -106,11 +109,10 @@ export class PnID_Device {
                     this.Done = true;
                     return;
                   }
-                  function FindIndex(Key) {
-                    return data[3].findIndex(x => x.indexOf(Key) > 0);
-                  }
-                  const Value_i = FindIndex("value");
-                  const Time_i = FindIndex("time");
+
+                  const [Value_i, Time_i] = ["value", "time"].map(key =>
+                    data[3].findIndex(x => x.indexOf(key) > 0)
+                  );
 
                   const date = new Date(data[data.length - 3][Time_i]);
                   date.setSeconds(date.getSeconds() + 1);
@@ -173,14 +175,7 @@ export class PnID_Dialog {
   matcher = new MyErrorStateMatcher();
 }
 
-import {
-  FormControl,
-  FormGroupDirective,
-  NgForm,
-  Validators,
-  AsyncValidatorFn,
-  ValidationErrors
-} from "@angular/forms";
+import { FormControl, FormGroupDirective, NgForm } from "@angular/forms";
 import { ErrorStateMatcher } from "@angular/material/core";
 
 class MyErrorStateMatcher implements ErrorStateMatcher {
