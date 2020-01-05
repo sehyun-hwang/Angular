@@ -5,7 +5,7 @@ import { Parser, IOInjectable } from "./PnID";
 @Component({
   selector: "pnid-switch",
   template: `<mat-slide-toggle
-  (change)="Request.emit(i, $event.checked)"
+  (change)="Request.emit($event.checked)"
   ></mat-slide-toggle>`
 })
 export class PnID_Switch {
@@ -19,7 +19,7 @@ export class PnID_Switch {
   @Input() Disabled_Override;
   Disabled;
   
-  @Output() Request = new EventEmitter<[number, boolean]>();
+  @Output() Request = new EventEmitter<boolean>();
 }
 
 import { MatDialog } from "@angular/material/dialog";
