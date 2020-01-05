@@ -56,7 +56,7 @@ export class PnID_Device {
 
   request: boolean;
   Height = "100px";
-  _Dialog(event) {
+  _Dialog(event, checked) {
     event.stopPropagation();
     event.preventDefault();
 
@@ -64,8 +64,8 @@ export class PnID_Device {
       .open(PnID_Dialog)
       .afterClosed()
       .subscribe(result => {
-        console.log(result, this.request)
-        if (result) this.Request(0, this.request);
+        console.log(result, checked)
+        if (result) this.Request(0, checked);
       });
   }
   Dialog = this._Dialog.bind(this)
