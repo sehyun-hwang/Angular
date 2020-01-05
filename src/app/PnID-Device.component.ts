@@ -116,7 +116,7 @@ export class PnID_Device {
   @Input() Switches;
   
   Height = "100px";
-  _Dialog(event, checked) {
+  _Dialog(event, Slider) {
     event.stopPropagation();
     event.preventDefault();
 
@@ -125,8 +125,9 @@ export class PnID_Device {
       .afterClosed()
       .subscribe(result => {
         if (!result) return;
-        checked = !checked;
-        this.Request(0, !checked);
+        Slider.checked ^= true;
+        
+        this.Request(0, Slider.checked);
         this.Switch.ngOnChanges();
       });
   }
