@@ -1,18 +1,17 @@
-import { Injectable, OnDestroy, OnInit } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import IOClient from "socket.io-client";
 
 @Injectable({
   providedIn: "root"
 })
-export class IOInjectable{
+export class IOInjectable implements OnDestroy {
   io;
-  construtor(){
-    console.log(this.io)
+  constructor(){
+    console.log("constructed")
     this.io = IOClient("https://proxy.hwangsehyun.ga?port=8081");
   }
-  
   ngOnDestroy() {
-    console.log("Connecdstion closed");
+    console.log("Connetion close");
     this.io.close();
   }
 }

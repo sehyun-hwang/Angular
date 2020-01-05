@@ -10,10 +10,10 @@ platformBrowserDynamic()
   .bootstrapModule(AppModule)
   .then(ref => {
     console.log("Bootstrap");
-    if (window["ngRef"] && !window["ngRef"]["_destroyed"])
+    if (window["ngRef"] && !window["ngRef"]["_destroyed"]) {
       window["ngRef"].destroy();
-    else
-      window["ngRef"] = ref;
+    }
+    window["ngRef"] = ref;
 
     window["RecreateAppRoot"] = function() {
       document.querySelector("app-root").remove();

@@ -12,8 +12,8 @@ import { ChartsModule } from "ng2-charts";
 import { GaugeModule } from "angular-gauge";
 
 import { DemoMaterialModule } from "./modules/Material.module";
-import { SocketIO } from "./modules/socket.io";
 
+import { DoBootstrap } from "@angular/core"
 import { RouterModule } from "@angular/router";
 import { routes, AppComponent, Declarations, PnID_Dialog } from "./Components";
 
@@ -36,11 +36,11 @@ import { routes, AppComponent, Declarations, PnID_Dialog } from "./Components";
 
     RouterModule.forRoot(routes())
   ],
-  providers: [SocketIO],
+  providers: [],
   //bootstrap: [AppComponent],
   entryComponents: [AppComponent, PnID_Dialog]
 })
-export class AppModule {
+export class AppModule implements DoBootstrap {
   ngDoBootstrap(app: ApplicationRef) {
     function Bootstrap() {
       app.bootstrap(AppComponent);
