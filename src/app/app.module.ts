@@ -13,7 +13,7 @@ import { GaugeModule } from "angular-gauge";
 
 import { DemoMaterialModule } from "./modules/Material.module";
 
-import { DoBootstrap } from "@angular/core"
+import { DoBootstrap } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { routes, AppComponent, Declarations, PnID_Dialog } from "./Components";
 
@@ -45,7 +45,7 @@ export class AppModule implements DoBootstrap {
     function Bootstrap() {
       app.bootstrap(AppComponent);
     }
-    if ("cordova" in window)
+    if ("cordova" in (window as any))
       window["Bootstrap"] = () => {
         Bootstrap();
         Bootstrap();

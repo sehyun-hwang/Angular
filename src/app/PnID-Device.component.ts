@@ -85,15 +85,29 @@ export class PnID_Switch {
   @Output() Request = new EventEmitter<boolean>();
 }
 
+interface Realtime {
+  duration: number;
+  ttl: number;
+  delay: number;
+  refresh: number;
+  onRefresh: (ChartConfiguration) => void;
+  frameRate: number;
+  pause: boolean;
+}
+
+interface XAxe extends ChartXAxe {
+  realtime: Realtime;
+}
+
 import { Client } from "@influxdata/influx";
 import { Papa } from "ngx-papaparse";
-import { ChartsModule } from "ng2-charts";
-import { ChartOptions, ChartType, ChartDataSets } from "chart.js";
+//import { ChartsModule } from "ng2-charts";
+import { ChartOptions, ChartXAxe } from "chart.js";
 import "chartjs-plugin-streaming";
 
 @Component({
   selector: "pnid-device",
-  templateUrl: "./PnID-Device.component.html",
+  templateUrl: "./PnID-Device.component.html"
 })
 export class PnID_Device {
   io = this.IO.io;
@@ -103,9 +117,11 @@ export class PnID_Device {
     private IO: IOInjectable
   ) {}
 
-  @ViewChild('Switch', {
+  @ViewChild("Switch", {
     static: false
-  }) Switch;
+  })
+  Switch;
+  Expanded: boolean;
 
   Request(i: number, x: boolean) {
     console.log(i, x);
@@ -114,9 +130,9 @@ export class PnID_Device {
     this.io.emit("Switches", arr);
   }
   @Input() Switches;
-  
+
   Height = "100px";
-  _Dialog(event, Slider) {
+  private _Dialog(event, Slider) {
     event.stopPropagation();
     event.preventDefault();
 
@@ -125,8 +141,9 @@ export class PnID_Device {
       .afterClosed()
       .subscribe(result => {
         if (!result) return;
-        Slider.checked ^= true;
-        
+
+        Slider.checked ^= true as any;
+
         this.Request(0, Slider.checked);
         this.Switch.ngOnChanges();
       });
@@ -138,8 +155,9 @@ export class PnID_Device {
     "jUGziYHIueFTW-eqGJwfxvnwmXwRDsEd9fhCGLsm7VBS_m0OH2stYEsECQwo6J39-ZzwpgaPCSRtVvvWc0zU6w=="
   );
 
-  datasets: ChartDataSets = [
+  datasets: any = [
     {
+      fill: true,
       label: "Influx DB",
       lineTension: 0,
       borderDash: [8, 4],
@@ -158,7 +176,7 @@ export class PnID_Device {
   Done = true;
   options: ChartOptions = {
     scales: {
-      xAxes: [
+      xAxes: <XAxe[]>[
         {
           type: "realtim",
           realtime: {
@@ -187,7 +205,7 @@ export class PnID_Device {
                       })
                     )
                 )
-                .then(data => {
+                .then((data: string[][]) => {
                   console.log(this.Last, data.length);
                   if (data.length < 3) {
                     this.Done = true;

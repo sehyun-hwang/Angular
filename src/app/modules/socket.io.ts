@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import io from 'socket.io-client';
-import { Observable, Subject } from 'rxjs';
-import * as Rx from 'rxjs';
+import { Injectable } from "@angular/core";
+import "socket.io-client";
+import { Observable, Subject } from "rxjs";
+//import * as Rx from "rxjs";
 
 @Injectable()
 export class SocketIO {
@@ -9,10 +9,10 @@ export class SocketIO {
   constructor() {}
 
   connect(): Subject<MessageEvent> {
-    this.socket = io('https://proxy.hwangsehyun.ga?port=8081');
+    this.socket = io("https://proxy.hwangsehyun.ga?port=8081");
     let observable = new Observable(observer => {
-      this.socket.on('message', data => {
-        console.log('Received a message from WebSocket: ', data);
+      this.socket.on("message", data => {
+        console.log("Received a message from WebSocket: ", data);
         observer.next(data);
       });
       return () => this.socket.disconnect();
@@ -20,9 +20,9 @@ export class SocketIO {
 
     let observer = {
       next: (data: Object) => {
-        this.socket.emit('Ping', JSON.stringify(data));
+        this.socket.emit("Ping", JSON.stringify(data));
       }
     };
     return Subject.create(observer, observable);
   }
-} 
+}
