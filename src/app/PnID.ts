@@ -1,5 +1,6 @@
 import { Injectable, OnDestroy } from "@angular/core";
-import "socket.io-client";
+// @ts-ignore
+import io from "socket.io-client";
 
 @Injectable({
   providedIn: "root"

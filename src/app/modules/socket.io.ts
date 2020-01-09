@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
-import "socket.io-client";
+// @ts-ignore
+import io from "socket.io-client";
 import { Observable, Subject } from "rxjs";
 //import * as Rx from "rxjs";
 
