@@ -96,6 +96,7 @@ interface Realtime {
 }
 
 interface XAxe extends ChartXAxe {
+  type: string;
   realtime: Realtime;
 }
 
@@ -115,13 +116,16 @@ export class PnID_Device {
     public dialog: MatDialog,
     private papa: Papa,
     private IO: IOInjectable
-  ) {}
+  ) {
+
+    setInterval(()=>console.log(this.Expanded), 1000)
+  }
 
   @ViewChild("Switch", {
     static: false
   })
   Switch;
-  Expanded: boolean;
+  Expanded: true;
 
   Request(i: number, x: boolean) {
     console.log(i, x);
@@ -178,7 +182,7 @@ export class PnID_Device {
     scales: {
       xAxes: <XAxe[]>[
         {
-          type: "realtim",
+          type: "realtime",
           realtime: {
             ttl: undefined,
             refresh: 1000,
@@ -187,6 +191,7 @@ export class PnID_Device {
                 x: Date.now(),
                 y: Math.random()
               });
+              console.log(123)
 
               if (!this.Done) return;
               this.Done = false;
