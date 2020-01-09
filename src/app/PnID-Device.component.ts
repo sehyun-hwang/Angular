@@ -117,15 +117,13 @@ export class PnID_Device {
     private papa: Papa,
     private IO: IOInjectable
   ) {
-
-    setInterval(()=>console.log(this.Expanded), 1000)
   }
 
   @ViewChild("Switch", {
     static: false
   })
   Switch;
-  Expanded: true;
+  Expanded =  true;
 
   Request(i: number, x: boolean) {
     console.log(i, x);
@@ -211,13 +209,13 @@ export class PnID_Device {
                     )
                 )
                 .then((data: string[][]) => {
-                  console.log(this.Last, data.length);
+                  console.log(data, this.Last, data.length);
                   if (data.length < 3) {
                     this.Done = true;
                     return;
                   }
 
-                  const [Value_i, Time_i] = ["value", "time"].map(key =>
+                  const [Value_i, Time_i] = ["temp", "time"].map(key =>
                     data[3].findIndex(x => x.indexOf(key) > 0)
                   );
 
