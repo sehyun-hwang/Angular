@@ -1,29 +1,17 @@
 import { Injectable, OnDestroy } from "@angular/core";
 import io from "socket.io-client";
 
-function AllProperties(In:object, Out:object = {}):object {
-  const keys = Object.getOwnPropertyNames(In);
-  keys.forEach(key =>
-    Object.defineProperty(In, key, {
-      enumerable: true
-    })
-  );
-  Out = { ...In, ...Out };
-
-  const Prototype = Object.getPrototypeOf(In);
-  return Prototype === Object.prototype ? Out : AllProperties(Prototype, Out);
-}
-
-interface SomeInterface extends SocketIOClientStatic {
+interface IOInterface extends SocketIOClientStatic {
   new(someParam: any): any
 }
 
 @Injectable({
   providedIn: "root"
 })
-export class IOInjectable extends (io as SomeInterface) implements OnDestroy {
+export class IOInjectable extends (io as IOInterface) implements OnDestroy {
   constructor() {
     super("https://proxy.hwangsehyun.ga?port=8081");
+
   }
   ngOnDestroy() {
     this.close();
