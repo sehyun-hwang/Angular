@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from "@angular/core";
 // @ts-ignore
 import io from "socket.io-client";
 
-function AllProperties(In, Out = {}) {
+function AllProperties(In:object, Out:object = {}):object {
   const keys = Object.getOwnPropertyNames(In);
   keys.forEach(key =>
     Object.defineProperty(In, key, {
@@ -18,9 +18,9 @@ function AllProperties(In, Out = {}) {
 @Injectable({
   providedIn: "root"
 })
-export class IOInjectable implements io, OnDestroy {
+export class IOInjectable implements SocketIOClient.Emitter, OnDestroy {
   constructor() {
-    Object.assign(this, AllProperties(io("https://proxy.hwangsehyun.ga?port=8081")));
+    Object.assign(this, <SocketIOClient.Emitter> AllProperties(io("https://proxy.hwangsehyun.ga?port=8081")));
   }
   ngOnDestroy() {
     this.close();
