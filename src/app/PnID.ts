@@ -1,5 +1,4 @@
 import { Injectable, OnDestroy } from "@angular/core";
-// @ts-ignore
 import io from "socket.io-client";
 
 function AllProperties(In:object, Out:object = {}):object {
@@ -15,12 +14,16 @@ function AllProperties(In:object, Out:object = {}):object {
   return Prototype === Object.prototype ? Out : AllProperties(Prototype, Out);
 }
 
+interface SomeInterface extends SocketIOClientStatic {
+  new(someParam: any): any
+}
+
 @Injectable({
   providedIn: "root"
 })
-export class IOInjectable implements SocketIOClient.Emitter, OnDestroy {
+export class IOInjectable extends (io as SomeInterface) implements OnDestroy {
   constructor() {
-    Object.assign(this, <SocketIOClient.Emitter> AllProperties(io("https://proxy.hwangsehyun.ga?port=8081")));
+    super("https://proxy.hwangsehyun.ga?port=8081");
   }
   ngOnDestroy() {
     this.close();
