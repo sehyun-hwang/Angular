@@ -14,6 +14,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { Parser, IOInjectable } from "./PnID";
 import { PnID_Dialog } from "./PnID-Dialog.component";
 import { Realtime, XAxe } from "./PnID-Interfaces";
+import { Influx } from "./PnID-Influx";
 
 @Component({
   selector: "pnid-switch",
@@ -39,13 +40,15 @@ import "chartjs-plugin-streaming";
   selector: "pnid-device",
   templateUrl: "./PnID-Device.component.html"
 })
-export class PnID_Device {
+export class PnID_Device extends Influx {
   io = this.IO.io;
   constructor(
     public dialog: MatDialog,
     private papa: Papa,
     private IO: IOInjectable
   ) {
+    super(Time => `from(bucket: "test")
+                  |> range(start: ${Time})`)
   }
 
   @ViewChild("Switch", {
@@ -81,23 +84,6 @@ export class PnID_Device {
   }
   Dialog = this._Dialog.bind(this);
 
-  Influx = new Client(
-    "https://us-west-2-1.aws.cloud2.influxdata.com/api/v2",
-    "jUGziYHIueFTW-eqGJwfxvnwmXwRDsEd9fhCGLsm7VBS_m0OH2stYEsECQwo6J39-ZzwpgaPCSRtVvvWc0zU6w=="
-  );
-
-  datasets: any = [
-    {
-      label: "Random",
-      lineTension: 0,
-      borderDash: [8, 4],
-      data: [],
-      hidden: true
-    }
-  ];
-
-  Last = "-1m";
-  Done = true;
   options: ChartOptions = {
     scales: {
       xAxes: <XAxe[]>[
@@ -107,7 +93,7 @@ export class PnID_Device {
             ttl: undefined,
             refresh: 1000,
             onRefresh: chart => {
-              chart.data.datasets[0].data.push({
+              this.Datasets[0].data.push({
                 x: Date.now(),
                 y: Math.random()
               });

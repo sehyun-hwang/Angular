@@ -1,4 +1,8 @@
-export default class Influx {
+interface Datasets extends Object {
+  data: object[]
+}
+
+export class Influx {
   Last = '-1m'
   First() {
 function Tags() {
@@ -12,11 +16,24 @@ function Tags() {
         }
   }
 
-  constructor(Query: (string)=>string) {
+Datasets: object[] = [
+    {
+      label: "Random",
+      lineTension: 0,
+      borderDash: [8, 4],
+      data: [],
+      hidden: true
+    }
+  ];
 
-  }
+  constructor(private Query: (string)=>string) {}
 
-  Push(Datasets) {
+  Influx = new Client(
+    "https://us-west-2-1.aws.cloud2.influxdata.com/api/v2",
+    "jUGziYHIueFTW-eqGJwfxvnwmXwRDsEd9fhCGLsm7VBS_m0OH2stYEsECQwo6J39-ZzwpgaPCSRtVvvWc0zU6w=="
+  );
 
-  } 
+  Last = "-1m";
+  Done = true;
+  
 }
