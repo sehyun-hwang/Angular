@@ -40,16 +40,17 @@ import "chartjs-plugin-streaming";
   selector: "pnid-device",
   templateUrl: "./PnID-Device.component.html"
 })
-export class PnID_Device extends Influx {
+export class PnID_Device {
   io = this.IO.io;
   constructor(
     public dialog: MatDialog,
     private papa: Papa,
     private IO: IOInjectable
   ) {
-    super(Time => `from(bucket: "test")
+    this.Influx = new Influx(Time => `from(bucket: "test")
                   |> range(start: ${Time})`)
   }
+  Influx:Influx;
 
   @ViewChild("Switch", {
     static: false
@@ -93,64 +94,7 @@ export class PnID_Device extends Influx {
             ttl: undefined,
             refresh: 1000,
             onRefresh: chart => {
-              this.Datasets[0].data.push({
-                x: Date.now(),
-                y: Math.random()
-              });
-              console.log(123)
-              return;
-
-              if (!this.Done) return;
-              this.Done = false;
-
-              this.Influx.queries
-                .execute(
-                  "44051e60e390121f",
-                  `from(bucket: "test")
-                  |> range(start: ${this.Last})`
-                )
-                .promise.then(
-                  data =>
-                    new Promise(resolve =>
-                      this.papa.parse(data, {
-                        complete: data => resolve({ data })
-                      })
-                    )
-                )
-                .then((data: string[][]) => {
-                  console.log(data, this.Last, data.length);
-                  /*
-                  {
-      label: "Influx DB",
-      lineTension: 0,
-      borderDash: [8, 4],
-      data: []
-    },*/
-                  if (data.length < 3) {
-                    this.Done = true;
-                    return;
-                  }
-
-                  const [Value_i, Time_i] = ["temp", "time"].map(key =>
-                    data[3].findIndex(x => x.indexOf(key) > 0)
-                  );
-
-                  const date = new Date(data[data.length - 3][Time_i]);
-                  date.setSeconds(date.getSeconds() + 1);
-                  this.Last = date.toISOString();
-
-                  for (const x of data)
-                    chart.data.datasets[0].data.push({
-                      x: x[Time_i],
-                      y: x[Value_i]
-                    });
-
-                  chart.update({
-                    preservation: true
-                  });
-                  this.Done = true;
-                })
-                .catch(console.warn);
+              
             }
           }
         }
