@@ -12,6 +12,8 @@ import {
 import { MatDialog } from "@angular/material/dialog";
 
 import { Parser, IOInjectable } from "./PnID";
+import { PnID_Dialog } from "./PnID-Dialog.component";
+import { Realtime, XAxe } from "./PnID-Interfaces";
 
 @Component({
   selector: "pnid-switch",
@@ -32,8 +34,6 @@ import { Client } from "@influxdata/influx";
 import { Papa } from "ngx-papaparse";
 import { ChartOptions } from "chart.js";
 import "chartjs-plugin-streaming";
-
-import { Realtime, XAxe } from "./PnID-Interfaces";
 
 @Component({
   selector: "pnid-device",
@@ -88,13 +88,6 @@ export class PnID_Device {
 
   datasets: any = [
     {
-      fill: true,
-      label: "Influx DB",
-      lineTension: 0,
-      borderDash: [8, 4],
-      data: []
-    },
-    {
       label: "Random",
       lineTension: 0,
       borderDash: [8, 4],
@@ -139,6 +132,13 @@ export class PnID_Device {
                 )
                 .then((data: string[][]) => {
                   console.log(data, this.Last, data.length);
+                  /*
+                  {
+      label: "Influx DB",
+      lineTension: 0,
+      borderDash: [8, 4],
+      data: []
+    },*/
                   if (data.length < 3) {
                     this.Done = true;
                     return;

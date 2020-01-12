@@ -4,7 +4,7 @@ import { TeachersDay } from "./TeachersDay.component";
 import { StreetCapture } from "./StreetCapture.component";
 import { PnID } from "./PnID.component";
 import { PnID_Device, PnID_Switch } from "./PnID-Device.component";
-import { PnID_Dialog } from "./PnID-D.component";
+import { PnID_Dialog } from "./PnID-Dialog.component";
 import { Community } from "./Community.component";
 
 import { Routes } from "@angular/router";
