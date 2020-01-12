@@ -1,19 +1,15 @@
 import { Client } from "@influxdata/influx";
 import { Papa } from "ngx-papaparse";
-
-interface Data {
-  x: string | number;
-  y: number;
-}
-interface Dataset {
-  [key: string]: any;
-  data: Data[];
-}
-
 export class Influx {
   Last = "-1m";
 
-  Datasets: Dataset[] = [
+  Datasets: {
+    [key: string]: any;
+    data: {
+      x: string | number;
+      y: number;
+    }[];
+  }[] = [
     {
       label: "Random",
       lineTension: 0,
@@ -86,8 +82,19 @@ export class Influx {
 
         return data;
       })
-      .then((data: (string | number)[][]) => {
-        const Result = (():object => {
+      .then(
+        (
+          data: (string | number)[][]
+        ): {
+          [key: string]: number[];
+          x: number[];
+        } => {
+          {
+            const date = new Date(data[data.length - 3][10]);
+            date.setSeconds(date.getSeconds() + 1);
+            this.Last = date.toISOString();
+          }
+
           const Labels = {
             x: 5,
             y: 6,
@@ -113,25 +120,20 @@ export class Influx {
             },
             {
               x: data2[0].map(x => x[Labels.x])
-            } as any
+            }
           );
-        })()
-        
-        Object.defineProperty(Result, 'x', {
-  enumerab: false
-});
-        Object.Result.forEach(Label => {
-          this.Datasets[this.Labels.findIndex(Label)].data.push({
-            x: x[Time_i],
-            y: 
-          });
+        }
+      )
+      .then(data => {
+        Object.defineProperty(Result, "x", {
+          enumerable: false
+        });
+        const { x } = Result;
+
+        Object.entries(Result).forEach(([key, value], i) => {
+          this.Datasets[this.Labels.findIndex(key)].data.concat();
         });
 
-        {
-          const date = new Date(data[data.length - 3][10]);
-          date.setSeconds(date.getSeconds() + 1);
-          this.Last = date.toISOString();
-        }
         this.Done = true;
         chart.update({
           preservation: true
