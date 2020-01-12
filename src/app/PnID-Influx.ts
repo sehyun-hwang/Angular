@@ -27,7 +27,7 @@ export class Influx {
   );
 
   Done = false;
-  Labels= string[];
+  Labels: string[];
   Refresh(chart) {
     this.Datasets[0].data.push({
       x: Date.now(),
@@ -52,12 +52,13 @@ export class Influx {
             })
           )
       )
-      .then((data: string[][]) => {
+      .then((data: (string|number)[][]) => {
+        console.log(data, data.length, this.Last);
         if (data.length > 2) return data;
         this.Done = true;
         Promise.reject();
       })
-      .then(data => {
+      .then((data: (string|number)[][]) => {
         const tags = data.slice(3, 5).map(x => x.slice(9));
         function Tags(Result: string[] | object) {
           return Result instanceof Array
@@ -81,16 +82,36 @@ export class Influx {
 
         return data;
       })
-      .then(data => {
-        console.log(data, this.Last, data.length);
+      .then((data: (string|number)[][]) => {
+        const Result = (()=> {
+        const Labels = {
+          x: 5,
+          y: 6,
+          label: 7
+        };
 
-        const [Value_i, Time_i] = ["temp", "time"].map(key =>
-          data[3].findIndex(x => x.indexOf(key) > 0)
+        const Indexes = data.reduce((accum, cur, i) => {
+          cur.length === 1 && accum.push(i);
+          return accum;
+        }, []) as number[];
+        Indexes.pop();
+        console.log("Indexes:", Indexes);
+
+        const data2 = Indexes.map((x, i) =>
+          data.slice(i ? Indexes[i - 1] + 5 : 4, x) as number[][]
         );
-
-        const date = new Date(data[data.length - 3][Time_i]);
-        date.setSeconds(date.getSeconds() + 1);
-        this.Last = date.toISOString();
+        //console.log(data2.map(x => x.slice(0, 5)));
+        const Label = data[0][Labels.label] as string;
+        return data2.reduce(
+          (accum, cur) => {
+            accum[Label] = cur.map(x => x[Labels.y]);
+            return accum;
+          },
+          {
+            x: data2[0].map(x => x[Labels.x])
+          }
+        );
+        })()
 
         for (const x of data)
           chart.data.datasets[0].data.push({
@@ -98,8 +119,12 @@ export class Influx {
             y: x[Value_i]
           });
 
+        {
+          const date = new Date(data[data.length - 3][10]);
+          date.setSeconds(date.getSeconds() + 1);
+          this.Last = date.toISOString();
+        }
         this.Done = true;
-
         chart.update({
           preservation: true
         });
