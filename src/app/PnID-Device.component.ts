@@ -13,7 +13,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { ChartOptions } from "chart.js";
 import "chartjs-plugin-streaming";
 
-import { Parser, IOInjectable } from "./PnID";
+import { IOInjectable } from "./PnID";
 import { PnID_Dialog } from "./PnID-Dialog.component";
 import { Realtime, XAxe } from "./PnID-Interfaces";
 import { Influx } from "./PnID-Influx";

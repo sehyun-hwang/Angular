@@ -12,10 +12,9 @@ export class PnID {
   displayedColumns: string[] = ["time", "event"];
   Timestamp = Timestamp;
 
-  Switches: boolean[];
+  Switches: boolean;
 
-  io = this.IO.io;
-  constructor(private IO: IOInjectable) {
+  constructor(private io: IOInjectable) {
     console.log(this.io)
     this.io.on("AngularTable", data => (this.table = data));
     this.io.on("Switches", data => (this.Switches = data));
