@@ -30,3 +30,4 @@ export async function Parser(promise: Response) {
 export function Timestamp(n: number) {
   return new Date(n * 1000).toLocaleString();
 }
+
