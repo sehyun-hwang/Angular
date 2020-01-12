@@ -7,7 +7,7 @@ export interface Realtime {
   ttl: number;
   delay: number;
   refresh: number;
-  onRefresh: (ChartConfiguration) => void;
+  onRefresh(ChartConfiguration): void;
   frameRate: number;
   pause: boolean;
 }
