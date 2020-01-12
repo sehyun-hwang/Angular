@@ -1,11 +1,12 @@
 import { Injectable, OnDestroy } from "@angular/core";
 import io from "socket.io-client";
 
+import {IOInterface } from "./PnID-Interfaces"
 
 @Injectable({
   providedIn: "root"
 })
-export class IOInjectable extends (io as SocketIOClient.Socket) implements OnDestroy {
+export class IOInjectable extends (io as IOInterface) implements OnDestroy {
   constructor() {
     super("https://proxy.hwangsehyun.ga?port=8081");
     console.log(this)

@@ -1,6 +1,6 @@
-import io from "socket.io-client";
-
-
+export interface IOInterface extends SocketIOClientStatic {
+  new(URL: string, Options?: SocketIOClient.ConnectOpts): any
+}
 
 export interface Realtime {
   duration: number;
