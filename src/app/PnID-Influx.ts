@@ -1,5 +1,11 @@
 import { Client } from "@influxdata/influx";
 import { Papa } from "ngx-papaparse";
+
+interface Data {
+  [key: string]: number[];
+  x: number[];
+}
+
 export class Influx {
   Last = "-1m";
 
@@ -83,12 +89,7 @@ export class Influx {
         return data;
       })
       .then(
-        (
-          data: (string | number)[][]
-        ): {
-          [key: string]: number[];
-          x: number[];
-        } => {
+        (data: (string | number)[][]): Data => {
           {
             const date = new Date(data[data.length - 3][10]);
             date.setSeconds(date.getSeconds() + 1);
@@ -124,14 +125,15 @@ export class Influx {
           );
         }
       )
-      .then(data => {
-        Object.defineProperty(Result, "x", {
+      .then((data: Data) => {
+        Object.defineProperty(data, "x", {
           enumerable: false
         });
-        const { x } = Result;
+        const { x } = data;
 
-        Object.entries(Result).forEach(([key, value], i) => {
-          this.Datasets[this.Labels.findIndex(key)].data.concat();
+        Object.entries(data).forEach(([key, value], i) => {
+          const temp = data.map((y, i) => ({ x: x[i], y }));
+          this.Datasets[this.Labels.findIndex(key)].data.concat(temp);
         });
 
         this.Done = true;

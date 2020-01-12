@@ -85,7 +85,7 @@ export class PnID_Device {
           realtime: {
             ttl: undefined,
             refresh: 1000,
-            onRefresh: chart => {}
+            onRefresh: Influx.Refresh
           }
         }
       ]
