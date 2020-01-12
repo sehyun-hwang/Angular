@@ -10,6 +10,8 @@ import {
   Inject
 } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
+import { ChartOptions } from "chart.js";
+import "chartjs-plugin-streaming";
 
 import { Parser, IOInjectable } from "./PnID";
 import { PnID_Dialog } from "./PnID-Dialog.component";
@@ -31,32 +33,22 @@ export class PnID_Switch {
   @Output() Request = new EventEmitter<boolean>();
 }
 
-import { Client } from "@influxdata/influx";
-import { Papa } from "ngx-papaparse";
-import { ChartOptions } from "chart.js";
-import "chartjs-plugin-streaming";
-
 @Component({
   selector: "pnid-device",
   templateUrl: "./PnID-Device.component.html"
 })
 export class PnID_Device {
-  io = this.IO.io;
-  constructor(
-    public dialog: MatDialog,
-    private papa: Papa,
-    private IO: IOInjectable
-  ) {
-    this.Influx = new Influx(Time => `from(bucket: "test")
-                  |> range(start: ${Time})`)
-  }
-  Influx:Influx;
+  constructor(private dialog: MatDialog, private io: IOInjectable) {}
+  Influx = new Influx(
+    Time => `from(bucket: "test")
+                  |> range(start: ${Time})`
+  );
 
   @ViewChild("Switch", {
     static: false
   })
   Switch;
-  Expanded =  true;
+  Expanded = true;
 
   Request(i: number, x: boolean) {
     console.log(i, x);
@@ -93,9 +85,7 @@ export class PnID_Device {
           realtime: {
             ttl: undefined,
             refresh: 1000,
-            onRefresh: chart => {
-              
-            }
+            onRefresh: chart => {}
           }
         }
       ]
