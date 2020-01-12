@@ -14,8 +14,9 @@ export class PnID {
 
   Switches: boolean[];
 
-  //io = this.IO.io;
-  constructor(private io: IOInjectable) {
+  io = this.IO.io;
+  constructor(private IO: IOInjectable) {
+    console.log(this.io)
     this.io.on("AngularTable", data => (this.table = data));
     this.io.on("Switches", data => (this.Switches = data));
   }

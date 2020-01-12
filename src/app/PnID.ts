@@ -9,6 +9,7 @@ import { IOInterface } from "./PnID-Interfaces";
 export class IOInjectable extends (io as IOInterface) implements OnDestroy {
   constructor() {
     super("https://proxy.hwangsehyun.ga?port=8081");
+    console.log(io)
   }
   ngOnDestroy() {
     this.close();
