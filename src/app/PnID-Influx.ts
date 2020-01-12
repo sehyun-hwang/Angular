@@ -1,9 +1,8 @@
 import { Client } from "@influxdata/influx";
 import { Papa } from "ngx-papaparse";
 
-
 interface Data {
-  x: string|number;
+  x: string | number;
   y: number;
 }
 interface Dataset {
@@ -57,13 +56,13 @@ export class Influx {
             })
           )
       )
-      .then((data: (string|number)[][]) => {
+      .then((data: (string | number)[][]) => {
         console.log(data, data.length, this.Last);
         if (data.length > 2) return data;
         this.Done = true;
         Promise.reject();
       })
-      .then((data: (string|number)[][]) => {
+      .then((data: (string | number)[][]) => {
         const tags = data.slice(3, 5).map(x => x.slice(9));
         function Tags(Result: string[] | object) {
           return Result instanceof Array
@@ -87,41 +86,46 @@ export class Influx {
 
         return data;
       })
-      .then((data: (string|number)[][]) => {
-        const Result = (()=> {
-        const Labels = {
-          x: 5,
-          y: 6,
-          label: 7
-        };
+      .then((data: (string | number)[][]) => {
+        const Result = (():object => {
+          const Labels = {
+            x: 5,
+            y: 6,
+            label: 7
+          };
 
-        const Indexes = data.reduce((accum, cur, i) => {
-          cur.length === 1 && accum.push(i);
-          return accum;
-        }, []) as number[];
-        Indexes.pop();
-        console.log("Indexes:", Indexes);
-
-        const data2 = Indexes.map((x, i) =>
-          data.slice(i ? Indexes[i - 1] + 5 : 4, x) as number[][]
-        );
-        //console.log(data2.map(x => x.slice(0, 5)));
-        const Label = data[0][Labels.label] as string;
-        return data2.reduce(
-          (accum, cur) => {
-            accum[Label] = cur.map(x => x[Labels.y]);
+          const Indexes = data.reduce((accum, cur, i) => {
+            cur.length === 1 && accum.push(i);
             return accum;
-          },
-          {
-            x: data2[0].map(x => x[Labels.x]),
-          } as any
-        );
-        })() 
+          }, []) as number[];
+          Indexes.pop();
+          console.log("Indexes:", Indexes);
 
-          this.Datasets[0].data.push({
+          const data2 = Indexes.map(
+            (x, i) => data.slice(i ? Indexes[i - 1] + 5 : 4, x) as number[][]
+          );
+          //console.log(data2.map(x => x.slice(0, 5)));
+          const Label = data[0][Labels.label] as string;
+          return data2.reduce(
+            (accum, cur) => {
+              accum[Label] = cur.map(x => x[Labels.y]);
+              return accum;
+            },
+            {
+              x: data2[0].map(x => x[Labels.x])
+            } as any
+          );
+        })()
+        
+        Object.defineProperty(Result, 'x', {
+  enumerab: false
+});
+        Object.Result.forEach(Label => {
+          this.Datasets[this.Labels.findIndex(Label)].data.push({
             x: x[Time_i],
-            y: x[Value_i]
+            y: 
           });
+        });
 
         {
           const date = new Date(data[data.length - 3][10]);
