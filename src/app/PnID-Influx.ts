@@ -1,22 +1,22 @@
-interface Datasets extends Object {
-  data: object[]
+interface Dataset {
+  data: object[];
+  [key: string]: any;
 }
 
 export class Influx {
-  Last = '-1m'
+  Last = "-1m";
   First() {
-function Tags() {
-            const tags = data.slice(3, 5)
-                .map(x => x.slice(9));
+    function Tags() {
+      const tags = data.slice(3, 5).map(x => x.slice(9));
 
-            return tags[0].reduce((accum, cur, i) => {
-                accum[cur] = tags[1][i];
-                return accum;
-            }, {});
-        }
+      return tags[0].reduce((accum, cur, i) => {
+        accum[cur] = tags[1][i];
+        return accum;
+      }, {});
+    }
   }
 
-Datasets: object[] = [
+  Datasets: Dataset[] = [
     {
       label: "Random",
       lineTension: 0,
@@ -26,7 +26,7 @@ Datasets: object[] = [
     }
   ];
 
-  constructor(private Query: (string)=>string) {}
+  constructor(private Query: (string) => string) {}
 
   Influx = new Client(
     "https://us-west-2-1.aws.cloud2.influxdata.com/api/v2",
@@ -35,5 +35,4 @@ Datasets: object[] = [
 
   Last = "-1m";
   Done = true;
-  
 }
