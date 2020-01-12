@@ -107,11 +107,12 @@ export class PnID_Device {
             ttl: undefined,
             refresh: 1000,
             onRefresh: chart => {
-              chart.data.datasets[1].data.push({
+              chart.data.datasets[0].data.push({
                 x: Date.now(),
                 y: Math.random()
               });
               console.log(123)
+              return;
 
               if (!this.Done) return;
               this.Done = false;
