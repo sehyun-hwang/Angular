@@ -9,64 +9,7 @@ import {
   ElementRef,
   Inject
 } from "@angular/core";
-
 import { MatDialog } from "@angular/material/dialog";
-
-@Component({
-  selector: "pnid-dialog",
-  templateUrl: "PnID-Dialog.component.html"
-})
-export class PnID_Dialog {
-  emailFormControl = new FormControl(
-    "",
-    Validators.required,
-    async ({ value }) =>
-      fetch("https://plantasset.kr/MPIS_WCF/webservice.asmx/LOGIN", {
-        method: "POST",
-        body: (function() {
-          const Param = new URLSearchParams();
-          JSON.parse(
-            '["id","pwd","model","cordova","platform","uuid","version","manufacturer","isvirtual","serial","latitude","longitude","macaddress"]'
-          ).forEach(x =>
-            Param.append(
-              x,
-              {
-                id: "mpis",
-                pwd: value
-              }[x] || null
-            )
-          );
-          return Param;
-        })()
-      })
-        .then(Parser)
-        .then(data => ("STATUS" in data ? { error: "Wrong Password" } : null))
-  );
-
-  matcher = new MyErrorStateMatcher();
-}
-
-import {
-  FormControl,
-  FormGroupDirective,
-  NgForm,
-  Validators
-} from "@angular/forms";
-import { ErrorStateMatcher } from "@angular/material/core";
-
-class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null
-  ): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
-  }
-}
 
 import { Parser, IOInjectable } from "./PnID";
 
@@ -85,26 +28,12 @@ export class PnID_Switch {
   @Output() Request = new EventEmitter<boolean>();
 }
 
-interface Realtime {
-  duration: number;
-  ttl: number;
-  delay: number;
-  refresh: number;
-  onRefresh: (ChartConfiguration) => void;
-  frameRate: number;
-  pause: boolean;
-}
-
-interface XAxe extends ChartXAxe {
-  type: string;
-  realtime: Realtime;
-}
-
 import { Client } from "@influxdata/influx";
 import { Papa } from "ngx-papaparse";
-//import { ChartsModule } from "ng2-charts";
-import { ChartOptions, ChartXAxe } from "chart.js";
+import { ChartOptions } from "chart.js";
 import "chartjs-plugin-streaming";
+
+import { Realtime, XAxe } from "./PnID-Interfaces";
 
 @Component({
   selector: "pnid-device",
