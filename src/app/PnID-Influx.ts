@@ -2,25 +2,12 @@ import { Client } from "@influxdata/influx";
 import { Papa } from "ngx-papaparse";
 
 interface Dataset {
-  data: object[];
   [key: string]: any;
+  data: object[];
 }
 
 export class Influx {
   Last = "-1m";
-
-  First(data:string[][]) {
-    const tags = data.slice(3, 5).map(x => x.slice(9));
-
-    function Tags(Result: string[] | object) {
-      return tags[0].reduce((accum, cur, i) => {
-        accum[cur] = tags[1][i];
-        return accum;
-      }, {});
-    }
-
-    return;
-  }
 
   Datasets: Dataset[] = [
     {
@@ -39,15 +26,13 @@ export class Influx {
     "jUGziYHIueFTW-eqGJwfxvnwmXwRDsEd9fhCGLsm7VBS_m0OH2stYEsECQwo6J39-ZzwpgaPCSRtVvvWc0zU6w=="
   );
 
-  Last = "-1m";
-  Done = true;
-
+  Done = false;
+  Labels= string[];
   Refresh(chart) {
     this.Datasets[0].data.push({
       x: Date.now(),
       y: Math.random()
     });
-    console.log(123);
     return;
 
     if (!this.Done) return;
@@ -57,7 +42,7 @@ export class Influx {
       .execute(
         "44051e60e390121f",
         `from(bucket: "test")
-                  |> range(start: ${this.Last})`
+          |> range(start: ${this.Last})`
       )
       .promise.then(
         data =>
@@ -68,18 +53,36 @@ export class Influx {
           )
       )
       .then((data: string[][]) => {
-        console.log(data, this.Last, data.length);
-        /*
-                  {
-      label: "Influx DB",
-      lineTension: 0,
-      borderDash: [8, 4],
-      data: []
-    },*/
-        if (data.length < 3) {
-          this.Done = true;
-          return;
+        if (data.length > 2) return data;
+        this.Done = true;
+        Promise.reject();
+      })
+      .then(data => {
+        const tags = data.slice(3, 5).map(x => x.slice(9));
+        function Tags(Result: string[] | object) {
+          return Result instanceof Array
+            ? tags[0].reduce((accum, cur, i) => {
+                accum[cur] = tags[1][i];
+                return accum;
+              }, {})
+            : tags[0];
         }
+
+        this.Labels = this.Datasets.map(x => x.label);
+        this.Labels.forEach(label => {
+          label in this.Labels ||
+            this.Datasets.push({
+              label,
+              lineTension: 0,
+              borderDash: [8, 4],
+              data: []
+            });
+        });
+
+        return data;
+      })
+      .then(data => {
+        console.log(data, this.Last, data.length);
 
         const [Value_i, Time_i] = ["temp", "time"].map(key =>
           data[3].findIndex(x => x.indexOf(key) > 0)
