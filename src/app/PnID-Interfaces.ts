@@ -1,6 +1,4 @@
-export interface IOInterface extends SocketIOClientStatic {
-  new(URL: string, Options?: SocketIOClient.ConnectOpts): any
-}
+import io from "socket.io-client";
 
 
 
