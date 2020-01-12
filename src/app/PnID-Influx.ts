@@ -1,9 +1,14 @@
 import { Client } from "@influxdata/influx";
 import { Papa } from "ngx-papaparse";
 
+
+interface Data {
+  x: string|number;
+  y: number;
+}
 interface Dataset {
   [key: string]: any;
-  data: object[];
+  data: Data[];
 }
 
 export class Influx {
@@ -108,13 +113,12 @@ export class Influx {
             return accum;
           },
           {
-            x: data2[0].map(x => x[Labels.x])
-          }
+            x: data2[0].map(x => x[Labels.x]),
+          } as any
         );
-        })()
+        })() 
 
-        for (const x of data)
-          chart.data.datasets[0].data.push({
+          this.Datasets[0].data.push({
             x: x[Time_i],
             y: x[Value_i]
           });
