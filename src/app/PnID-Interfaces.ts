@@ -2,12 +2,14 @@ export interface IOInterface extends SocketIOClientStatic {
   new(URL: string, Options?: SocketIOClient.ConnectOpts): any
 }
 
+
+
 export interface Realtime {
   duration: number;
   ttl: number;
   delay: number;
   refresh: number;
-  onRefresh(ChartConfiguration): void;
+  onRefresh: (ChartConfiguration) => void;
   frameRate: number;
   pause: boolean;
 }
