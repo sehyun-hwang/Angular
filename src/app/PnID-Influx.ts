@@ -26,7 +26,7 @@ export class Influx {
   ];
 
   constructor(private Query: (string) => string) {}
-  
+
   papa = new Papa();
   Influx = new Client(
     "https://us-west-2-1.aws.cloud2.influxdata.com/api/v2",
@@ -49,21 +49,20 @@ export class Influx {
         `from(bucket: "test")
           |> range(start: ${this.Last})`
       )
-      .promise.then(
-        data => {
-          console.log(data)
-          new Promise(resolve =>
-            this.papa.parse(data, {
-              complete: data => resolve({ data })
-            })
-          )
-        }
+      .promise.then(data =>
+        data.trim()
+          ? new Promise(resolve =>
+              this.papa.parse(data, {
+                complete: data => resolve({ data })
+              })
+            )
+          : Promise.reject("Empty response")
       )
-      .then((data: (string | number)[][]) => {
+      .then(({ data, errors }: { data: (string | number)[][]; errors: any[] }) => {
         console.log(data, data.length, this.Last);
-        if (data.length > 2) return data;
+        if (!errors.length && data.length > 2) return data;
         this.Done = true;
-        Promise.reject();
+        return Promise.reject();
       })
       .then((data: (string | number)[][]) => {
         const tags = data.slice(3, 5).map(x => x.slice(9));
