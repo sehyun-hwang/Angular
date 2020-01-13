@@ -117,7 +117,7 @@ export class Influx {
           return data2.reduce(
             (accum, cur, i) => {
               const label = cur[0][Labels.label];
-              console.log("push", label, this.Labels);
+
               this.Labels.includes(label) ||
                 this.Datasets.push({
                   label,
