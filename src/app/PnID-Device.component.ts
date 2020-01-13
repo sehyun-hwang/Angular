@@ -41,7 +41,7 @@ export class PnID_Device {
   constructor(private dialog: MatDialog, private io: IOInjectable) {}
   Influx = new Influx(
     Time => `from(bucket: "test")
-                  |> range(start: ${Time})`
+                  |> range(start: ${Time})`,
   );
 
   @ViewChild("Switch", {
@@ -85,7 +85,7 @@ export class PnID_Device {
           realtime: {
             ttl: undefined,
             refresh: 1000,
-            onRefresh: Influx.Refresh
+            onRefresh: this.Influx.Refresh.bind(this.Influx)
           }
         }
       ]

@@ -20,8 +20,8 @@ export class Influx {
       label: "Random",
       lineTension: 0,
       borderDash: [8, 4],
-      data: [],
-      hidden: true
+      data: []
+      //hidden: true,
     }
   ];
 
@@ -39,11 +39,10 @@ export class Influx {
       x: Date.now(),
       y: Math.random()
     });
-    return;
 
     if (!this.Done) return;
     this.Done = false;
-
+    console.log(13);
     this.Influx.queries
       .execute(
         "44051e60e390121f",
