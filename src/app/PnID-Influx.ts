@@ -23,12 +23,11 @@ export class Influx {
     }
   ];
 
-
-Data = new Proxy(this.Datasets, {
-  get: function(target, name) {
-    return target[name].data;
-  }
-});
+  Data = new Proxy(this.Datasets, {
+    get: function(target, name) {
+      return target[name].data;
+    }
+  });
 
   constructor(private Query: (string) => string) {}
 
@@ -39,14 +38,15 @@ Data = new Proxy(this.Datasets, {
   );
 
   Done = true;
+  Tags: string[] = [];
   Labels: string[];
   Refresh(chart) {
     this.Datasets[0].data.push({
       x: Date.now(),
       y: Math.random()
     });
-    console.log(this.Done)
-    if (!this.Done) return;
+    console.log(this.Done);
+    if (this.Done) return;
     this.Done = false;
     this.Influx.queries
       .execute(
@@ -58,46 +58,36 @@ Data = new Proxy(this.Datasets, {
         data.trim()
           ? new Promise(resolve =>
               this.papa.parse(data, {
-                complete: data => resolve({ data })
+                complete: data => resolve(data)
               })
             )
           : Promise.reject("Empty response")
       )
-      .then(({ data, errors }: { data: (string | number)[][]; errors: any[] }) => {
-        console.log(data, data.length, this.Last);
-        console.assert(errors.length !== 0, errors.toString());
-        if (!errors.length && (data.length > 2)) return data;
-        this.Done = true;
-        return Promise.reject();
-      })
-      .then((data: (string | number)[][]) => {
-        console.log(data)
-        const tags = data.slice(3, 5).map(x => x.slice(9));
-        console.log(tags)
-        function Tags(Result: string[] | object) {
-          return Result instanceof Array
-            ? tags[0].reduce((accum, cur, i) => {
-                accum[cur] = tags[1][i];
-                return accum;
-              }, {})
-            : tags[0];
+      .then(
+        ({ data, errors }: { data: (string | number)[][]; errors: any[] }) => {
+          console.log(data, data.length, this.Last);
+          console.assert(errors.length === 0, errors.toString());
+          if (!errors.length && data.length > 2) return data;
+          this.Done = true;
+          return Promise.reject();
         }
-
-        this.Labels = this.Datasets.map(x => x.label);
-        this.Labels.forEach(label => {
-          label in this.Labels ||
-            this.Datasets.push({
-              label,
-              lineTension: 0,
-              borderDash: [8, 4],
-              data: []
-            });
-        });
-
-        return data;
-      })
+      )
       .then(
         (data: (string | number)[][]): Data => {
+          {
+            function Tags(Result: string[] | object) {
+              const tags = data.slice(3, 5).map(x => x.slice(9));
+
+              return Result instanceof Array
+                ? tags[0].reduce((accum, cur, i) => {
+                    accum[cur] = tags[1][i];
+                    return accum;
+                  }, {})
+                : tags[0];
+            }
+            if (!this.Tags.length) this.Tags = Tags([]);
+          }
+
           {
             const date = new Date(data[data.length - 3][10]);
             date.setSeconds(date.getSeconds() + 1);
@@ -110,20 +100,21 @@ Data = new Proxy(this.Datasets, {
             label: 7
           };
 
-          const Indexes = data.reduce((accum, cur, i) => {
+          const ToSlice = data.reduce((accum, cur, i) => {
             cur.length === 1 && accum.push(i);
             return accum;
           }, []) as number[];
-          Indexes.pop();
-          console.log("Indexes:", Indexes);
+          ToSlice.pop();
+          console.log("ToSlice:", ToSlice);
 
-          const data2 = Indexes.map(
-            (x, i) => data.slice(i ? Indexes[i - 1] + 5 : 4, x) as number[][]
+          const data2 = ToSlice.map(
+            (x, i) => data.slice(i ? ToSlice[i - 1] + 5 : 4, x) as number[][]
           );
           //console.log(data2.map(x => x.slice(0, 5)));
-          const Label = data[0][Labels.label] as string;
+
           return data2.reduce(
-            (accum, cur) => {
+            (accum, cur, i) => {
+              const Label = data[i][Labels.label] as string;
               accum[Label] = cur.map(x => x[Labels.y]);
               return accum;
             },

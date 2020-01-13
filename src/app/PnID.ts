@@ -11,6 +11,7 @@ export class IOInjectable extends (io as IOInterface) implements OnDestroy {
     super("https://proxy.hwangsehyun.ga?port=8081");
   }
   ngOnDestroy() {
+    console.log("Closing connection")
     this.close();
   }
 }
