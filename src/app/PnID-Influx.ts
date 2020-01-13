@@ -25,14 +25,15 @@ export class Influx {
     }
   ];
 
-  constructor(private Query: (string) => string, private papa: Papa) {}
-
+  constructor(private Query: (string) => string) {}
+  
+  papa = new Papa();
   Influx = new Client(
     "https://us-west-2-1.aws.cloud2.influxdata.com/api/v2",
     "jUGziYHIueFTW-eqGJwfxvnwmXwRDsEd9fhCGLsm7VBS_m0OH2stYEsECQwo6J39-ZzwpgaPCSRtVvvWc0zU6w=="
   );
 
-  Done = false;
+  Done = true;
   Labels: string[];
   Refresh(chart) {
     this.Datasets[0].data.push({
@@ -42,7 +43,6 @@ export class Influx {
 
     if (!this.Done) return;
     this.Done = false;
-    console.log(13);
     this.Influx.queries
       .execute(
         "44051e60e390121f",
@@ -50,12 +50,14 @@ export class Influx {
           |> range(start: ${this.Last})`
       )
       .promise.then(
-        data =>
+        data => {
+          console.log(data)
           new Promise(resolve =>
             this.papa.parse(data, {
               complete: data => resolve({ data })
             })
           )
+        }
       )
       .then((data: (string | number)[][]) => {
         console.log(data, data.length, this.Last);
