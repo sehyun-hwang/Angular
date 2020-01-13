@@ -117,8 +117,8 @@ export class Influx {
           return data2.reduce(
             (accum, cur, i) => {
               const label = cur[0][Labels.label];
-console.log("push", label)
-              label in this.Labels ||
+              console.log("push", label, this.Labels);
+              this.Labels.includes(label) ||
                 this.Datasets.push({
                   label,
                   lineTension: 0,
@@ -145,15 +145,16 @@ console.log("push", label)
         console.log(data);
 
         Object.entries(data).forEach(([key, value], i) => {
-          const temp = value.map((y, i) => ({ x: x[i], y }));
-          this.Datasets[this.Labels.indexOf(key)].data.concat(temp);
+          const Data = this.Datasets[this.Labels.indexOf(key)].data;
+          value.forEach((y, i) => Data.push({ x: x[i], y }));
         });
 
         chart.update({
           preservation: true
         });
-            this.Done = true;
+        console.log(this.Datasets[1].data);
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => (this.Done = true));
   }
 }
