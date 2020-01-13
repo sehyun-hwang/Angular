@@ -1,6 +1,7 @@
 import { Client } from "@influxdata/influx";
 import { Papa } from "ngx-papaparse";
 
+import { ChartPoint } from "chart.js";
 interface Data {
   [key: string]: number[];
   x: number[];
@@ -11,10 +12,7 @@ export class Influx {
 
   Datasets: {
     [key: string]: any;
-    data: {
-      x: string | number;
-      y: number;
-    }[];
+    data: ChartPoint[];
   }[] = [
     {
       label: "Random",
@@ -24,6 +22,13 @@ export class Influx {
       //hidden: true,
     }
   ];
+
+
+Data = new Proxy(this.Datasets, {
+  get: function(target, name) {
+    return target[name].data;
+  }
+});
 
   constructor(private Query: (string) => string) {}
 
@@ -40,7 +45,7 @@ export class Influx {
       x: Date.now(),
       y: Math.random()
     });
-
+    console.log(this.Done)
     if (!this.Done) return;
     this.Done = false;
     this.Influx.queries
@@ -60,12 +65,14 @@ export class Influx {
       )
       .then(({ data, errors }: { data: (string | number)[][]; errors: any[] }) => {
         console.log(data, data.length, this.Last);
-        if (!errors.length && data.length > 2) return data;
+        console.assert(!errors.length, errors.toString());
+        if (!errors.length && (data.length > 2)) return data;
         this.Done = true;
         return Promise.reject();
       })
       .then((data: (string | number)[][]) => {
         const tags = data.slice(3, 5).map(x => x.slice(9));
+        console.log(tags)
         function Tags(Result: string[] | object) {
           return Result instanceof Array
             ? tags[0].reduce((accum, cur, i) => {
