@@ -65,12 +65,13 @@ Data = new Proxy(this.Datasets, {
       )
       .then(({ data, errors }: { data: (string | number)[][]; errors: any[] }) => {
         console.log(data, data.length, this.Last);
-        console.assert(!errors.length, errors.toString());
+        console.assert(errors.length !== 0, errors.toString());
         if (!errors.length && (data.length > 2)) return data;
         this.Done = true;
         return Promise.reject();
       })
       .then((data: (string | number)[][]) => {
+        console.log(data)
         const tags = data.slice(3, 5).map(x => x.slice(9));
         console.log(tags)
         function Tags(Result: string[] | object) {
@@ -148,6 +149,6 @@ Data = new Proxy(this.Datasets, {
           preservation: true
         });
       })
-      .catch(console.warn);
+      .catch(console.error);
   }
 }
