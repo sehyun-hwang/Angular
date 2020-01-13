@@ -45,7 +45,6 @@ export class Influx {
       x: Date.now(),
       y: Math.random()
     });
-    console.log(this.Done);
 
     if (!this.Done) return;
     this.Done = false;
@@ -66,7 +65,7 @@ export class Influx {
           })
       )
       .then(({ data, errors }: { data: string[][]; errors: any[] }) => {
-        console.log(data, data.length, this.Last);
+        console.log("# of rows:", data.length);
         console.assert(errors.length === 0, errors.toString());
         if (!errors.length && data.length > 2) return data;
         this.Done = true;
@@ -108,7 +107,7 @@ export class Influx {
             [] as number[]
           );
           ToSlice.pop();
-          console.log({ ToSlice });
+
           const data2 = ToSlice.map((x, i) =>
             data.slice(i ? ToSlice[i - 1] + 5 : 4, x)
           );
@@ -117,7 +116,6 @@ export class Influx {
           return data2.reduce(
             (accum, cur, i) => {
               const label = cur[0][Labels.label];
-
               this.Labels.includes(label) ||
                 this.Datasets.push({
                   label,
@@ -142,7 +140,6 @@ export class Influx {
           enumerable: false
         });
         const { x } = data;
-        console.log(data);
 
         Object.entries(data).forEach(([key, value], i) => {
           const Data = this.Datasets[this.Labels.indexOf(key)].data;
@@ -152,7 +149,6 @@ export class Influx {
         chart.update({
           preservation: true
         });
-        console.log(this.Datasets[1].data);
       })
       .catch(console.error)
       .finally(() => (this.Done = true));
