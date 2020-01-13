@@ -1,12 +1,10 @@
-import { Injectable, Host, OnDestroy } from "@angular/core";
+import { Injectable, Host } from "@angular/core";
 import io from "socket.io-client";
 
 import { IOInterface } from "./PnID-Interfaces";
 
-@Injectable({
-  providedIn: "root"
-})
-export class IOInjectable extends (io as IOInterface){
+@Injectable()
+export class IOInjectable extends (io as IOInterface) {
   Socket:SocketIOClient.Socket;
 
   constructor() {
