@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from "@angular/core";
+import { Injectable, Host, OnDestroy } from "@angular/core";
 import io from "socket.io-client";
 
 import { IOInterface } from "./PnID-Interfaces";
@@ -6,13 +6,12 @@ import { IOInterface } from "./PnID-Interfaces";
 @Injectable({
   providedIn: "root"
 })
-export class IOInjectable extends (io as IOInterface) implements OnDestroy {
+export class IOInjectable extends (io as IOInterface){
+  Socket:SocketIOClient.Socket;
+
   constructor() {
-    super("https://proxy.hwangsehyun.ga?port=8081");
-  }
-  ngOnDestroy() {
-    console.log("Closing connection")
-    this.close();
+    const Socket = super("https://proxy.hwangsehyun.ga?port=8081") as unknown as SocketIOClient.Socket;
+    this.Socket= Socket;
   }
 }
 

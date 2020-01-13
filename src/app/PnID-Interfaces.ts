@@ -1,5 +1,5 @@
 export interface IOInterface extends SocketIOClientStatic {
-  new(URL: string, Options?: SocketIOClient.ConnectOpts): any
+  new(URL: string, Options?: SocketIOClient.ConnectOpts);
 }
 
 export interface Realtime {

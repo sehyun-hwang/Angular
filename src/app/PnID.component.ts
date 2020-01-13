@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { IOInjectable, Timestamp } from "./PnID";
 
@@ -7,7 +7,7 @@ import { IOInjectable, Timestamp } from "./PnID";
   templateUrl: "./PnID.component.html",
   styleUrls: ["./PnID.component.css"]
 })
-export class PnID {
+export class PnID implements OnDestroy {
   table: Object;
   displayedColumns: string[] = ["time", "event"];
   Timestamp = Timestamp;
@@ -15,7 +15,6 @@ export class PnID {
   Switches: boolean;
 
   constructor(private io: IOInjectable) {
-    console.log(this.io)
     this.io.on("AngularTable", data => (this.table = data));
     this.io.on("Switches", data => (this.Switches = data));
   }
@@ -23,5 +22,10 @@ export class PnID {
   myControl = new FormControl();
   test() {
     this.io.emit("Ping");
+  }
+
+  ngOnDestroy() {
+    this.io.close();
+    console.log(21321312);
   }
 }
