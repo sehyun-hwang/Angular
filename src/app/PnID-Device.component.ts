@@ -47,17 +47,16 @@ export class PnID_Device {
   @ViewChild("Switch", {
     static: false
   })
+  @Input() Switches;
   Switch;
   Expanded = true;
 
   Request(i: number, x: boolean) {
-    console.log(i, x);
-    const arr = [...this.Switches];
-    arr[i] = x;
-    this.io.emit("Switches", arr);
+    console.log({i, x});
+    this.Switches[i] = x;
+    this.io.emit("Switches", this.Switches);
   }
-  @Input() Switches;
-
+  
   Height = "100px";
   private _Dialog(event, Slider) {
     event.stopPropagation();
