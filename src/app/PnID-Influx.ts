@@ -8,8 +8,6 @@ interface Data {
 }
 
 export class Influx {
-  Last = "-1m";
-
   Datasets: {
     [key: string]: any;
     data: ChartPoint[];
@@ -17,7 +15,6 @@ export class Influx {
     {
       label: "Random",
       data: []
-      //hidden: true,
     }
   ];
 
@@ -26,9 +23,7 @@ export class Influx {
       return target[name].data;
     }
   });
-
   constructor(private Query: (string) => string) {}
-
   papa = new Papa();
   Influx = new Client(
     "https://us-west-2-1.aws.cloud2.influxdata.com/api/v2",
@@ -36,14 +31,16 @@ export class Influx {
   );
 
   Done = true;
+  Last = "-1m";
   Tags: string[] = [];
   Labels: string[] = [];
   Refresh(chart) {
     this.Datasets[0].data.push({
       x: Date.now(),
-      y: Math.random()
+      y: Math.random() * 30
     });
 
+    this.Datasets[0]["hidden"] = !!this.Datasets.length;
     if (!this.Done) return;
     this.Done = false;
     this.Influx.queries
@@ -64,10 +61,8 @@ export class Influx {
       )
       .then(({ data, errors }: { data: string[][]; errors: any[] }) => {
         console.log("# of rows:", data.length);
-        console.assert(errors.length === 0, errors.toString());
         if (!errors.length && data.length > 2) return data;
-        this.Done = true;
-        return Promise.reject();
+        return Promise.reject(errors.toString());
       })
       .then(
         (data: string[][]): Data => {
@@ -118,20 +113,13 @@ export class Influx {
               if (!this.Labels.includes(label)) {
                 const Color =
                   "rgba(" +
-                  Array.from(
-                    {
-                      length: 3
-                    },
-                    Math.random
-                  )
-                    .map(x => Math.floor(x * 255))
-                    .join(", ") +
+                  [0, 127, 255].sort(() => 0.5 - Math.random()).join(", ") +
                   ", ";
-                console.log(Color);
+                /console.log(Color);
                 this.Datasets.push({
                   label,
-                  borderColor: Color + "0.1)",
-                  backgroundColor: Color + "0.2)",
+                  borderColor: Color + "0.2)",
+                  backgroundColor: Color + "0.4)",
                   data: []
                 });
               }
