@@ -115,7 +115,7 @@ export class Influx {
                   "rgba(" +
                   [0, 127, 255].sort(() => 0.5 - Math.random()).join(", ") +
                   ", ";
-                /console.log(Color);
+                //console.log(Color);
                 this.Datasets.push({
                   label,
                   borderColor: Color + "0.2)",

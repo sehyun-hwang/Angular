@@ -1,6 +1,25 @@
 <div class="mat-app-background basic-container" style="overflow-y:auto">
 	<button mat-button (click)="test();">test</button>
 
+	<form>
+		<mat-form-field>
+			<mat-label>Cars</mat-label>
+			<select matNativeControl required>
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="mercedes">Mercedes</option>
+    <option value="audi">Audi</option>
+  </select>
+
+			<!--input type="text" placeholder="Pick one" matInput [formControl]="myControl" [matAutocomplete]="auto">
+			<mat-autocomplete #auto="matAutocomplete">
+				<mat-option *ngFor="let Account of 'Account '.repeat(20).split(' '), let i = index">
+					{{Account+" "+i}}
+				</mat-option>
+			</mat-autocomplete-->
+		</mat-form-field>
+	</form>
+
 	<mat-accordion *ngIf="Switches">
 		<pnid-device [Switches]="Switches"></pnid-device>
 	</mat-accordion>
@@ -20,15 +39,4 @@
 		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 		<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 	</table>
-
-	<form>
-		<mat-form-field>
-			<input type="text" placeholder="Pick one" matInput [formControl]="myControl" [matAutocomplete]="auto">
-			<mat-autocomplete #auto="matAutocomplete">
-				<mat-option *ngFor="let Account of 'Account '.repeat(20).split(' '), let i = index">
-					{{Account+" "+i}}
-				</mat-option>
-			</mat-autocomplete>
-		</mat-form-field>
-	</form>
 </div>
