@@ -74,15 +74,15 @@ export class Influx {
       .then(
         (data: string[][]): Data => {
           {
-            function Tags(Result: string[] | object) {
-              const tags = data.slice(3, 5).map(x => x.slice(9));
-
+            const tags = data.slice(3, 5).map(x => x.slice(9));
+            function Tags(Result: string[]): typeof Result;
+            function Tags(Result: object): typeof Result {
               return Result instanceof Array
-                ? tags[0].reduce((accum, cur, i) => {
+                ? tags[0]
+                : tags[0].reduce((accum, cur, i) => {
                     accum[cur] = tags[1][i];
                     return accum;
-                  }, {})
-                : tags[0];
+                  }, {});
             }
             if (!this.Tags.length) this.Tags = Tags([]);
           }
