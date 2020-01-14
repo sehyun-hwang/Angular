@@ -16,8 +16,6 @@ export class Influx {
   }[] = [
     {
       label: "Random",
-      lineTension: 0,
-      borderDash: [8, 4],
       data: []
       //hidden: true,
     }
@@ -116,13 +114,27 @@ export class Influx {
           return data2.reduce(
             (accum, cur, i) => {
               const label = cur[0][Labels.label];
-              this.Labels.includes(label) ||
+
+              if (!this.Labels.includes(label)) {
+                const Color =
+                  "rgba(" +
+                  Array.from(
+                    {
+                      length: 3
+                    },
+                    Math.random
+                  )
+                    .map(x => Math.floor(x * 255))
+                    .join(", ") +
+                  ", ";
+                console.log(Color);
                 this.Datasets.push({
                   label,
-                  lineTension: 0,
-                  borderDash: [8, 4],
+                  borderColor: Color + "0.1)",
+                  backgroundColor: Color + "0.2)",
                   data: []
                 });
+              }
 
               accum[label] = cur.map(x => x[Labels.y]);
               return accum;
@@ -150,7 +162,9 @@ export class Influx {
           preservation: true
         });
       })
-      .catch(console.error)
+      .catch((error: string | Error) =>
+        error instanceof Error ? console.error(error) : console.info(error)
+      )
       .finally(() => (this.Done = true));
   }
 }
