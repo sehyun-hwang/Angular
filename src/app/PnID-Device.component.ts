@@ -38,13 +38,10 @@ export class PnID_Switch {
   templateUrl: "./PnID-Device.component.html"
 })
 export class PnID_Device {
-  Slice = Array.prototype.slice;
-
-  constructor(private dialog: MatDialog, private io: IOInjectable) {
-}
+  constructor(private dialog: MatDialog, private io: IOInjectable) {}
   Influx = new Influx(
     Time => `from(bucket: "test")
-                  |> range(start: ${Time})`,
+                  |> range(start: ${Time})`
   );
 
   @ViewChild("Switch", {
@@ -57,11 +54,11 @@ export class PnID_Device {
   Expanded = true;
 
   Request(i: number, x: boolean) {
-    console.log({i, x});
+    console.log({ i, x });
     this.Switches[i] = x;
     this.io.emit("Switches", this.Switches);
   }
-  
+
   Height = "100px";
   private _Dialog(event, Slider) {
     event.stopPropagation();

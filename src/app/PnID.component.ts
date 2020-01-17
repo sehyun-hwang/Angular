@@ -8,7 +8,7 @@ import { IOInjectable, Timestamp } from "./PnID";
   styleUrls: ["./PnID.component.css"],
   providers: [IOInjectable]
 })
-export class PnID  {
+export class PnID {
   table: Object;
   displayedColumns: string[] = ["time", "event"];
   Timestamp = Timestamp;
