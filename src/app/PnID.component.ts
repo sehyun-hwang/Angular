@@ -13,11 +13,12 @@ export class PnID  {
   displayedColumns: string[] = ["time", "event"];
   Timestamp = Timestamp;
 
-  Switches: boolean;
+  Switches: boolean[];
 
   constructor(private io: IOInjectable) {
     this.io.on("AngularTable", data => (this.table = data));
     this.io.on("Switches", data => (this.Switches = data));
+    setInterval(()=>console.log(this.Switches),10000)
   }
 
   myControl = new FormControl();
@@ -27,6 +28,5 @@ export class PnID  {
 
   ngOnDestroy() {
     this.io.close();
-    console.log(21321312);
   }
 }

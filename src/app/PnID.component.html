@@ -18,7 +18,7 @@
 		</mat-form-field>
 	</form>
 
-	<mat-accordion *ngIf="Switches">
+	<mat-accordion *ngIf="Switches && Switches.length">
 		<pnid-device [Switches]="Switches"></pnid-device>
 	</mat-accordion>
 

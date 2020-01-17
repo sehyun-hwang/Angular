@@ -38,6 +38,8 @@ export class PnID_Switch {
   templateUrl: "./PnID-Device.component.html"
 })
 export class PnID_Device {
+  Slice = Array.prototype.slice;
+  
   constructor(private dialog: MatDialog, private io: IOInjectable) {}
   Influx = new Influx(
     Time => `from(bucket: "test")
@@ -47,7 +49,7 @@ export class PnID_Device {
   @ViewChild("Switch", {
     static: false
   })
-  @Input() Switches;
+  @Input() Switches: boolean[];
   Switch;
   Expanded = true;
 
