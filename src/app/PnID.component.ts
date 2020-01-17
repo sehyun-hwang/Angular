@@ -18,7 +18,6 @@ export class PnID  {
   constructor(private io: IOInjectable) {
     this.io.on("AngularTable", data => (this.table = data));
     this.io.on("Switches", data => (this.Switches = data));
-    setInterval(()=>console.log(this.Switches),10000)
   }
 
   myControl = new FormControl();

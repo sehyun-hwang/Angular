@@ -39,8 +39,9 @@ export class PnID_Switch {
 })
 export class PnID_Device {
   Slice = Array.prototype.slice;
-  
-  constructor(private dialog: MatDialog, private io: IOInjectable) {}
+
+  constructor(private dialog: MatDialog, private io: IOInjectable) {
+}
   Influx = new Influx(
     Time => `from(bucket: "test")
                   |> range(start: ${Time})`,
@@ -49,8 +50,10 @@ export class PnID_Device {
   @ViewChild("Switch", {
     static: false
   })
-  @Input() Switches: boolean[];
   Switch;
+
+  @Input() Switches: boolean[];
+
   Expanded = true;
 
   Request(i: number, x: boolean) {
