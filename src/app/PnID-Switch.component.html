@@ -3,6 +3,6 @@
 	[disabled]="Slider.checked !== Response"
   [checked]="Response"
   (change)="Request.emit($event.checked)"
-  labelPosition="before">
+  [labelPosition]="Slider.checked?'after':'before'">
 	<span [innerText]="Slider.disabled? 'Transitioning...' : (Slider.checked? 'ON':'OFF')"></span>
 </mat-slide-toggle>

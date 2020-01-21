@@ -9,6 +9,7 @@ import {
   ElementRef,
   Inject
 } from "@angular/core";
+import { Parser } from "./PnID";
 
 @Component({
   selector: "pnid-dialog",
