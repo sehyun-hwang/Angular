@@ -22,6 +22,18 @@
 		<pnid-device [Switches]="Switches"></pnid-device>
 	</mat-accordion>
 
+<mat-form-field>
+  <mat-label>Ofertas vinculadas</mat-label>
+  <mat-chip-list [(ngModel)]="selectedOffers" multiple>
+    <mat-chip *ngFor="let offer of offers" selectable="true"
+             [selected]="isSelected(offer)"
+             (click)="toggleOffer(offer)">
+      {{offer.name}}&nbsp;
+    </mat-chip>
+
+  </mat-chip-list>
+</mat-form-field>
+
 	<table mat-table [dataSource]="table" class="mat-elevation-z8">
 
 		<ng-container matColumnDef="time">
