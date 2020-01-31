@@ -28,10 +28,12 @@ export class PnID {
         "https://plantasset.kr/MPIS_WCF/webservice.asmx/TAG_SECH_LIST?area="
       )
         .then(Parser)
-        .then((data: any[]) => data.reduce((accum, cur) => {
-        accum[c["TAG_NAME"]] = cur;
-        return accum;
-        }, {}))
+        .then((data: any[]) =>
+          data.reduce((accum: an, cur) => {
+            accum[cur["TAG_NAME"]] = cur;
+            return accum;
+          }, {})
+        )
     ]).then(data => {
       console.log(data);
     });

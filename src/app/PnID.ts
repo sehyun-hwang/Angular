@@ -13,15 +13,17 @@ export class IOInjectable extends (io as IOInterface) {
   }
 }
 
-export async function Parser(promise: Response): any[] {
-  const data = await promise
+export async function Parser(promise: Response):Promise<any[]>{
+  const data:{
+    Table:any[]
+  } = await promise
     .text()
     .then(
       text =>
         new DOMParser().parseFromString(text, "text/xml").firstElementChild
           .innerHTML
     ).then(JSON.parse);
-  return data.Table;
+  return Promise.resolve(data.Table);
 }
 
 export function Timestamp(n: number) {
