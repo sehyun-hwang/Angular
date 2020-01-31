@@ -8,7 +8,7 @@ export class IOInjectable extends (io as IOInterface) {
   Socket:SocketIOClient.Socket;
 
   constructor() {
-    const Socket = super("https://proxy.hwangsehyun.?port=8081") as unknown as SocketIOClient.Socket;
+    const Socket = super("https://proxy.hwangsehyun.com?port=8081") as unknown as SocketIOClient.Socket;
     this.Socket= Socket;
   }
 }
