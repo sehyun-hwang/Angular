@@ -14,8 +14,9 @@ export class PnID {
   Timestamp = Timestamp;
 
   Switches: boolean[];
-
+  Tags: string[][]
   constructor(private io: IOInjectable) {
+    this.io.on("Tags", data=>this.Tags = data);
     this.io.on("AngularTable", data => (this.table = data));
     this.io.on("Switches", data => (this.Switches = data));
   }
