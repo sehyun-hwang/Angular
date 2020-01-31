@@ -16,6 +16,15 @@ export class PnID {
   Switches: boolean[];
   Tags: string[][];
   constructor(private io: IOInjectable) {
+    const Reduce = Key => (data: any[]):any =>
+      data.reduce(
+        (accum, cur) => {
+          accum[cur[Key]] = cur;
+          return accum;
+        },
+        {} as any
+      );
+
     Promise.all([
       new Promise(resolve => {
         function Resolve(data) {
@@ -27,14 +36,10 @@ export class PnID {
       fetch(
         "https://plantasset.kr/MPIS_WCF/webservice.asmx/TAG_SECH_LIST?area="
       )
-        .then(Parser)
-        .then((data: any[]) =>
-          data.reduce((accum: an, cur) => {
-            accum[cur["TAG_NAME"]] = cur;
-            return accum;
-          }, {})
-        )
+        .then(Parser).
+        then(Reduce("TAG_NAME"))
     ]).then(data => {
+      data.map(Reduce)
       console.log(data);
     });
     this.io.on("AngularTable", data => (this.table = data));
