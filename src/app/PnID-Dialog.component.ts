@@ -39,7 +39,7 @@ export class PnID_Dialog {
         })()
       })
         .then(Parser)
-        .then(data => ("STATUS" in data ? { error: "Wrong Password" } : null))
+        .then(([data]) => ("STATUS" in data ? { error: "Wrong Password" } : null))
   );
 
   matcher = new MyErrorStateMatcher();
