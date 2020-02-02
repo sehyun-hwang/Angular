@@ -14,7 +14,9 @@ export class PnID {
   Timestamp = Timestamp;
 
   Switches: boolean[];
-  Tags: string[][];
+  Tags: {
+    TAG_NAME: string;
+  }[];
   constructor(private io: IOInjectable) {
     console.time("Constructor");
 
@@ -35,14 +37,14 @@ export class PnID {
       new Promise(resolve => {
         function Resolve(data) {
           this.io.off("Tags", resolve);
-          console.log(data)
           resolve(data);
         }
         this.io.on("Tags", Resolve);
       }).then(Reduce("tag"))
     ]).then(([data, data2]) => {
       for (let x in data2) Object.assign(data[x], data2[x]);
-      console.log(data);
+      this.Tags = Object.values(data)
+      .sort(x=>x.TAG_NAME in data2);
       console.timeEnd("Constructor");
     });
     this.io.on("AngularTable", data => (this.table = data));

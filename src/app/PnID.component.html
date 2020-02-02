@@ -5,7 +5,7 @@
 		<span style="margin-right:10px">P&ID Tag</span>
 		<mat-form-field>
 			<select matNativeControl required>
-        <option *ngFor="let Tag of Tags" [innerText]="Tag.tag"></option>
+        <option *ngFor="let Tag of Tags" [innerText]="Tag.TAG_NAME"></option>
       </select>
 
 			<!--input type="text" placeholder="Pick one" matInput [formControl]="myControl" [matAutocomplete]="auto">
