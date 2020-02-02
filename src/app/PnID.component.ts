@@ -19,23 +19,29 @@ export class PnID {
     console.time("Constructor");
 
     const Reduce = Key => (data: any[]): any =>
-      data.reduce((accum, cur) => {
-        accum[cur[Key]] = cur;
-        return accum;
-      }, {} as any);
+      data.reduce(
+        (accum, cur) => {
+          accum[cur[Key]] = cur;
+          return accum;
+        },
+        {} as any
+      );
 
     Promise.all([
-      new Promise(resolve => {
-        function Resolve(data) {
-          resolve(data);
-          this.io.off("Tags", resolve);
-        }
-        this.io.on("Tags", Resolve);
-      }).then(Reduce("tag")),
       (fetch(
         "https://plantasset.kr/MPIS_WCF/webservice.asmx/TAG_SECH_LIST?area="
-      ).then(Parser) as Promise<any>).then(Reduce("TAG_NAME"))
-    ]).then(data => {
+      ).then(Parser) as Promise<any>).then(Reduce("TAG_NAME")),
+
+      new Promise(resolve => {
+        function Resolve(data) {
+          this.io.off("Tags", resolve);
+          console.log(data)
+          resolve(data);
+        }
+        this.io.on("Tags", Resolve);
+      }).then(Reduce("tag"))
+    ]).then(([data, data2]) => {
+      for (let x in data2) Object.assign(data[x], data2[x]);
       console.log(data);
       console.timeEnd("Constructor");
     });
