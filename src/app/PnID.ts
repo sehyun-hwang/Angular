@@ -1,4 +1,5 @@
-import { Injectable, Host } from "@angular/core";
+import { Injectable } from "@angular/core";
+// @ts-ignore
 import io from "socket.io-client";
 
 import { IOInterface } from "./PnID-Interfaces";

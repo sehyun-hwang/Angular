@@ -18,14 +18,11 @@ export class PnID {
   constructor(private io: IOInjectable) {
     console.time("Constructor");
 
-    const Reduce = Key => ((data: any[]):any =>
-      data.reduce(
-        (accum, cur) => {
-          accum[cur[Key]] = cur;
-          return accum;
-        },
-        {} as any
-      ));
+    const Reduce = Key => (data: any[]): any =>
+      data.reduce((accum, cur) => {
+        accum[cur[Key]] = cur;
+        return accum;
+      }, {} as any);
 
     Promise.all([
       new Promise(resolve => {
@@ -37,12 +34,10 @@ export class PnID {
       }).then(Reduce("tag")),
       (fetch(
         "https://plantasset.kr/MPIS_WCF/webservice.asmx/TAG_SECH_LIST?area="
-      )
-        .then(Parser) as Promise<any>)
-        .then(Reduce("TAG_NAME"))
+      ).then(Parser) as Promise<any>).then(Reduce("TAG_NAME"))
     ]).then(data => {
       console.log(data);
-      console.timeE("Constructor");
+      console.timeEnd("Constructor");
     });
     this.io.on("AngularTable", data => (this.table = data));
     this.io.on("Switches", data => (this.Switches = data));

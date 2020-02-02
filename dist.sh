@@ -1,3 +1,5 @@
+sed -i 's+"../src/api/custom.d.ts"+"../../src/api/custom.d.ts"+' node_modules/@influxdata/influx/dist/api/api.d.ts
+
 if [ "$1" == "update" ]; then
     ng update @angular/cli @angular/core --allow-dirty
 fi

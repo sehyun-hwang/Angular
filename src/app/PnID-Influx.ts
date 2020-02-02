@@ -54,14 +54,14 @@ export class Influx {
           new Promise((resolve, reject) => {
             data.trim()
               ? this.papa.parse(data, {
-                  complete: data => resolve(data)
+                  complete: data => resolve(data) 
                 })
               : reject("Empty response");
           })
       )
       .then(({ data, errors }: { data: string[][]; errors: any[] }) => {
         console.log("# of rows:", data.length);
-        if (!errors.length && data.length > 2) return data;
+        if (!errors.length && data.length > 2) return Promise.resolve(data);
         return Promise.reject(errors.toString());
       })
       .then(
@@ -92,13 +92,10 @@ export class Influx {
             this.Last = date.toISOString();
           }
 
-          const ToSlice = data.reduce(
-            (accum, cur, i) => {
-              cur.length === 1 && accum.push(i);
-              return accum;
-            },
-            [] as number[]
-          );
+          const ToSlice = data.reduce((accum, cur, i) => {
+            cur.length === 1 && accum.push(i);
+            return accum;
+          }, [] as number[]);
           ToSlice.pop();
 
           const data2 = ToSlice.map((x, i) =>
