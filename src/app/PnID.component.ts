@@ -22,7 +22,7 @@ export class PnID {
     return Object.keys(this.Status)
   }
   StatusToggle(Tag) {
-    this.Status[Tag] ^= true as any;
+    this.Status[Tag] ^= 1;
     console.log(this.Status);
   }
 
@@ -53,7 +53,7 @@ export class PnID {
     ]).then(([data, { Status, Tags }]) => {
       Tags = Reduce("tag")(Tags);
       this.Status=  Status.reduce((accum, cur)=> {
-        accum[cur[0].trim()] = true;
+        accum[cur[0].trim()] = 1;
         return accum;
       }, {} as StatusInterface);
 

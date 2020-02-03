@@ -19,5 +19,5 @@ export interface XAxe extends ChartXAxe {
 }
 
 export interface StatusInterface {
-  [key: string]: boolean;
+  [key: string]: 0 | 1;
 }
