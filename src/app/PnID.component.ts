@@ -46,9 +46,7 @@ export class PnID {
       }
       this.io.on("Init", Resolve);
     })
-      .then(({ data, Status, Tags }) => {
-        Tags = Reduce("tag")(Tags);
-
+      .then(async ({ data, Status, Tags }) => {
         this.Status = Status.reduce(
           (accum, cur) => {
             accum[cur[0].trim()] = 1;
@@ -57,13 +55,13 @@ export class PnID {
           {} as StatusInterface
         );
 
-        return data;
+        return {
+          Tags: Reduce("tag")(Tags), 
+          data: await Parser(data),
+         };
       })
-      .then(Parser)
-      .then(data => {
-        console.log(data);
-        for (let x in Tags) Object.assign(data[x], Tags[x]);
-        this.Tags = Object.values(data).reduce((accum, cur) => {
+      .then(({data, Tags }) => {
+        this.Tags = data.reduce((accum, cur) => {
           cur.TAG_NAME in Tags ? accum.unshift(cur) : accum.push(cur);
           return accum;
         }, []);

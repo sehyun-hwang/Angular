@@ -1,7 +1,7 @@
 <div class="mat-app-background basic-container" style="overflow-y:auto">
 	<button mat-button (click)="test();">test</button>
 
-	<form>
+	<form *ngIf="Tags">
 		<span style="margin-right:10px">Select a P&ID Tag:</span>
 		<mat-form-field>
 			<input type="text" placeholder="P&ID Tag" matInput [formControl]="myControl" [matAutocomplete]="auto">

@@ -16,9 +16,7 @@ export class IOInjectable extends (io as IOInterface) {
   }
 }
 
-async function Parser(arg: string): Promise<any[]>
-async function Parser(arg: Response): Promise<any[]> {
-  arg
+export async function Parser(arg: Response | string): Promise<any[]> {
   const data: {
     Table: any[];
   } = await Promise.resolve(arg instanceof Response ? await arg.text() : arg)
