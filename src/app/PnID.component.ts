@@ -30,12 +30,10 @@ export class PnID {
   constructor(private io: IOInjectable) {
     console.time("Constructor");
 
-    let First;
     const Once = () =>
       new Promise(resolve => {
         function Resolve(data) {
           this.io.off(resolve);
-          First = data;
           resolve(data);
         }
         this.io.on("Init", Resolve);
