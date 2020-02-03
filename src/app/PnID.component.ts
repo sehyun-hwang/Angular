@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { IOInjectable, Timestamp, Parser } from "./PnID";
+import { IOInjectable, Timestamp, Parser, StatusInterface } from "./PnID";
 
 @Component({
   selector: "",
@@ -17,18 +17,13 @@ export class PnID {
   Tags: {
     TAG_NAME: string;
   }[];
-  Status = new FormControl(new Set());
-  
-  toggleChip = (chip: any) => {
-    const Status = new Proxy(this.Status, {
-      get: (obj, prop)=> { 
-        console.log(obj, prop);
-        return obj;
-      }
-    });
-    console.log(Status);
-
-    Status.has(chip) ? Status.delete(chip) : Status.add(chip);
+  Status: StatusInterface;
+  get StatusArray() {
+    return Object.keys(this.Status)
+  }
+  StatusToggle(Tag) {
+    this.Status[Tag] ^= true as any;
+    console.log(this.Status);
   }
 
   constructor(private io: IOInjectable) {
@@ -57,7 +52,10 @@ export class PnID {
       })
     ]).then(([data, { Status, Tags }]) => {
       Tags = Reduce("tag")(Tags);
-      this.Status=  Status.map(x=>x[0]);
+      this.Status=  Status.reduce((accum, cur)=> {
+        accum[cur[0].trim()] = true;
+        return accum;
+      }, {} as StatusInterface);
 
       for (let x in Tags) Object.assign(data[x], Tags[x]);
       this.Tags = Object.values(data).reduce((accum, cur) => {

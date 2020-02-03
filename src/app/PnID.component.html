@@ -19,8 +19,9 @@
 	<mat-form-field>
 		<mat-label>Ofertas vinculadas</mat-label>
 		<mat-chip-list multiple>
-			<mat-chip *ngFor="let x of Status_All">
-				{{x}}<mat-icon matChipRemove>cancel</mat-icon>
+			<mat-chip *ngFor="let x of StatusArray"
+      (click)="StatusToggle()">
+				{{x}}<mat-icon matChipRemove *ngIf="Status[x]">cancel</mat-icon>
 			</mat-chip>
 		</mat-chip-list>
 	</mat-form-field>
