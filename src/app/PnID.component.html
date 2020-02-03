@@ -20,7 +20,7 @@
 		<mat-label>Ofertas vinculadas</mat-label>
 		<mat-chip-list multiple>
 			<mat-chip *ngFor="let x of StatusArray"
-      (click)="StatusToggle()">
+      (click)="StatusToggle(x)" selected="Status[x]">
 				{{x}}<mat-icon matChipRemove *ngIf="Status[x]">cancel</mat-icon>
 			</mat-chip>
 		</mat-chip-list>
