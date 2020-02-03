@@ -30,29 +30,26 @@ export class PnID {
   constructor(private io: IOInjectable) {
     console.time("Constructor");
 
-    const Reduce = Key => (data: any[]): any =>
-      data.reduce(
-        (accum, cur) => {
-          accum[cur[Key]] = cur;
-          return accum;
-        },
-        {} as any
-      );
-
-    const Once = new Promise(resolve => {
+let First;
+    const Once = ()=>new Promise(resolve => {
       function Resolve(data) {
         this.io.off(resolve);
+        First = data;
         resolve(data);
       }
       this.io.on("Init", Resolve);
     });
     const Fetch = fetch(
       "https://plantasset.kr/MPIS_WCF/webservice.asmx/TAG_SECH_LIST?area="
-    );
-    const Promises = [Once, Fetch];
-    Promise.all(Promises).then(console.log);
-    Promise.race(Promises).then(console.log);
-    /*.then(async ({ data, Status, Tags }) => {
+    ),
+    const Promises = [Once(), Fetch];
+    Promise.race(Promises).then(async data=>data instanceof Response? 
+    {  data, ...(await Promises[0]) } :
+      Promise.race([Once(), Fetch]).then(data=>data instanceof Response? 
+      {data, ...First}: data
+      ))
+      .then(console.log)
+    .then(async ({ data, Status, Tags }) => {
         this.Status = Status.reduce(
           (accum, cur) => {
             accum[cur[0].trim()] = 1;
@@ -72,7 +69,7 @@ export class PnID {
           return accum;
         }, []);
         console.timeEnd("Constructor");
-      });*/
+      });
     this.io.on("AngularTable", data => (this.table = data));
     this.io.on("Switches", data => (this.Switches = data));
   }
