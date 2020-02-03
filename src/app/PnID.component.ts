@@ -9,6 +9,7 @@ import { IOInjectable, Timestamp, Parser, StatusInterface } from "./PnID";
   providers: [IOInjectable]
 })
 export class PnID {
+  Log = console.log;
   table: Object;
   displayedColumns: string[] = ["time", "event"];
   Timestamp = Timestamp;
@@ -59,7 +60,7 @@ export class PnID {
 
       for (let x in Tags) Object.assign(data[x], Tags[x]);
       this.Tags = Object.values(data).reduce((accum, cur) => {
-        cur.TAG_NAME in data ? accum.unshift(cur) : accum.push(cur);
+        cur.TAG_NAME in Tags ? accum.unshift(cur) : accum.push(cur);
         return accum;
       }, []);
       console.timeEnd("Constructor");

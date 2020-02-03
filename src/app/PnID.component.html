@@ -21,7 +21,7 @@
 		<mat-chip-list multiple>
 			<mat-chip *ngFor="let x of StatusArray"
       (click)="StatusToggle(x)" [selected]="!!Status[x]">
-				{{x}}<mat-icon *ngIf="Status[x]">cancel</mat-icon>
+				{{x}}<mat-icon matChipRemove *ngIf="Status[x]">cancel</mat-icon>
 			</mat-chip>
 		</mat-chip-list>
 	</mat-form-field>
