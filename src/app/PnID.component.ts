@@ -38,20 +38,20 @@ export class PnID {
         },
         {} as any
       );
-    
-    const Once = ()=>new Promise(resolve => ["on", "off"].map(x=>
-      this.io[x]("Init", resolve)));
-      const once = Once();
-const Fetch = fetch("https://plantasset.kr/MPIS_WCF/webservice.asmx/TAG_SECH_LIST?area=");
-    Promise.race([
-       once,
-   Fetch
-    ]).then(data=>{
-      data instanceof Response? {...data, once}: 
-      Promise.race([Once(), Fetch ])
-    })
-    .then(console.log)
-      .then(async ({ data, Status, Tags }) => {
+
+    const Once = () =>
+      new Promise(resolve =>
+        ["on", "off"].map(x => this.io[x]("Init", resolve))
+      );
+    const once = Once();
+    const Fetch = fetch(
+      "https://plantasset.kr/MPIS_WCF/webservice.asmx/TAG_SECH_LIST?area="
+    );
+    const Promises = [once, Fetch];
+    Promise.all(Promises).then(console.log)
+    Promise.race(Promises)
+      .then(console.log)
+      /*.then(async ({ data, Status, Tags }) => {
         this.Status = Status.reduce(
           (accum, cur) => {
             accum[cur[0].trim()] = 1;
@@ -61,17 +61,17 @@ const Fetch = fetch("https://plantasset.kr/MPIS_WCF/webservice.asmx/TAG_SECH_LIS
         );
 
         return {
-          Tags: Reduce("tag")(Tags), 
-          data: await Parser(data),
-         };
+          Tags: Reduce("tag")(Tags),
+          data: await Parser(data)
+        };
       })
-      .then(({data, Tags }) => {
+      .then(({ data, Tags }) => {
         this.Tags = data.reduce((accum, cur) => {
           cur.TAG_NAME in Tags ? accum.unshift(cur) : accum.push(cur);
           return accum;
         }, []);
         console.timeEnd("Constructor");
-      });
+      });*/
     this.io.on("AngularTable", data => (this.table = data));
     this.io.on("Switches", data => (this.Switches = data));
   }
