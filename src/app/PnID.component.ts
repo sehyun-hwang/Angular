@@ -48,7 +48,6 @@ let First;
       Promise.race([Once(), Fetch]).then(data=>data instanceof Response? 
       {data, ...First}: data
       ))
-      .then(console.log)
     .then(async ({ data, Status, Tags }) => {
         this.Status = Status.reduce(
           (accum, cur) => {
@@ -59,13 +58,13 @@ let First;
         );
 
         return {
-          Tags: Reduce("tag")(Tags),
+          Tags: Tags.map(x=>x[0]),
           data: await Parser(data)
         };
       })
       .then(({ data, Tags }) => {
         this.Tags = data.reduce((accum, cur) => {
-          cur.TAG_NAME in Tags ? accum.unshift(cur) : accum.push(cur);
+          Tags.includes(cur.TAG_NAME)  ? accum.unshift(cur) : accum.push(cur);
           return accum;
         }, []);
         console.timeEnd("Constructor");
