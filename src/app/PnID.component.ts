@@ -51,7 +51,6 @@ export class PnID {
         cur.TAG_NAME in data ? accum.unshift(cur) : accum.push(cur);
         return accum;
       }, []);
-      console.log(this.Status)
       console.timeEnd("Constructor");
     });
     this.io.on("AngularTable", data => (this.table = data));
