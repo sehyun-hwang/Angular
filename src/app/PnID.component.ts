@@ -30,25 +30,29 @@ export class PnID {
   constructor(private io: IOInjectable) {
     console.time("Constructor");
 
-let First;
-    const Once = ()=>new Promise(resolve => {
-      function Resolve(data) {
-        this.io.off(resolve);
-        First = data;
-        resolve(data);
-      }
-      this.io.on("Init", Resolve);
-    });
+    let First;
+    const Once = () =>
+      new Promise(resolve => {
+        function Resolve(data) {
+          this.io.off(resolve);
+          First = data;
+          resolve(data);
+        }
+        this.io.on("Init", Resolve);
+      });
     const Fetch = fetch(
       "https://plantasset.kr/MPIS_WCF/webservice.asmx/TAG_SECH_LIST?area="
-    ),
+    );
     const Promises = [Once(), Fetch];
-    Promise.race(Promises).then(async data=>data instanceof Response? 
-    {  data, ...(await Promises[0]) } :
-      Promise.race([Once(), Fetch]).then(data=>data instanceof Response? 
-      {data, ...First}: data
-      ))
-    .then(async ({ data, Status, Tags }) => {
+    Promise.race(Promises)
+      .then(async data =>
+        data instanceof Response
+          ? { data, ...(await Promises[0]) }
+          : Promise.race([Once(), Fetch]).then(async data =>
+              data instanceof Response ? { data, ...(await Promises[0]) } : data
+            )
+      )
+      .then(async ({ data, Status, Tags }) => {
         this.Status = Status.reduce(
           (accum, cur) => {
             accum[cur[0].trim()] = 1;
@@ -58,13 +62,14 @@ let First;
         );
 
         return {
-          Tags: Tags.map(x=>x[0]),
+          Tags: Tags.map(x => x.tag),
           data: await Parser(data)
         };
       })
       .then(({ data, Tags }) => {
+        console.log(Tags);
         this.Tags = data.reduce((accum, cur) => {
-          Tags.includes(cur.TAG_NAME)  ? accum.unshift(cur) : accum.push(cur);
+          cTags.includes(cur.TAG_NAME) ? accum.unshift(cur) : accum.push(cur);
           return accum;
         }, []);
         console.timeEnd("Constructor");
