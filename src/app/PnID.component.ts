@@ -17,6 +17,7 @@ export class PnID {
   Tags: {
     TAG_NAME: string;
   }[];
+  Status:string[];
   constructor(private io: IOInjectable) {
     console.time("Constructor");
 
@@ -36,17 +37,21 @@ export class PnID {
 
       new Promise(resolve => {
         function Resolve(data) {
-          this.io.off("Tags", resolve);
+          this.io.off("Init", resolve);
           resolve(data);
         }
-        this.io.on("Tags", Resolve);
-      }).then(Reduce("tag"))
-    ]).then(([data, data2]) => {
-      for (let x in data2) Object.assign(data[x], data2[x]);
+        this.io.on("Init", Resolve);
+      })
+    ]).then(([data, { Status, Tags }]) => {
+      Tags = Reduce("tag")(Tags);
+      this.Status=  Status.map(x=>x[0]);
+
+      for (let x in Tags) Object.assign(data[x], Tags[x]);
       this.Tags = Object.values(data).reduce((accum, cur) => {
-        cur.TAG_NAME in data2 ? accum.unshift(cur) : accum.push(cur);
+        cur.TAG_NAME in data ? accum.unshift(cur) : accum.push(cur);
         return accum;
       }, []);
+      console.log(this.Status)
       console.timeEnd("Constructor");
     });
     this.io.on("AngularTable", data => (this.table = data));
