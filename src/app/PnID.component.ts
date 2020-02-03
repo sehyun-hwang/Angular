@@ -17,7 +17,20 @@ export class PnID {
   Tags: {
     TAG_NAME: string;
   }[];
-  Status:string[];
+  Status = new FormControl(new Set());
+  
+  toggleChip = (chip: any) => {
+    const Status = new Proxy(this.Status, {
+      get: (obj, prop)=> { 
+        console.log(obj, prop);
+        return obj;
+      }
+    });
+    console.log(Status);
+
+    Status.has(chip) ? Status.delete(chip) : Status.add(chip);
+  }
+
   constructor(private io: IOInjectable) {
     console.time("Constructor");
 
