@@ -20,7 +20,7 @@ export class PnID {
   }[];
   Status: StatusInterface;
   get StatusArray() {
-    return Object.keys(this.Status)
+    return Object.keys(this.Status);
   }
   StatusToggle(Tag) {
     this.Status[Tag] ^= 1;
@@ -39,25 +39,23 @@ export class PnID {
         {} as any
       );
 
-    Promise.all([
-      (fetch(
-        "https://plantasset.kr/MPIS_WCF/webservice.asmx/TAG_SECH_LIST?area="
-      ).then(Parser) as Promise<any>).then(Reduce("TAG_NAME")),
-
-      new Promise(resolve => {
-        function Resolve(data) {
-          this.io.off("Init", resolve);
-          resolve(data);
-        }
-        this.io.on("Init", Resolve);
-      })
-    ]).then(([data, { Status, Tags }]) => {
+    new Promise(resolve => {
+      function Resolve(data) {
+        this.io.off("Init", resolve);
+        resolve(data);
+      }
+      this.io.on("Init", Resolve);
+    }).then(({ data, Status, Tags }) => {
       Tags = Reduce("tag")(Tags);
-      this.Status=  Status.reduce((accum, cur)=> {
-        accum[cur[0].trim()] = 1;
-        return accum;
-      }, {} as StatusInterface);
-
+      this.Status = Status.reduce(
+        (accum, cur) => {
+          accum[cur[0].trim()] = 1;
+          return accum;
+        },
+        {} as StatusInterface
+      );
+      
+data = Parser(data);
       for (let x in Tags) Object.assign(data[x], Tags[x]);
       this.Tags = Object.values(data).reduce((accum, cur) => {
         cur.TAG_NAME in Tags ? accum.unshift(cur) : accum.push(cur);
