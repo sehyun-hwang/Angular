@@ -40,19 +40,19 @@ export class PnID {
         }
         this.io.on("Init", Resolve);
       });
-    const Fetch = fetch(
+    const Promises = [Once(), fetch(
       "https://plantasset.kr/MPIS_WCF/webservice.asmx/TAG_SECH_LIST?area="
-    );
-    const Promises = [Once(), Fetch];
-    Promise.race(Promises)
-      .then(async data =>
-        data instanceof Response
-          ? { data, ...(await Promises[0]) }
-          : Promise.race([Once(), Fetch]).then(async data =>
-              data instanceof Response ? { data, ...(await Promises[0]) } : data
-            )
+    )];
+    Promise.race([
+      Promise.all(Promises),
+      Promises[0].then(async data =>
+        Promise.race([
+          Promise.resolve([ await Once(), data]),
+          Promise.all(Promises)
+        ])
       )
-      .then(async ({ data, Status, Tags }) => {
+    ])
+      .then(async ([{ Status, Tags }, data]) => {
         this.Status = Status.reduce(
           (accum, cur) => {
             accum[cur[0].trim()] = 1;
@@ -69,7 +69,7 @@ export class PnID {
       .then(({ data, Tags }) => {
         console.log(Tags);
         this.Tags = data.reduce((accum, cur) => {
-          cTags.includes(cur.TAG_NAME) ? accum.unshift(cur) : accum.push(cur);
+          Tags.includes(cur.TAG_NAME) ? accum.unshift(cur) : accum.push(cur);
           return accum;
         }, []);
         console.timeEnd("Constructor");
