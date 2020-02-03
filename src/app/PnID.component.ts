@@ -45,24 +45,30 @@ export class PnID {
         resolve(data);
       }
       this.io.on("Init", Resolve);
-    }).then(({ data, Status, Tags }) => {
-      Tags = Reduce("tag")(Tags);
-      this.Status = Status.reduce(
-        (accum, cur) => {
-          accum[cur[0].trim()] = 1;
+    })
+      .then(({ data, Status, Tags }) => {
+        Tags = Reduce("tag")(Tags);
+
+        this.Status = Status.reduce(
+          (accum, cur) => {
+            accum[cur[0].trim()] = 1;
+            return accum;
+          },
+          {} as StatusInterface
+        );
+
+        return data;
+      })
+      .then(Parser)
+      .then(data => {
+        console.log(data);
+        for (let x in Tags) Object.assign(data[x], Tags[x]);
+        this.Tags = Object.values(data).reduce((accum, cur) => {
+          cur.TAG_NAME in Tags ? accum.unshift(cur) : accum.push(cur);
           return accum;
-        },
-        {} as StatusInterface
-      );
-      
-data = Parser(data);
-      for (let x in Tags) Object.assign(data[x], Tags[x]);
-      this.Tags = Object.values(data).reduce((accum, cur) => {
-        cur.TAG_NAME in Tags ? accum.unshift(cur) : accum.push(cur);
-        return accum;
-      }, []);
-      console.timeEnd("Constructor");
-    });
+        }, []);
+        console.timeEnd("Constructor");
+      });
     this.io.on("AngularTable", data => (this.table = data));
     this.io.on("Switches", data => (this.Switches = data));
   }

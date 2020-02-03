@@ -14,12 +14,12 @@ export class IOInjectable extends (io as IOInterface) {
   }
 }
 
-export async function Parser(promise: Response):Promise<any[]>{
-  const data:{
-    Table:any[]
-  } = await promise
-    .text()
-    .then(
+export async function Parser(arg: string):Promise<any[]>
+export async function Parser(arg: Response):Promise<any[]>{
+  let data = arg instanceof String? arg : await arg.text();
+  data: {
+    Table: any[]
+  } = await Promise.resolve(data).then(
       text =>
         new DOMParser().parseFromString(text, "text/xml").firstElementChild
           .innerHTML
