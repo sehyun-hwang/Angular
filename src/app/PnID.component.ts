@@ -43,8 +43,10 @@ export class PnID {
       }).then(Reduce("tag"))
     ]).then(([data, data2]) => {
       for (let x in data2) Object.assign(data[x], data2[x]);
-      this.Tags = Object.values(data)
-      .sort(x=>x.TAG_NAME in data2);
+      this.Tags = Object.values(data).reduce((accum, cur) => {
+        cur.TAG_NAME in data2 ? accum.unshift(cur) : accum.push(cur);
+        return accum;
+      }, []);
       console.timeEnd("Constructor");
     });
     this.io.on("AngularTable", data => (this.table = data));
