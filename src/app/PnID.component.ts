@@ -38,14 +38,19 @@ export class PnID {
         },
         {} as any
       );
-
-    new Promise(resolve => {
-      function Resolve(data) {
-        this.io.off("Init", resolve);
-        resolve(data);
-      }
-      this.io.on("Init", Resolve);
+    
+    const Once = ()=>new Promise(resolve => ["on", "off"].map(x=>
+      this.io[x]("Init", resolve)));
+      const once = Once();
+const Fetch = fetch("https://plantasset.kr/MPIS_WCF/webservice.asmx/TAG_SECH_LIST?area=");
+    Promise.race([
+       once,
+   Fetch
+    ]).then(data=>{
+      data instanceof Response? {...data, once}: 
+      Promise.race([Once(), Fetch ])
     })
+    .then(console.log)
       .then(async ({ data, Status, Tags }) => {
         this.Status = Status.reduce(
           (accum, cur) => {
