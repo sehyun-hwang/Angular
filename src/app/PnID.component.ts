@@ -38,16 +38,18 @@ export class PnID {
         }
         this.io.on("Init", Resolve);
       });
-    const Promises = [Once(), fetch(
-      "https://plantasset.kr/MPIS_WCF/webservice.asmx/TAG_SECH_LIST?area="
-    )];
+    const Promises = [
+      Once(),
+      fetch(
+        "https://plantasset.kr/MPIS_WCF/webservice.asmx/TAG_SECH_LIST?area="
+      )
+    ];
     Promise.race([
       Promise.all(Promises),
       Promises[0].then(async data =>
-        Promise.race([
-          Promise.resolve([ await Once(), data]),
-          Promise.all(Promises)
-        ])
+        Promise.race([Once(), Promises[1]]).then(data2 =>
+          data2 instanceof Response ? [data, data2] : [data2, data2]
+        )
       )
     ])
       .then(async ([{ Status, Tags }, data]) => {
