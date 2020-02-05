@@ -48,14 +48,15 @@ export class PnID {
       Promise.all(Promises),
       Promises[0].then(async data =>
         Promise.race([Once(), Promises[1]]).then(data2 =>
-          data2 instanceof Response ? [data, data2] : [data2, data2]
+          data2 instanceof Response ? [data, data2] : [data, data[2]]
         )
       )
-    ])
-      .then(async ([{ Status, Tags }, data]) => {
+    ])//.then(console.log)
+      .then(async ([[ Status, Tags ], data]) => {
+        console.log(Status, Tags, data)
         this.Status = Status.reduce(
           (accum, cur) => {
-            accum[cur[0].trim()] = 1;
+            accum[cur.trim()] = 1;
             return accum;
           },
           {} as StatusInterface
