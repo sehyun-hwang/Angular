@@ -4,7 +4,7 @@
 	<form *ngIf="Tags" id="Form">
 		<span>Select a P&ID Tag:</span>
 		<mat-form-field>
-			<input type="text" placeholder="P&ID Tag" matInput [formControl]="myControl" [matAutocomplete]="auto">
+			<input matInput [formControl]="TagControl" [matAutocomplete]="auto" placeholder="P&ID Tag" >
 			<mat-autocomplete #auto="matAutocomplete">
 				<mat-option *ngFor="let Tag of Tags" [innerText]="Tag.TAG_NAME" [value]="Tag.TAG_NAME">
 				</mat-option>

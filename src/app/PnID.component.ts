@@ -1,4 +1,4 @@
-import { Component, OnDestroy, AfterViewInit } from "@angular/core";
+import { Component, OnDestroy, ViewChild, AfterViewInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { IOInjectable, Timestamp, Parser, StatusInterface } from "./PnID";
 
@@ -9,6 +9,8 @@ import { IOInjectable, Timestamp, Parser, StatusInterface } from "./PnID";
   providers: [IOInjectable]
 })
 export class PnID implements AfterViewInit {
+  @ViewChild("auto", { static: false }) TagElement;
+
   Log = console.log;
   table: Object;
   displayedColumns: string[] = ["time", "event"];
@@ -79,11 +81,15 @@ export class PnID implements AfterViewInit {
         }
       )
       .then(({ data, Tags }) => {
-        console.log(Tags);
         this.Tags = data.reduce((accum, cur) => {
           Tags.includes(cur.TAG_NAME) ? accum.unshift(cur) : accum.push(cur);
           return accum;
         }, []);
+
+        this.TagControl.setValue(
+          localStorage.getItem("Tag") || this.Tags[0].TAG_NAME
+        );
+
         console.timeEnd("Constructor");
       });
     this.io.on("AngularTable", data => (this.table = data));
@@ -91,11 +97,12 @@ export class PnID implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    localStorage.getItem("Tag")
-    console.log()
+    this.TagControl.valueChanges.subscribe(value => {
+      console.log(value);
+    });
   }
 
-  myControl = new FormControl();
+  TagControl = new FormControl();
   test() {
     this.io.emit("Ping");
   }

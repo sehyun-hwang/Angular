@@ -1,5 +1,7 @@
 #Form span {
-  margin-right:1em;
+  display: inline-block;
+  width:calc(30% - 1em);
+  padding-right:1em;
 }
 #Form mat-form-field {
   width: 70%;
@@ -8,3 +10,4 @@
 .example-full-width {
   width: 100%;
 }
+
