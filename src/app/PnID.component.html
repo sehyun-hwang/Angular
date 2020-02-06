@@ -1,9 +1,9 @@
 <div class="mat-app-background basic-container" style="overflow-y:auto">
 	<button mat-button (click)="test();">test</button>
 
-	<form *ngIf="Tags">
-		<span style="margin-right:10px">Select a P&ID Tag:</span>
-		<mat-form-field [style.width]="'70%'">
+	<form *ngIf="Tags" id="Form">
+		<span>Select a P&ID Tag:</span>
+		<mat-form-field>
 			<input type="text" placeholder="P&ID Tag" matInput [formControl]="myControl" [matAutocomplete]="auto">
 			<mat-autocomplete #auto="matAutocomplete">
 				<mat-option *ngFor="let Tag of Tags" [innerText]="Tag.TAG_NAME" [value]="Tag.TAG_NAME">
@@ -11,11 +11,14 @@
 			</mat-autocomplete>
 		</mat-form-field>
 
-		<mat-form-field [style.width]="'100%'">
-			<mat-label>Status to display:</mat-label>
+		<br/>
+
+		<span>Status to display:</span>
+		<mat-form-field>
+			<mat-label>Status</mat-label>
 			<mat-chip-list multiple>
 				<mat-chip *ngFor="let x of StatusArray" (click)="StatusToggle(x)" [selected]="!!Status[x]">
-					{{x}}<mat-icon *ngIf="Status[x]" [inline]="false"[style.font-size]="'1.5em'">cancel</mat-icon>
+					{{x}}<mat-icon *ngIf="Status[x]" [inline]="false" [style.font-size]="'1.5em'">cancel</mat-icon>
 				</mat-chip>
 			</mat-chip-list>
 		</mat-form-field>
