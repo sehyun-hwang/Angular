@@ -91,7 +91,8 @@ export class PnID implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    
+    localStorage.getItem("Tag")
+    console.log()
   }
 
   myControl = new FormControl();

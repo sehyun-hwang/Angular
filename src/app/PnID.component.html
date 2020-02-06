@@ -3,7 +3,7 @@
 
 	<form *ngIf="Tags">
 		<span style="margin-right:10px">Select a P&ID Tag:</span>
-		<mat-form-field>
+		<mat-form-field [style.width]="'70%'">
 			<input type="text" placeholder="P&ID Tag" matInput [formControl]="myControl" [matAutocomplete]="auto">
 			<mat-autocomplete #auto="matAutocomplete">
 				<mat-option *ngFor="let Tag of Tags" [innerText]="Tag.TAG_NAME" [value]="Tag.TAG_NAME">
@@ -11,8 +11,8 @@
 			</mat-autocomplete>
 		</mat-form-field>
 
-		<mat-form-field>
-			<mat-label>Ofertas vinculadas</mat-label>
+		<mat-form-field [style.width]="'100%'">
+			<mat-label>Status to display:</mat-label>
 			<mat-chip-list multiple>
 				<mat-chip *ngFor="let x of StatusArray" (click)="StatusToggle(x)" [selected]="!!Status[x]">
 					{{x}}<mat-icon *ngIf="Status[x]" [inline]="false"[style.font-size]="'1.5em'">cancel</mat-icon>
