@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, AfterViewInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { IOInjectable, Timestamp, Parser, StatusInterface } from "./PnID";
 
@@ -8,7 +8,7 @@ import { IOInjectable, Timestamp, Parser, StatusInterface } from "./PnID";
   styleUrls: ["./PnID.component.css"],
   providers: [IOInjectable]
 })
-export class PnID {
+export class PnID implements AfterViewInit {
   Log = console.log;
   table: Object;
   displayedColumns: string[] = ["time", "event"];
@@ -51,22 +51,33 @@ export class PnID {
           data2 instanceof Response ? [data, data2] : [data, data[2]]
         )
       )
-    ])//.then(console.log)
-      .then(async ([[ Status, Tags ], data]) => {
-        console.log(Status, Tags, data)
-        this.Status = Status.reduce(
-          (accum, cur) => {
-            accum[cur.trim()] = 1;
-            return accum;
-          },
-          {} as StatusInterface
-        );
+    ]) //.then(console.log)
+      .then(
+        async ([[Status, Tags], data]: [
+          [
+            string[],
+            {
+              device: string;
+              tag: string;
+            }[]
+          ],
+          { TAG_NAME: string }
+        ]) => {
+          console.log(Status, Tags, data);
+          this.Status = Status.reduce(
+            (accum, cur) => {
+              accum[cur.trim()] = 1;
+              return accum;
+            },
+            {} as StatusInterface
+          );
 
-        return {
-          Tags: Tags.map(x => x.tag),
-          data: await Parser(data)
-        };
-      })
+          return {
+            Tags: Tags.map(x => x.tag),
+            data: await Parser(data)
+          };
+        }
+      )
       .then(({ data, Tags }) => {
         console.log(Tags);
         this.Tags = data.reduce((accum, cur) => {
@@ -77,6 +88,10 @@ export class PnID {
       });
     this.io.on("AngularTable", data => (this.table = data));
     this.io.on("Switches", data => (this.Switches = data));
+  }
+
+  ngAfterViewInit() {
+    
   }
 
   myControl = new FormControl();
