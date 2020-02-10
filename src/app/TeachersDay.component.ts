@@ -33,7 +33,7 @@ export class TeachersDay {
 
   displayedColumns = ["Rank", "Prize", "Name", "Hash", "Remove"];
   dataSource = new MatTableDataSource();
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild('MatSort', {static: true}) sort: MatSort;
 
 
   ngAfterViewInit() {
