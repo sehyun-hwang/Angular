@@ -44,9 +44,7 @@ export class PnID_Device {
                   |> range(start: ${Time})`
   );
 
-  @ViewChild("Switch", {
-    static: false
-  })
+  @ViewChild("Switch")
   Switch;
 
   @Input() Switches: boolean[];

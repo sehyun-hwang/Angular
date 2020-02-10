@@ -1,6 +1,7 @@
-import { Component, OnDestroy, ViewChild, AfterViewInit } from "@angular/core";
+import { Component, ViewChild, AfterViewInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { IOInjectable, Timestamp, Parser, StatusInterface } from "./PnID";
+import { IOInjectable, Timestamp, Parser } from "./PnID";
+import { StatusInterface } from "./PnID-Interfaces";
 
 @Component({
   selector: "",
@@ -9,7 +10,7 @@ import { IOInjectable, Timestamp, Parser, StatusInterface } from "./PnID";
   providers: [IOInjectable]
 })
 export class PnID implements AfterViewInit {
-  @ViewChild("auto", { static: false }) TagElement;
+  @ViewChild("auto") TagElement;
 
   Log = console.log;
   table: Object;
@@ -63,16 +64,13 @@ export class PnID implements AfterViewInit {
               tag: string;
             }[]
           ],
-          { TAG_NAME: string }
+          any
         ]) => {
           console.log(Status, Tags, data);
-          this.Status = Status.reduce(
-            (accum, cur) => {
-              accum[cur.trim()] = 1;
-              return accum;
-            },
-            {} as StatusInterface
-          );
+          this.Status = Status.reduce((accum, cur) => {
+            accum[cur.trim()] = 1;
+            return accum;
+          }, {} as StatusInterface);
 
           return {
             Tags: Tags.map(x => x.tag),
