@@ -67,20 +67,29 @@ export class PnID implements AfterViewInit {
           any
         ]) => {
           console.log(Status, Tags, data);
-          this.Status = Status.reduce((accum, cur) => {
-            accum[cur.trim()] = 1;
-            return accum;
-          }, {} as StatusInterface);
+          this.Status = Status.reduce(
+            (accum, cur) => {
+              accum[cur.trim()] = 1;
+              return accum;
+            },
+            {} as StatusInterface
+          );
 
           return {
-            Tags: Tags.map(x => x.tag),
-            data: await Parser(data)
+            Tags,
+            data: await Parser(data),
           };
         }
       )
-      .then(({ data, Tags }) => {
+      .then(({ Tags, data }) => {
+        const Tags_arr = Tags.map(x => x.tag);
+
         this.Tags = data.reduce((accum, cur) => {
-          Tags.includes(cur.TAG_NAME) ? accum.unshift(cur) : accum.push(cur);
+          let Index = Tags_arr.indexOf(cur.TAG_NAME);
+          if (Index > -1) {
+            cur.device = Tags[Index].device;
+            accum.unshift(cur);
+          } else accum.push(cur);
           return accum;
         }, []);
 

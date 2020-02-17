@@ -6,7 +6,7 @@
 		<mat-form-field>
 			<input matInput [formControl]="TagControl" [matAutocomplete]="auto" placeholder="P&ID Tag" >
 			<mat-autocomplete #auto="matAutocomplete">
-				<mat-option *ngFor="let Tag of Tags" [innerText]="Tag.TAG_NAME" [value]="Tag.TAG_NAME">
+				<mat-option *ngFor="let Tag of Tags" [innerText]="Tag.TAG_NAME" [value]="Tag.TAG_NAME" [style.background-color]="Tag.device? '#9c4dcc' : 'default'">
 				</mat-option>
 			</mat-autocomplete>
 		</mat-form-field>
@@ -17,8 +17,8 @@
 		<mat-form-field>
 			<mat-label>Status</mat-label>
 			<mat-chip-list multiple>
-				<mat-chip *ngFor="let x of StatusArray" (click)="StatusToggle(x)" [selected]="!!Status[x]">
-					{{x}}<mat-icon *ngIf="Status[x]" [inline]="false" [style.font-size]="'1.5em'">cancel</mat-icon>
+				<mat-chip *ngFor="let x of StatusArray" (click)="StatusToggle(x)" [selected]="!!Status[x]" >
+					{{x}}<mat-icon *ngIf="Status[x]" [inline]="false" [style.font-size]="'1.5em'" >cancel</mat-icon>
 				</mat-chip>
 			</mat-chip-list>
 		</mat-form-field>
