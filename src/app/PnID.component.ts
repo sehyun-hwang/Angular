@@ -77,7 +77,7 @@ export class PnID implements AfterViewInit {
 
           return {
             Tags,
-            data: await Parser(data),
+            data: await Parser(data)
           };
         }
       )
@@ -104,9 +104,7 @@ export class PnID implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.TagControl.valueChanges.subscribe(value => {
-      console.log(value);
-    });
+    this.TagControl.valueChanges.subscribe(value => this.io.emit("Tag", value));
   }
 
   TagControl = new FormControl();
