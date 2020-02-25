@@ -27,7 +27,7 @@ export function routes (): Routes {
   { path: "", component: Index },
   { path: "pnid", component: PnID },
   { path: "community", component: Community },
-  { path: "teachersday/console.html", component: TeachersDay },
+  { path: "teachersday/console", component: TeachersDay },
   { path: "ptais/street-capture.html", component: StreetCapture },
   { path: "**", redirectTo: "" },
 ]}
