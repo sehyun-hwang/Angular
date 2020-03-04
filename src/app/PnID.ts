@@ -12,7 +12,7 @@ export class IOInjectable extends (io as IOInterface) {
     const Socket = super(
       "https://proxy.hwangsehyun.com?port=8081"
     ) as unknown as SocketIOClient.Socket;
-    this.Socket = Socket;
+    Object.assign(this, {Socket});
   }
 }
 
