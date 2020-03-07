@@ -17,6 +17,8 @@ export class PnID implements AfterViewInit {
   displayedColumns: string[] = ["time", "event"];
   Timestamp = Timestamp;
 
+  List: [];
+
   Switches: boolean[];
   Tags: {
     TAG_NAME: string;
@@ -61,7 +63,7 @@ export class PnID implements AfterViewInit {
           }[],
           any
         ]) => {
-          /console.log(Status, Tags, data);
+          //console.log(Status, Tags, data);
           this.Status = Status.reduce(
             (accum, cur) => {
               accum[cur.trim()] = 1;
@@ -94,7 +96,8 @@ export class PnID implements AfterViewInit {
 
         console.timeEnd("Constructor");
       });
-    this.io.on("AngularTable", data => (this.table = data));
+      
+    this.io.on("AngularTable",data => this.List = data);
     this.io.on("Switches", data => (this.Switches = data));
   }
 
