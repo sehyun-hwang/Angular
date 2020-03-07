@@ -34,27 +34,24 @@ export class PnID implements AfterViewInit {
     console.time("Constructor");
 
     const Once = () =>
-      new Promise(resolve => {
-        function Resolve(data) {
-          this.io.off(resolve);
-          resolve(data);
-        }
-        this.io.on("Init", Resolve);
-      });
+      new Promise(resolve => 
+        this.io.once("Init", data=>{
+          resolve([data, Once()]);
+          }));
     const Promises = [
-      Once(),
-      fetch(
-        "https://plantasset.kr/MPIS_WCF/webservice.asmx/TAG_SECH_LIST?area="
-      )
+      Once().then(data=>data[0]),
+      fetch("https://plantasset.kr/MPIS_WCF/webservice.asmx/TAG_SECH_LIST?area=")
     ];
     Promise.race([
-      Promise.all(Promises),
-      Promises[0].then(async data =>
-        Promise.race([Once(), Promises[1]]).then(data2 =>
+      //Promise.all(Promises),
+      Promises[0].then(async ([data, promise]) => {
+        console.log(4,data)
+        return Promise.race([promise]).then(data2 => {
+console.log(5,data2);
           data2 instanceof Response ? [data, data2] : [data, data[2]]
-        )
-      )
-    ]) //.then(console.log)
+        })
+      })
+    ]).then(console.log)
       .then(
         async ([[Status, Tags], data]: [
           [
