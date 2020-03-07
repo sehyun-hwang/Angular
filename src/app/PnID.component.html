@@ -29,13 +29,13 @@
 	<mat-tab-group>
 		<mat-tab label="Overview">
 			<mat-nav-list *ngIf="List.length">
-				<mat-list-item *ngFor="let x of List.slice(ListItem)">
+				<mat-list-item *ngFor="let x of List.slice(0, ListItem)">
 					<span [innerText]="Timestamp(x[0])"[style.font-weight]="'bold'" ></span>
 					<span [innerText]="x[1]"></span>
 				</mat-list-item>
 			</mat-nav-list>
 
-      <button mat-raised-button (click)="ListItem + 10">Load More</button>
+      <button mat-raised-button (click)="ListItem = ListItem + 10">Load More</button>
 		</mat-tab>
 
 		<mat-tab label="Details">

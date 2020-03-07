@@ -18,10 +18,8 @@ export class PnID implements AfterViewInit {
   Timestamp = Timestamp;
 
   List:[[number, string]] = [];
-  _ListItem = 10;
-  set ListItem(x){
+  ListItem = 10;
 
-  }
   Switches: boolean[];
   Tags: {
     TAG_NAME: string;
