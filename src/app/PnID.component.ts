@@ -43,15 +43,15 @@ export class PnID implements AfterViewInit {
     );
     Promise.race([
       Promise.all([
-        once.then(data => data[0]) //Fetch
+        once.then(data => data[0]),
+        Fetch,
+         new Promise(resolve=>resolve),
       ]),
-      once.then(async ([data, promise]) => {
-        console.log(4, data, promise);
-        return Promise.all([data, promise]);
-      })
+      once.then(async ([data, promise]) => 
+        Promise.all([data, promise]))
     ])
-      .then(console.log)
-      .then(Array.prototype.flat)
+      //.then(console.log)
+      .then(data=>data.flat())
       .then(
         async ([Status, Tags, data]: [
           string[],
@@ -61,7 +61,7 @@ export class PnID implements AfterViewInit {
           }[],
           any
         ]) => {
-          console.log(Status, Tags, data);
+          /console.log(Status, Tags, data);
           this.Status = Status.reduce(
             (accum, cur) => {
               accum[cur.trim()] = 1;
