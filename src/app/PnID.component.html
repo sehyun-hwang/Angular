@@ -28,14 +28,14 @@
 
 	<mat-tab-group>
 		<mat-tab label="Overview">
-			<mat-nav-list>
-				<mat-list-item *ngFor="let x of List">
-					<span [innerText]="Timestamp(x[0])"[style.font-weight]="'bold'" >
-    </span>
-					<span [innerText]="x[1]">
-      </span>
+			<mat-nav-list *ngIf="List.length">
+				<mat-list-item *ngFor="let x of List.slice(ListItems)">
+					<span [innerText]="Timestamp(x[0])"[style.font-weight]="'bold'" ></span>
+					<span [innerText]="x[1]"></span>
 				</mat-list-item>
 			</mat-nav-list>
+
+      <button mat-raised-button onclick="ListItems+=10">Load More</button>
 		</mat-tab>
 
 		<mat-tab label="Details">
@@ -57,7 +57,6 @@
 
 		</mat-tab>
 	</mat-tab-group>
-
 
 	<mat-accordion *ngIf="false && Switches && Switches.length">
 		<pnid-device [Switches]="Switches"></pnid-device>

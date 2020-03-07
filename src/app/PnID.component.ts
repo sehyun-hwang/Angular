@@ -18,7 +18,7 @@ export class PnID implements AfterViewInit {
   Timestamp = Timestamp;
 
   List: [];
-
+ListItems= 10;
   Switches: boolean[];
   Tags: {
     TAG_NAME: string;
