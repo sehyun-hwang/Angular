@@ -17,8 +17,11 @@ export class PnID implements AfterViewInit {
   displayedColumns: string[] = ["time", "event"];
   Timestamp = Timestamp;
 
-  List: [];
-ListItems= 10;
+  List:[[number, string]] = [];
+  _ListItem = 10;
+  set ListItem(x){
+
+  }
   Switches: boolean[];
   Tags: {
     TAG_NAME: string;
