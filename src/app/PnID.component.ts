@@ -103,8 +103,11 @@ export class PnID implements AfterViewInit {
       let Table;
       [this.List, Table] = data
       console.log(Table);
-      const arr = JSON.stringify('["unlock_requester", "unlock_checker", "lock_requester"]');
-    console.log(Table.map(x=>_.pick(x, (value, key)=>arr.includes(key)))
+      const arr = JSON.parse('["unlock_requester", "unlock_checker", "lock_requester"]');
+      console.log(arr);
+    Table.forEach(x=>{
+      console.log(_.pick(x, arr)
+      })
       });
     this.io.on("Switches", data => (this.Switches = data));
   }
