@@ -16,10 +16,10 @@ export class PnID implements AfterViewInit {
 
   Log = console.log;
   Table: Object;
-  displayedColumns: string[] = ["time", "event"];
+  displayedColumns: string[] = ["time", "status", "person","event",];
   Timestamp = Timestamp;
 
-  List:[[number, string]] = [];
+  List: [[number, string]] = [];
   ListItem = 10;
 
   Switches: boolean[];
@@ -47,15 +47,11 @@ export class PnID implements AfterViewInit {
       "https://plantasset.kr/MPIS_WCF/webservice.asmx/TAG_SECH_LIST?area="
     );
     Promise.race([
-      Promise.all([
-        once.then(data => data[0]),
-        Fetch.catch()
-      ]),
-      once.then(async ([data, promise]) => 
-        Promise.all([data, promise]))
+      Promise.all([once.then(data => data[0]), Fetch.catch()]),
+      once.then(async ([data, promise]) => Promise.all([data, promise]))
     ])
       //.then(console.log)
-      .then(data=>data.flat())
+      .then(data => data.flat())
       .then(
         async ([Status, Tags, data]: [
           string[],
@@ -65,7 +61,7 @@ export class PnID implements AfterViewInit {
           }[],
           any
         ]) => {
-          console.log({Status, Tags, data});
+          console.log({ Status, Tags, data });
           this.Status = Status.reduce(
             (accum, cur) => {
               accum[cur.trim()] = 1;
@@ -101,15 +97,20 @@ export class PnID implements AfterViewInit {
 
     this.io.on("Tables", data => {
       let Table;
-      [this.List, Table] = data
-      console.log(Table);
-      const arr = JSON.parse('["unlock_requester", "unlock_checker", "lock_requester"]');
-      console.log(arr);
-    Table.forEach(x=>{
-      cosnt [Event, Person]=Object.entries(_.pickBy(_.pick(x, arr), x=>x));
-      Object.assign(Table, {Event, Person});
-      })
+      [this.List, Table] = data;
+      const arr = JSON.parse(
+        '["unlock_requester", "unlock_checker", "lock_requester"]'
+      );
+
+      Table.forEach(x => {
+        const [Event, Person] = Object.entries(
+          _.pickBy(_.pick(x, arr), x => x)
+        );
+        Object.assign(x, { Event, Person });
       });
+      console.log(Table);
+      this.Table = Table
+    });
     this.io.on("Switches", data => (this.Switches = data));
   }
 
