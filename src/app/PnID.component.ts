@@ -47,8 +47,7 @@ export class PnID implements AfterViewInit {
     Promise.race([
       Promise.all([
         once.then(data => data[0]),
-        Fetch,
-         new Promise(resolve=>resolve),
+        Fetch.catch()
       ]),
       once.then(async ([data, promise]) => 
         Promise.all([data, promise]))
@@ -64,7 +63,7 @@ export class PnID implements AfterViewInit {
           }[],
           any
         ]) => {
-          //console.log({Status, Tags, data});
+          console.log({Status, Tags, data});
           this.Status = Status.reduce(
             (accum, cur) => {
               accum[cur.trim()] = 1;
@@ -98,7 +97,7 @@ export class PnID implements AfterViewInit {
         console.timeEnd("Constructor");
       });
 
-    this.io.on("AngularTable",data => this.List = data);
+    this.io.on("Tables",data => [this.List, this.Table] = data);
     this.io.on("Switches", data => (this.Switches = data));
   }
 
