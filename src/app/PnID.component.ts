@@ -13,7 +13,7 @@ export class PnID implements AfterViewInit {
   @ViewChild("auto") TagElement;
 
   Log = console.log;
-  table: Object;
+  Table: Object;
   displayedColumns: string[] = ["time", "event"];
   Timestamp = Timestamp;
 
@@ -97,7 +97,12 @@ export class PnID implements AfterViewInit {
         console.timeEnd("Constructor");
       });
 
-    this.io.on("Tables",data => [this.List, this.Table] = data);
+    this.io.on("Tables", data => {
+      let Table;
+      [this.List, Table] = data
+      console.log(Table);
+        console.log(Table.map(x=>[["unlock_requester", "unlock_checker", "lock_requester"].find(y=>x[y])]))
+      });
     this.io.on("Switches", data => (this.Switches = data));
   }
 
