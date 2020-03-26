@@ -16,7 +16,7 @@ export class PnID implements AfterViewInit {
 
   Log = console.log;
   Table: Object;
-  displayedColumns: string[] = ["time", "status", "person","event",];
+  displayedColumns: string[] = ["time", "status", "position", "event"];
   Timestamp = Timestamp;
 
   List: [[number, string]] = [];
@@ -98,18 +98,18 @@ export class PnID implements AfterViewInit {
     this.io.on("Tables", data => {
       let Table;
       [this.List, Table] = data;
-      const arr = JSON.parse(
-        '["unlock_requester", "unlock_checker", "lock_requester"]'
-      );
 
       Table.forEach(x => {
-        const [Event, Person] = Object.entries(
-          _.pickBy(_.pick(x, arr), x => x)
-        );
-        Object.assign(x, { Event, Person });
+        const [Event, Position] = Object.entries(
+          _.pickBy(
+            _.pick(x, ["unlock_requester", "unlock_checker", "lock_requester"]),
+            x => x
+          )
+        )[0];
+        Object.assign(x, { Event, Position });
       });
       console.log(Table);
-      this.Table = Table
+      this.Table = Table;
     });
     this.io.on("Switches", data => (this.Switches = data));
   }
