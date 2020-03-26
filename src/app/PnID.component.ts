@@ -1,5 +1,7 @@
 import { Component, ViewChild, AfterViewInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
+import _ from "lodash";
+
 import { IOInjectable, Timestamp, Parser } from "./PnID";
 import { StatusInterface } from "./PnID-Interfaces";
 
@@ -101,15 +103,7 @@ export class PnID implements AfterViewInit {
       let Table;
       [this.List, Table] = data
       console.log(Table);
-        console.log(Table.map(x=>{
-          let i;
-          const Title = [x.unlock_requester, x.unlock_checker, x.lock_requester].find((x, _i)=>{
-            i = _i;
-            return x;
-            });
-          return {
-            Title
-          }))
+    Table.map(x=>_.pick(x, )
       });
     this.io.on("Switches", data => (this.Switches = data));
   }
