@@ -106,7 +106,8 @@ export class PnID implements AfterViewInit {
       const arr = JSON.parse('["unlock_requester", "unlock_checker", "lock_requester"]');
       console.log(arr);
     Table.forEach(x=>{
-      console.log(_.pick(x, arr)
+      cosnt [Event, Person]=Object.entries(_.pickBy(_.pick(x, arr), x=>x));
+      Object.assign(Table, {Event, Person});
       })
       });
     this.io.on("Switches", data => (this.Switches = data));
