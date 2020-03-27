@@ -35,6 +35,7 @@ export class PnID implements AfterViewInit {
     this.Status[Tag] ^= 1;
     const Status = this.StatusArray.filter(x=>x)
     this.Table = _.pickBy(this._Table, x=>Status.includes(x.status))
+    console.log(this.Table)
   }
 
   constructor(private io: IOInjectable) {
