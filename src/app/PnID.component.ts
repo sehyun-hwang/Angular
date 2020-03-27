@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit } from "@angular/core";
+import { Component, ViewChild, AfterViewInit, ChangeDetectorRef } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import _ from "lodash";
 
@@ -15,8 +15,8 @@ export class PnID implements AfterViewInit {
   @ViewChild("auto") TagElement;
 
   Log = console.log;
-  Table: Object;
-  _Table: Object;
+  Table: Object[];
+  _Table: Object[];
   displayedColumns: string[] = ["time", "status", "position", "event"];
   Timestamp = Timestamp;
 
@@ -31,14 +31,16 @@ export class PnID implements AfterViewInit {
   get StatusArray() {
     return Object.keys(this.Status);
   }
-  StatusToggle(Tag) {
-    this.Status[Tag] ^= 1;
-    const Status = this.StatusArray.filter(x=>x)
-    this.Table = _.pickBy(this._Table, x=>Status.includes(x.status))
+  StatusToggle(State) {
+    if (State) this.Status[State] ^= 1;
+    if (!this._Table) return;
+   const Status = Object.keys(_.pickBy(this.Status, x=>x))
+   console.log(Status)
+    this.Table = this._Table.filter(x=>Status.includes(x.status))
     console.log(this.Table)
   }
 
-  constructor(private io: IOInjectable) {
+  constructor(private io: IOInjectable, private changeDetectorRefs: ChangeDetectorRef) {
     console.time("Constructor");
 
     const Once = () =>
@@ -121,6 +123,7 @@ export class PnID implements AfterViewInit {
     this.TagControl.valueChanges.subscribe(value => {
       this.io.emit("Tag", value);
       localStorage.setItem("Tag", value);
+      this.StatusToggle();
     });
   }
 
