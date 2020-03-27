@@ -16,6 +16,7 @@ export class PnID implements AfterViewInit {
 
   Log = console.log;
   Table: Object;
+  _Table: Object;
   displayedColumns: string[] = ["time", "status", "position", "event"];
   Timestamp = Timestamp;
 
@@ -32,7 +33,8 @@ export class PnID implements AfterViewInit {
   }
   StatusToggle(Tag) {
     this.Status[Tag] ^= 1;
-    console.log(this.Status);
+    const Status = this.StatusArray.filter(x=>x)
+    this.Table = _.pickBy(this._Table, x=>Status.includes(x.status))
   }
 
   constructor(private io: IOInjectable) {
@@ -109,13 +111,16 @@ export class PnID implements AfterViewInit {
         Object.assign(x, { Event, Position });
       });
       console.log(Table);
-      this.Table = Table;
+      this._Table = Table;
     });
-    this.io.on("Switches", data => (this.Switches = data));
+    this.io.on("Switches", data => this.Switches = data);
   }
 
   ngAfterViewInit() {
-    this.TagControl.valueChanges.subscribe(value => this.io.emit("Tag", value));
+    this.TagControl.valueChanges.subscribe(value => {
+      this.io.emit("Tag", value);
+      localStorage.setItem("Tag", value);
+    });
   }
 
   TagControl = new FormControl();
