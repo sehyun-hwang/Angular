@@ -10,13 +10,12 @@ if ! grep browserslist package.json; then
 fi
 
 set -e
-NODE_OPTIONS="--max-old-space-size=2048" yarn ng build --prod
+#NODE_OPTIONS="--max-old-space-size=2048" yarn ng build --prod
 aws s3 sync --acl public-read dist/demo s3://hwangsehyun/Angular
 
 URL="https://hwangsehyun.s3-ap-southeast-1.amazonaws.com/Angular/"
-curl localhost/Angular/ | \
-    perl -i -pe 's/((?:src)|(?:href))="(?!https|\/)([^"]*)"/$1="'${URL//\//\\\/}'$2"/g' | \
-    aws s3 cp --acl public-read \
-    --content-type "text/html; charset=utf-8" \
-    --metadata-directive REPLACE \
-    - s3://hwangsehyun/Angular/index.html
+curl docker/volatile/Angular/ | \
+perl -pe 's/((?:src)|(?:href))="(?!https|\/)([^"]*)"/$1="'${URL//\//\\\/}'$2"/g' | \
+aws s3 cp --acl public-read \
+--content-type "text/html; charset=utf-8" --metadata-directive REPLACE \
+- s3://hwangsehyun/Angular/index.html
