@@ -1,26 +1,31 @@
-import { Component, ViewChild, AfterViewInit, ChangeDetectorRef } from "@angular/core";
+import {
+  Component,
+  ViewChild,
+  AfterViewInit,
+  ChangeDetectorRef,
+} from "@angular/core";
 import { FormControl } from "@angular/forms";
 import _ from "lodash";
 
 import { IOInjectable, Timestamp, Parser } from "./PnID";
-import { StatusInterface } from "./PnID-Interfaces";
+import { StatusInterface, TableType } from "./PnID-Interfaces";
 
 @Component({
   selector: "",
   templateUrl: "./PnID.component.html",
   styleUrls: ["./PnID.component.css"],
-  providers: [IOInjectable]
+  providers: [IOInjectable],
 })
 export class PnID implements AfterViewInit {
   @ViewChild("auto") TagElement;
 
   Log = console.log;
-  Table: Object[];
-  _Table: Object[];
-  displayedColumns: string[] = ["time", "status", "position", "event"];
+  Table: TableType;
+  _Table: TableType;
+  displayedColumns = ["time", "status", "position", "event"];
   Timestamp = Timestamp;
 
-  List: [[number, string]] = [];
+  List: [number, string][] = [];
   ListItem = 10;
 
   Switches: boolean[];
@@ -31,32 +36,35 @@ export class PnID implements AfterViewInit {
   get StatusArray() {
     return Object.keys(this.Status);
   }
-  StatusToggle(State) {
+  StatusToggle(State?: string) {
     if (State) this.Status[State] ^= 1;
     if (!this._Table) return;
-   const Status = Object.keys(_.pickBy(this.Status, x=>x))
-   console.log(Status)
-    this.Table = this._Table.filter(x=>Status.includes(x.status))
-    console.log(this.Table)
+    const Status = Object.keys(_.pickBy(this.Status, (x) => x));
+    console.log(Status);
+    this.Table = this._Table.filter((x) => Status.includes(x.status));
+    console.log(this.Table);
   }
 
-  constructor(private io: IOInjectable, private changeDetectorRefs: ChangeDetectorRef) {
+  constructor(
+    private io: IOInjectable,
+    private changeDetectorRefs: ChangeDetectorRef
+  ) {
     console.time("Constructor");
 
     const Once = () =>
-      new Promise(resolve =>
-        this.io.once("Init", data => resolve([data, Once()]))
+      new Promise((resolve) =>
+        this.io.once("Init", (data) => resolve([data, Once()]))
       );
     const once = Once();
     const Fetch = fetch(
       "https://plantasset.kr/MPIS_WCF/webservice.asmx/TAG_SECH_LIST?area="
     );
     Promise.race([
-      Promise.all([once.then(data => data[0]), Fetch.catch()]),
-      once.then(async ([data, promise]) => Promise.all([data, promise]))
+      Promise.all([once.then((data) => data[0]), Fetch.catch()]),
+      once.then(async ([data, promise]) => Promise.all([data, promise])),
     ])
       //.then(console.log)
-      .then(data => data.flat())
+      .then((data: any[]) => data.flat())
       .then(
         async ([Status, Tags, data]: [
           string[],
@@ -67,22 +75,19 @@ export class PnID implements AfterViewInit {
           any
         ]) => {
           console.log({ Status, Tags, data });
-          this.Status = Status.reduce(
-            (accum, cur) => {
-              accum[cur.trim()] = 1;
-              return accum;
-            },
-            {} as StatusInterface
-          );
+          this.Status = Status.reduce((accum, cur) => {
+            accum[cur.trim()] = 1;
+            return accum;
+          }, {} as StatusInterface);
 
           return {
             Tags,
-            data: await Parser(data)
+            data: await Parser(data),
           };
         }
       )
       .then(({ Tags, data }) => {
-        const Tags_arr = Tags.map(x => x.tag);
+        const Tags_arr = Tags.map((x) => x.tag);
 
         this.Tags = data.reduce((accum, cur) => {
           let Index = Tags_arr.indexOf(cur.TAG_NAME);
@@ -100,15 +105,15 @@ export class PnID implements AfterViewInit {
         console.timeEnd("Constructor");
       });
 
-    this.io.on("Tables", data => {
+    this.io.on("Tables", (data) => {
       let Table;
       [this.List, Table] = data;
 
-      Table.forEach(x => {
+      Table.forEach((x) => {
         const [Event, Position] = Object.entries(
           _.pickBy(
             _.pick(x, ["unlock_requester", "unlock_checker", "lock_requester"]),
-            x => x
+            (x) => x
           )
         )[0];
         Object.assign(x, { Event, Position });
@@ -116,11 +121,11 @@ export class PnID implements AfterViewInit {
       console.log(Table);
       this._Table = Table;
     });
-    this.io.on("Switches", data => this.Switches = data);
+    this.io.on("Switches", (data) => (this.Switches = data));
   }
 
   ngAfterViewInit() {
-    this.TagControl.valueChanges.subscribe(value => {
+    this.TagControl.valueChanges.subscribe((value) => {
       this.io.emit("Tag", value);
       localStorage.setItem("Tag", value);
       this.StatusToggle();
