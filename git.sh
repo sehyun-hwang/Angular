@@ -12,6 +12,6 @@ do
     if [ "$x" == "commit" ]; then
         git add .
         git commit -m "message"
-        git push
+        git push -f origin master
     fi
 done
