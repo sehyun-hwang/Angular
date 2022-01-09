@@ -1,7 +1,6 @@
 import { Client } from "@influxdata/influx";
 import { Papa } from "ngx-papaparse";
 
-import { ChartPoint } from "chart.js";
 interface Data {
   [key: string]: string[];
   x: string[];
@@ -10,18 +9,18 @@ interface Data {
 export class Influx {
   Datasets: {
     [key: string]: any;
-    data: ChartPoint[];
+    data: any[];
   }[] = [
     {
       label: "Random",
-      data: []
-    }
+      data: [],
+    },
   ];
 
   Data = new Proxy(this.Datasets, {
-    get: function(target, name) {
+    get: function (target, name) {
       return target[name].data;
-    }
+    },
   });
   constructor(private Query: (string) => string) {}
   papa = new Papa();
@@ -37,7 +36,7 @@ export class Influx {
   Refresh(chart) {
     this.Datasets[0].data.push({
       x: Date.now(),
-      y: Math.random() * 30
+      y: Math.random() * 30,
     });
 
     this.Datasets[0]["hidden"] = !!this.Datasets.length;
@@ -50,11 +49,11 @@ export class Influx {
           |> range(start: ${this.Last})`
       )
       .promise.then(
-        data =>
+        (data) =>
           new Promise((resolve, reject) => {
             data.trim()
               ? this.papa.parse(data, {
-                  complete: data => resolve(data) 
+                  complete: (data) => resolve(data),
                 })
               : reject("Empty response");
           })
@@ -64,77 +63,75 @@ export class Influx {
         if (!errors.length && data.length > 2) return Promise.resolve(data);
         return Promise.reject(errors.toString());
       })
-      .then(
-        (data: string[][]): Data => {
-          {
-            const tags = data.slice(3, 5).map(x => x.slice(9));
-            function Tags(Result: string[]): typeof Result;
-            function Tags(Result: object): typeof Result {
-              return Result instanceof Array
-                ? tags[0]
-                : tags[0].reduce((accum, cur, i) => {
-                    accum[cur] = tags[1][i];
-                    return accum;
-                  }, {});
-            }
-            if (!this.Tags.length) this.Tags = Tags([]);
+      .then((data: string[][]): Data => {
+        {
+          const tags = data.slice(3, 5).map((x) => x.slice(9));
+          function Tags(Result: string[]): typeof Result;
+          function Tags(Result: object): typeof Result {
+            return Result instanceof Array
+              ? tags[0]
+              : tags[0].reduce((accum, cur, i) => {
+                  accum[cur] = tags[1][i];
+                  return accum;
+                }, {});
           }
-
-          const Labels = {
-            x: 5,
-            y: 6,
-            label: 7
-          };
-
-          {
-            const date = new Date(data[data.length - 3][Labels.x]);
-            date.setSeconds(date.getSeconds() + 1);
-            this.Last = date.toISOString();
-          }
-
-          const ToSlice = data.reduce((accum, cur, i) => {
-            cur.length === 1 && accum.push(i);
-            return accum;
-          }, [] as number[]);
-          ToSlice.pop();
-
-          const data2 = ToSlice.map((x, i) =>
-            data.slice(i ? ToSlice[i - 1] + 5 : 4, x)
-          );
-          //console.log(data2.map(x => x.slice(0, 5)));
-
-          return data2.reduce(
-            (accum, cur, i) => {
-              const label = cur[0][Labels.label];
-
-              if (!this.Labels.includes(label)) {
-                const Color =
-                  "rgba(" +
-                  [0, 127, 255].sort(() => 0.5 - Math.random()).join(", ") +
-                  ", ";
-                //console.log(Color);
-                this.Datasets.push({
-                  label,
-                  borderColor: Color + "0.2)",
-                  backgroundColor: Color + "0.4)",
-                  data: []
-                });
-              }
-
-              accum[label] = cur.map(x => x[Labels.y]);
-              return accum;
-            },
-            {
-              x: data2[0].map(x => x[Labels.x])
-            }
-          );
+          if (!this.Tags.length) this.Tags = Tags([]);
         }
-      )
+
+        const Labels = {
+          x: 5,
+          y: 6,
+          label: 7,
+        };
+
+        {
+          const date = new Date(data[data.length - 3][Labels.x]);
+          date.setSeconds(date.getSeconds() + 1);
+          this.Last = date.toISOString();
+        }
+
+        const ToSlice = data.reduce((accum, cur, i) => {
+          cur.length === 1 && accum.push(i);
+          return accum;
+        }, [] as number[]);
+        ToSlice.pop();
+
+        const data2 = ToSlice.map((x, i) =>
+          data.slice(i ? ToSlice[i - 1] + 5 : 4, x)
+        );
+        //console.log(data2.map(x => x.slice(0, 5)));
+
+        return data2.reduce(
+          (accum, cur, i) => {
+            const label = cur[0][Labels.label];
+
+            if (!this.Labels.includes(label)) {
+              const Color =
+                "rgba(" +
+                [0, 127, 255].sort(() => 0.5 - Math.random()).join(", ") +
+                ", ";
+              //console.log(Color);
+              this.Datasets.push({
+                label,
+                borderColor: Color + "0.2)",
+                backgroundColor: Color + "0.4)",
+                data: [],
+              });
+            }
+
+            accum[label] = cur.map((x) => x[Labels.y]);
+            return accum;
+          },
+          {
+            x: data2[0].map((x) => x[Labels.x]),
+          }
+        );
+      })
       .then((data: Data) => {
-        this.Labels = this.Datasets.map(x => x.label);
+        this.Labels = this.Datasets.map((x) => x.label);
 
         Object.defineProperty(data, "x", {
-          enumerable: false
+          enumerable: false,
         });
         const { x } = data;
 
@@ -144,7 +141,7 @@ export class Influx {
         });
 
         chart.update({
-          preservation: true
+          preservation: true,
         });
       })
       .catch((error: string | Error) =>

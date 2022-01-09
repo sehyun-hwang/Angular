@@ -1,26 +1,24 @@
 import {
   Component,
   Input,
-  OnChanges,
   ChangeDetectorRef,
   Output,
   EventEmitter,
   ViewChild,
-  ElementRef,
-  Inject
 } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { ChartOptions } from "chart.js";
-import "chartjs-plugin-streaming";
+import { Chart, ChartOptions } from "chart.js";
+import ChartStreaming from "chartjs-plugin-streaming";
 
 import { IOInjectable } from "./PnID";
 import { PnID_Dialog } from "./PnID-Dialog.component";
-import { Realtime, XAxe } from "./PnID-Interfaces";
 import { Influx } from "./PnID-Influx";
+
+Chart.register(ChartStreaming);
 
 @Component({
   selector: "pnid-switch",
-  templateUrl: "PnID-Switch.component.html"
+  templateUrl: "PnID-Switch.component.html",
 })
 export class PnID_Switch {
   constructor(private cdRef: ChangeDetectorRef) {}
@@ -35,12 +33,12 @@ export class PnID_Switch {
 
 @Component({
   selector: "pnid-device",
-  templateUrl: "./PnID-Device.component.html"
+  templateUrl: "./PnID-Device.component.html",
 })
 export class PnID_Device {
   constructor(private dialog: MatDialog, private io: IOInjectable) {}
   Influx = new Influx(
-    Time => `from(bucket: "test")
+    (Time) => `from(bucket: "test")
                   |> range(start: ${Time})`
   );
 
@@ -65,7 +63,7 @@ export class PnID_Device {
     this.dialog
       .open(PnID_Dialog)
       .afterClosed()
-      .subscribe(result => {
+      .subscribe((result) => {
         if (!result) return;
 
         Slider.checked ^= true as any;
@@ -78,16 +76,14 @@ export class PnID_Device {
 
   options: ChartOptions = {
     scales: {
-      xAxes: <XAxe[]>[
-        {
-          type: "realtime",
-          realtime: {
-            ttl: undefined,
-            refresh: 1000,
-            onRefresh: this.Influx.Refresh.bind(this.Influx)
-          }
-        }
-      ]
-    }
+      x: {
+        type: "realtime",
+        realtime: {
+          ttl: undefined,
+          refresh: 1000,
+          onRefresh: this.Influx.Refresh.bind(this.Influx),
+        },
+      },
+    },
   };
 }

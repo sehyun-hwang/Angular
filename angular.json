@@ -27,12 +27,10 @@
           },
           "configurations": {
             "production": {
-              "budgets": [
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ],
+              "budgets": [{
+                "type": "anyComponentStyle",
+                "maximumWarning": "6kb"
+              }],
               "fileReplacements": [],
               "optimization": true,
               "outputHashing": "none",
@@ -49,6 +47,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
+            "host": "0.0.0.0",
             "browserTarget": "demo:build"
           },
           "configurations": {

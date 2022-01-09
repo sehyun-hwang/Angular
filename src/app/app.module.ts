@@ -7,8 +7,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { CountdownModule } from "ngx-countdown";
-import { WebcamModule } from "ngx-webcam";
-import { ChartsModule } from "ng2-charts";
+import { NgChartsModule } from "ng2-charts";
 import { GaugeModule } from "angular-gauge";
 
 import { DemoMaterialModule } from "./modules/Material.module";
@@ -30,15 +29,14 @@ import { routes, AppComponent, Declarations, PnID_Dialog } from "./Components";
     ReactiveFormsModule,
 
     CountdownModule,
-    WebcamModule,
-    ChartsModule,
+    NgChartsModule,
     GaugeModule.forRoot(),
 
-    RouterModule.forRoot(routes())
+    RouterModule.forRoot(routes()),
   ],
   providers: [],
   //bootstrap: [AppComponent],
-  entryComponents: [AppComponent, PnID_Dialog]
+  entryComponents: [AppComponent, PnID_Dialog],
 })
 export class AppModule implements DoBootstrap {
   ngDoBootstrap(app: ApplicationRef) {

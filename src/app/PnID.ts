@@ -1,18 +1,17 @@
 import { Injectable } from "@angular/core";
-// @ts-ignore
-import io from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 
-import { IOInterface } from "./PnID-Interfaces";
+interface SomeInterface extends Socket {
+  new (url: string): Socket;
+}
 
 @Injectable()
-export class IOInjectable extends (io as IOInterface) {
-  Socket: SocketIOClient.Socket;
+export class IOInjectable extends (io as unknown as SomeInterface) {
+  Socket: Socket;
 
   constructor() {
-    const Socket = super(
-      "https://proxy.hwangsehyun.com?port=8081"
-    ) as unknown as SocketIOClient.Socket;
-    Object.assign(this, {Socket});
+    const Socket = super("https://proxy.hwangsehyun.com?port=8081");
+    Object.assign(this, { Socket });
   }
 }
 
@@ -23,7 +22,7 @@ export async function Parser(arg: Response | string): Promise<any[]> {
     Table: any[];
   } = await Promise.resolve(arg instanceof Response ? await arg.text() : arg)
     .then(
-      text =>
+      (text) =>
         new DOMParser().parseFromString(text, "text/xml").firstElementChild
           .innerHTML
     )
